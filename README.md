@@ -18,7 +18,7 @@ Extract and process NAMCS and NHMCS patient case data.
     - helpers - methods to translate raw data from dataset to human readable format
     - years - year wise NAMCS details like fields, their position in dataset, length etc.
 * namcs - contains configurable parameters and constants
-* scipts
+* scripts
     - controllers - provide common entry point for execution
     - validation - validation of dataset and parameters provided while invoking script controllers
 * utils - contains useful decorators, context managers etc.

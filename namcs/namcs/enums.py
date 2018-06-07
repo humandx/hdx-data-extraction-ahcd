@@ -5,7 +5,7 @@ Module for enums used by NAMCS-NAHMCS extractor
 # Python modules
 from enum import Enum
 
-# zz modules
+# Other modules
 # - N/A
 
 # 3rd party modules
