@@ -9,7 +9,7 @@ from collections import Iterable
 # 3rd party modules
 # -N/A
 
-# HDx modules
+# Other modules
 # -N/A
 
 

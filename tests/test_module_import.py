@@ -8,7 +8,7 @@ from unittest import TestCase
 # Third party modules
 # -N/A
 
-# HDx modules
+# Other modules
 # -N/A
 
 

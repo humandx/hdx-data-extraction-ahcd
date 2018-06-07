@@ -7,7 +7,7 @@ import inspect
 import os
 from unittest import mock, TestCase
 
-# HDx modules
+# Other modules
 from general import namcs_convertor
 from general.namcs_convertor import (
     get_generator_by_year,
@@ -35,7 +35,7 @@ class NAMCSConverterTest(TestCase):
         year = 2000
 
         # Patch `EXTRACTED_DATA_DIR_PATH` to `test/data` directory
-z        functions.EXTRACTED_DATA_DIR_PATH = \
+        functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to method

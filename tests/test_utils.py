@@ -8,7 +8,7 @@ from unittest import TestCase, main
 # 3rd party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from utils.utils import (
     RangeDict,
     NAMCSMetaMappings

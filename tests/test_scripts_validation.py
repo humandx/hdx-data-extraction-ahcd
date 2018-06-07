@@ -9,7 +9,7 @@ from unittest import TestCase
 # Third party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from scripts.validation import (
     _check_if_file_exists,
     _validate_dataset_file_name_format,

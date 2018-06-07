@@ -8,7 +8,7 @@ import logging
 import os
 from namcs.enums import NAMCSFieldEnum
 
-# HDx modules
+# Other modules
 from utils.utils import RangeDict
 
 # 3rd party modules
@@ -56,6 +56,9 @@ ERROR_FILES_DIR_PATH = \
 
 # Dataset pattern to extract year from NAMCS record
 NAMCS_DATASET_YEAR_PATTERNS = ("%y", "%Y")
+
+# Dataset pattern to extract month from NAMCS record
+NAMCS_DATASET_MONTH_PATTERNS = ("%m", "%b", "%B")
 
 # Creating "namcs" as logger.
 logging.basicConfig(level=logging.INFO)

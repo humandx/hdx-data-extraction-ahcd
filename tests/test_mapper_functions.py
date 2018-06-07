@@ -5,7 +5,7 @@ Tests for mapper_functions module.
 # Python modules
 from unittest import TestCase
 
-# HDx modules
+# Other modules
 from mapper.functions import (
     age_reduced_to_days,
     convert_physician_diagnosis_code,

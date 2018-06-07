@@ -8,8 +8,9 @@ from datetime import datetime
 # 3rd party modules
 # -N/A
 
-# HDx modules
-from namcs.config import NAMCS_DATASET_YEAR_PATTERNS
+# Other modules
+from namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
+    NAMCS_DATASET_MONTH_PATTERNS
 from utils.decorators import enforce_type
 from utils.decorators import (
     add_method_to_mapping_dict,
@@ -32,7 +33,7 @@ from helpers.functions import (
             NAMCSFieldEnum.DATE_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=tuple)
+@enforce_type(str, return_type=tuple, use_regex='^(0[1-9]|1[012])([0-9]{2})$')
 def get_year_and_month_from_date(raw_format_date):
     """
     Method to convert date into human readable format.
@@ -59,7 +60,8 @@ def get_year_and_month_from_date(raw_format_date):
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
     )
 )
-@enforce_type(str, return_type=str)
+@enforce_type(str, return_type=str, use_regex='^[V|Y|\-|\&|1|2|0]'
+                                              '([0-9]{3}|[0-9]{5})$')
 def convert_physician_diagnosis_code(diagnosis_code):
     """
     Method to convert raw physician `diagnosis_code` into ICD-9 format.
@@ -86,7 +88,8 @@ def convert_physician_diagnosis_code(diagnosis_code):
             NAMCSFieldEnum.MONTH_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=str)
+@enforce_type(str, return_type=str, use_regex='^((0[1-9]|1[012])'
+                                              '|([A-Z][a-z]{2,8}))$')
 def get_month_from_date(raw_format_date):
     """
     Method to get convert raw `diagnosis_code` into ICD-9 format.
@@ -97,7 +100,17 @@ def get_month_from_date(raw_format_date):
     Returns:
         :class:`str`: Month in human readable format.
     """
-    date = datetime.strptime(raw_format_date, "%m")
+    date = None
+    for pattern in NAMCS_DATASET_MONTH_PATTERNS:
+        try:
+            date = datetime.strptime(raw_format_date, pattern)
+            if date:
+                break
+        except ValueError:
+            continue
+
+    if not date:
+        return "XXXX"[:len(raw_format_date)]
 
     # Get string representation of date for month
     month = date.strftime("%B")
@@ -111,7 +124,7 @@ def get_month_from_date(raw_format_date):
             NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=str)
+@enforce_type(str, return_type=str, use_regex='^([1-2][0|9])?[0-9]{2}$')
 def get_year_from_date(raw_format_year):
     """
     Method to convert date into human readable format
@@ -141,7 +154,7 @@ def get_year_from_date(raw_format_year):
 
 @catch_exception(reraise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.GENDER.value)
-@enforce_type(str, return_type=str)
+@enforce_type(str, return_type=str, use_regex='^[1|2]$')
 def get_gender(gender):
     """
     Method to convert gender into human readable format
@@ -166,7 +179,7 @@ def get_gender(gender):
             NAMCSFieldEnum.PATIENT_AGE.value
     )
 )
-@enforce_type(return_type=int)
+@enforce_type(return_type=int, use_regex='^[0-1]{0,1}[0-9]{0,2}$')
 def age_reduced_to_days(age=None, **kwargs):
     """
     Method to normalize age into human readable format.

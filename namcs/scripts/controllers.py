@@ -8,7 +8,7 @@ from functools import reduce
 # 3rd party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from general.namcs_convertor import (
     get_year_wise_generator
 )
@@ -48,15 +48,15 @@ class NAMCSController(object):
                 validation on `year` and `file_name` default value True to
                 perform validation.
             do_export (:class:`bool`) : Flag to indicate if to dump the
-                converted raw NAMCS pcd data into CSV file as defined by
-                `CONVERTED_CSV_FILE_NAME_SUFFIX` for given year default
-                value False.
+                converted raw NAMCS patient case data into CSV file as
+                defined by `CONVERTED_CSV_FILE_NAME_SUFFIX` for
+                given year default value False.
             force_download (:class:`bool`) : Whether to force download
                 NAMCS raw dataset file even if it exists,Default value True.
         
         Returns:
             :class:`defaultdict` : Dictionary containing generator of
-                converted raw NAMCS pcd data for given year.
+                converted raw NAMCS patient case data for given year.
         """
         year_wise_mld = dict()
 

@@ -9,7 +9,7 @@ import os
 # 3rd party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from functools import reduce
 from random import randint
 

@@ -1,12 +1,8 @@
 # NAMCS-NHAMCS-data-extraction
 ------
-
-[![N|Solid](https://www.cdc.gov/nchs/ahcd/wcms-inc/VP4_935_AHCD.png)](https://www.cdc.gov/nchs/ahcd/about_ahcd.htm)
-
 Extract and process NAMCS and NHMCS patient case data.
-
   - # NAMCS
-    The National Ambulatory Medical Care Survey (NAMCS) is a national survey designed to meet the need for objective, reliable information about the provision and use of ambulatory medical care services in the United States. Findings are based on a sample of visits to non federally employed office-based physicians who are primarily engaged in direct patient care.
+    The National Ambulatory Medical Care Survey (NAMCS) is a national survey designed to meet the need for objective, reliable information about the provision and use of ambulatory medical care services in the United States. Findings are based on a sample of visits to nonfederally employed office-based physicians who are primarily engaged in direct patient care.
   - # NHAMCS
     The National Hospital Ambulatory Medical Care Survey (NHAMCS) is designed to collect data on the utilization and provision of ambulatory care services in hospital emergency and outpatient departments, and in ambulatory surgery centers
 
@@ -22,7 +18,7 @@ Extract and process NAMCS and NHMCS patient case data.
     - helpers - methods to translate raw data from dataset to human readable format
     - years - year wise NAMCS details like fields, their position in dataset, length etc.
 * namcs - contains configurable parameters and constants
-* scripts
+* scipts
     - controllers - provide common entry point for execution
     - validation - validation of dataset and parameters provided while invoking script controllers
 * utils - contains useful decorators, context managers etc.
@@ -45,4 +41,4 @@ Extract and process NAMCS and NHMCS patient case data.
  ---
 License
 ----
-TBD
+To be discussed.

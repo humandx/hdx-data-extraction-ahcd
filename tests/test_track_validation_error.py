@@ -8,7 +8,7 @@ from unittest import TestCase
 # 3rd party modules
 # -NA-
 
-# HDx modules
+# Other modules
 from utils.exceptions import TrackValidationError
 
 

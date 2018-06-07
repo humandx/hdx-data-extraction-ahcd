@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-This file translates raw NAMCS pcd data into converted csv file.
+This file translates raw NAMCS patient case data data into converted csv file.
 """
 # Python modules
 import csv
 import os
 from collections import defaultdict
 
-# HDx modules
+# Other modules
 from helpers.functions import (
     get_customized_file_name,
     get_field_code_from_record,
@@ -28,7 +28,7 @@ from namcs.config import (
 from namcs.enums import NAMCSFieldEnum
 from utils.context import try_except
 from utils.decorators import (
-    create_path_if_does_not_existsz
+    create_path_if_does_not_exists
 )
 
 # 3rd party modules
@@ -41,7 +41,7 @@ from utils.decorators import (
 @create_path_if_does_not_exists(ERROR_FILES_DIR_PATH)
 def get_generator_by_year(year, namcs_raw_dataset_file=None):
     """
-    Method to translate raw NAMCS pcd data for given year.
+    Method to translate raw NAMCS patient case data data for given year.
 
     Parameters:
         year (:class:`int`): NAMCS year for which raw data needs to be
@@ -51,7 +51,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
 
     Returns:
         :class:`generator` : Generator object containing converted
-            raw NAMCS pcd data for given year.
+            raw NAMCS patient case data data for given year.
     """
     year_class_object = vars(years).get("Year{}".format(year))
     dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file else \
@@ -124,14 +124,15 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
 
 def export_to_csv(year, generator_object):
     """
-    Method to dump the converted raw NAMCS pcd data into CSV file as defined by
-    `CONVERTED_CSV_FILE_NAME_SUFFIX` for given year.
+    Method to dump the converted raw NAMCS patient case data data
+    into CSV file as defined by `CONVERTED_CSV_FILE_NAME_SUFFIX`
+    for given year.
 
     Parameters:
         year (:class:`int` or :class:`str`): NAMCS year for which raw
             data needs to be translated.
         generator_object (:class:`generator`): Generator object containing
-            converted raw NAMCS pcd data for given year.
+            converted raw NAMCS patient case data data for given year.
 
     Returns:
         :class:`str` : File path for `CONVERTED_CSV_FILE_NAME_SUFFIX`.
@@ -163,9 +164,10 @@ def get_year_wise_generator(year=None, namcs_raw_dataset_file=None,
                             do_export = False):
     """
     Method to convert raw NAMCS PCD data into CSV, and return Dictionary
-    containing generator of converted raw NAMCS pcd data for given year if
-    `do_export` is false else dump the converted raw NAMCS pcd data into CSV
-    file as defined by `CONVERTED_CSV_FILE_NAME_SUFFIX` for given year.
+    containing generator of converted raw NAMCS patient case data for
+    given year if `do_export` is false else dump the converted raw NAMCS
+    patient case data into CSV file as defined by
+    `CONVERTED_CSV_FILE_NAME_SUFFIX` for given year.
 
     Parameters:
         year (:class:`int` or :class:`tuple` or :class:`list`): NAMCS year
@@ -173,12 +175,12 @@ def get_year_wise_generator(year=None, namcs_raw_dataset_file=None,
         namcs_raw_dataset_file (:class:`str`): File path for
             raw dataset input file default value None.
         do_export (:class:`bool`) : Flag to indicate if to dump the converted
-            raw NAMCS pcd data into CSV file as defined by
+            raw NAMCS patient case data into CSV file as defined by
             `CONVERTED_CSV_FILE_NAME_SUFFIX` for given year default value False.
 
     Returns:
         :class:`defaultdict` : Dictionary containing generator of converted
-            raw NAMCS pcd data for given year.
+            raw NAMCS patient case data for given year.
     """
     year_wise_mld = defaultdict(dict)
     # If year not specified, get generator object

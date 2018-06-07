@@ -8,7 +8,7 @@ from unittest import mock, TestCase
 # Third party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from general.namcs_extractor import (
     download_namcs_zipfile,
     extract_data_zipfile,

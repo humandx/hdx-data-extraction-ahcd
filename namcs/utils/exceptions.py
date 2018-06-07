@@ -8,8 +8,8 @@ This module consists of utility classes and methods.
 # 3rd party modules
 from namcs.config import log
 
-# HDx modules
-
+# Other modules
+# - N/A
 
 # Global vars
 # - N/A

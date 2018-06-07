@@ -5,7 +5,7 @@ Utility methods for NAMCS data model.
 # Python modules
 from unittest import TestCase
 
-# HDx modules
+# Other modules
 from mapper.years import Year1973
 from namcs.enums import NAMCSFieldEnum
 

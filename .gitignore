@@ -1,0 +1,7 @@
+# This file contains directory and files that needs to ignored.
+build/
+dist/
+namcs.egg-info/
+namcs/data/
+namcs/namcs/__pycache__/
+namcs/utils/__pycache__/

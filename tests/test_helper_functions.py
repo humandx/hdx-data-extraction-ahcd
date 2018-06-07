@@ -7,7 +7,7 @@ import datetime
 import os
 from unittest import mock, TestCase
 
-# HDx modules
+# Other modules
 from helpers import functions
 from helpers.functions import (
     get_namcs_source_file_info,

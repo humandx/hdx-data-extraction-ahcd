@@ -10,7 +10,7 @@ from unittest import TestCase, mock
 # Third party modules
 # -N/A
 
-# HDx modules
+# Other modules
 from helpers import functions
 from helpers.functions import get_namcs_source_file_info
 from namcs.config import YEARS_AVAILABLE

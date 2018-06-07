@@ -10,7 +10,7 @@ import os
 import zipfile
 from urllib import request
 
-# HDx modules
+# Other modules
 from helpers.functions import (
     get_customized_file_name,
     get_namcs_source_file_info,
@@ -34,7 +34,6 @@ from utils.decorators import catch_exception, create_path_if_does_not_exists
 # -N/A
 
 
-# TODO: implement this using multi processing
 @create_path_if_does_not_exists(DOWNLOADED_FILES_DIR_PATH)
 def download_namcs_zipfile(namcs_year,
                            download_path=DOWNLOADED_FILES_DIR_PATH):

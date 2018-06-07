@@ -6,7 +6,7 @@ Module containing year specific NAMCSMetaMappings for all the years in
 # Python modules
 import inspect
 
-# HDx modules
+# Other modules
 from namcs.enums import NAMCSFieldEnum
 from helpers.functions import get_slice_object
 from utils.utils import NAMCSMetaMappings
@@ -584,7 +584,7 @@ class Year2010(Year2007):
     )
 
 
-# TODO: field `Year_of_visit` in document  NOT present
+# Note: field `Year_of_visit` in document  NOT present
 class Year2011(Year):
     """
     Year 2011 data with specified fields
@@ -621,7 +621,7 @@ class Year2011(Year):
     )
 
 
-# TODO:extra field  in document `AGE RECODE`,
+# Note:extra field  in document `AGE RECODE`,
 # `AGE IN DAYS FOR PATIENTS LESS THAN ONE YEAR OF AGE` onwards
 class Year2012(Year):
     """
@@ -695,7 +695,7 @@ class Year2013(Year):
     )
 
 
-# TODO: new diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` onwards
+# Note: new diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` onwards
 class Year2014(Year):
     """
     Year 2014 data with specified fields

@@ -7,7 +7,7 @@ import os
 from copy import deepcopy
 from datetime import datetime
 
-# HDx modules
+# Other modules
 from namcs.config import (
     BASE_FILE_NAME,
     EXTRACTED_DATA_DIR_PATH,
