@@ -5,23 +5,21 @@ File containing methods for validation.
 # Python modules
 import linecache
 import os
+from functools import reduce
+from random import randint
 
 # 3rd party modules
 # -N/A
 
 # Other modules
-from functools import reduce
-from random import randint
-
-from helpers.functions import (
+from namcs.helpers.functions import (
     get_normalized_namcs_file_name,
     get_year_from_dataset_file_name
 )
-from namcs.config import (
+from namcs.namcs.config import (
     YEARS_AVAILABLE,
     NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR)
-from utils.exceptions import TrackValidationError
-
+from namcs.utils.exceptions import TrackValidationError
 
 # Global vars
 # -N/A

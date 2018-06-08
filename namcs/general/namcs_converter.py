@@ -8,7 +8,7 @@ import os
 from collections import defaultdict
 
 # Other modules
-from helpers.functions import (
+from namcs.helpers.functions import (
     get_customized_file_name,
     get_field_code_from_record,
     get_namcs_datset_path_for_year,
@@ -17,19 +17,20 @@ from helpers.functions import (
     process_multiple_slice_objects,
     populate_missing_fields,
 )
-from mapper import years
-from namcs.config import (
+from namcs.mapper import years
+from namcs.namcs.config import (
     CONVERTED_CSV_FIELDS,
     CONVERTED_CSV_FILE_NAME_SUFFIX,
     ERROR_FILES_DIR_PATH,
     NAMCS_DATA_DIR_PATH,
     log,
     YEARS_AVAILABLE)
-from namcs.enums import NAMCSFieldEnum
-from utils.context import try_except
-from utils.decorators import (
+from namcs.namcs.enums import NAMCSFieldEnum
+from namcs.utils.context import try_except
+from namcs.utils.decorators import (
     create_path_if_does_not_exists
 )
+from namcs.utils.utils import detailed_exception_info
 
 # 3rd party modules
 # -N/A
@@ -105,6 +106,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                                             write_line)
                 yield write_line
             except Exception as exc:
+                detailed_exception_info()
                 errors.append(
                     {
                         "record_no": line_no + 1,

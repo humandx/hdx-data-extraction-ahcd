@@ -3,8 +3,9 @@
 Utility methods for NAMCS data model.
 """
 # Python modules
+import linecache
+import sys
 from collections import Iterable
-
 
 # 3rd party modules
 # -N/A
@@ -108,3 +109,38 @@ class NAMCSMetaMappings(object):
         self.field_length = field_length
         self.field_location = field_location
         self.field_name = field_name
+
+
+def detailed_exception_info(use_next_frame=False):
+    """
+    Method to provide detailed information about exception, details contains
+    exception type, file name/module name, operation/line number
+    in which exception occurred.
+
+    Parameters:
+        use_next_frame (:class:`bool`): To decide whether to use next frame
+            `tb_next` of `traceback_obj`, Set to true in case of decorated
+            method/context manager exception will occur in method itself not in
+            decorator/context manager. Default value False.
+    """
+    # Exception details objects
+    exception_type, exception_obj, traceback_obj = sys.exc_info()
+
+    # Decide `traceback_frame`
+    if not use_next_frame:
+        _frame = traceback_obj.tb_frame
+        filename = _frame.f_code.co_filename
+        module_globals = _frame.f_globals
+        line_no = traceback_obj.tb_lineno
+    else:
+        _frame = traceback_obj.tb_next
+        filename = _frame.tb_frame.f_code.co_filename
+        module_globals = _frame.tb_frame.f_globals
+        line_no = _frame.tb_lineno
+
+    linecache.checkcache(filename)
+    line = linecache.getline(filename, line_no, module_globals)
+    print('Exception occurred in : {} at line : {}\nOperation : "{}",'
+          'exception_object:{}'
+          .format(filename, line_no, line.strip(), exception_obj)
+          )

@@ -9,12 +9,12 @@ from unittest import mock, TestCase
 # -N/A
 
 # Other modules
-from general.namcs_extractor import (
+from namcs.general.namcs_extractor import (
     download_namcs_zipfile,
     extract_data_zipfile,
     initiate_namcs_dataset_download,
 )
-from namcs.config import YEARS_AVAILABLE
+from namcs.namcs.config import YEARS_AVAILABLE
 
 
 class NAMCSExtractorTest(TestCase):

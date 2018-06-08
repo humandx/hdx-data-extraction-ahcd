@@ -9,15 +9,15 @@ from datetime import datetime
 # -N/A
 
 # Other modules
-from namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
+from namcs.namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
     NAMCS_DATASET_MONTH_PATTERNS
-from utils.decorators import enforce_type
-from utils.decorators import (
+from namcs.utils.decorators import enforce_type
+from namcs.utils.decorators import (
     add_method_to_mapping_dict,
     catch_exception
 )
-from namcs.enums import GenderEnum, NAMCSFieldEnum
-from helpers.functions import (
+from namcs.namcs.enums import GenderEnum, NAMCSFieldEnum
+from namcs.helpers.functions import (
     get_icd_9_code_from_database,
     get_icd_9_code_from_numeric_string,
 )
@@ -33,7 +33,8 @@ from helpers.functions import (
             NAMCSFieldEnum.DATE_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=tuple, use_regex='^(0[1-9]|1[012])([0-9]{2})$')
+@enforce_type(str, return_type=(str, str),
+              use_regex='^(0[1-9]|1[012])([0-9]{2})$')
 def get_year_and_month_from_date(raw_format_date):
     """
     Method to convert date into human readable format.
@@ -60,7 +61,7 @@ def get_year_and_month_from_date(raw_format_date):
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
     )
 )
-@enforce_type(str, return_type=str, use_regex='^[V|Y|\-|\&|1|2|0]'
+@enforce_type(str, return_type=str, use_regex='^[V|Y|\-|\&|0-9]'
                                               '([0-9]{3}|[0-9]{5})$')
 def convert_physician_diagnosis_code(diagnosis_code):
     """
@@ -163,13 +164,13 @@ def get_gender(gender):
         gender (:class:`str`): Raw code for gender.
 
     Returns:
-        :class:`str`: String indicating gender.
+        :class:`str`: Human readable gender.
     """
     gender_long_name = {
         "1": GenderEnum.FEMALE.value,
         "2": GenderEnum.MALE.value
     }
-    return gender_long_name.get(str(gender), "CODE%s" % gender)
+    return gender_long_name.get(gender)
 
 
 @catch_exception(reraise=True)
@@ -179,7 +180,8 @@ def get_gender(gender):
             NAMCSFieldEnum.PATIENT_AGE.value
     )
 )
-@enforce_type(return_type=int, use_regex='^[0-1]{0,1}[0-9]{0,2}$')
+# @enforce_type(return_type=int, use_regex='^[0-1]{0,1}[0-9]{0,2}$')
+@enforce_type(return_type=int)
 def age_reduced_to_days(age=None, **kwargs):
     """
     Method to normalize age into human readable format.

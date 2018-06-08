@@ -5,8 +5,11 @@ Tests for mapper_functions module.
 # Python modules
 from unittest import TestCase
 
+# Third party modules
+# -N/A
+
 # Other modules
-from mapper.functions import (
+from namcs.mapper.functions import (
     age_reduced_to_days,
     convert_physician_diagnosis_code,
     get_gender,
@@ -14,13 +17,10 @@ from mapper.functions import (
     get_year_and_month_from_date,
     get_year_from_date,
 )
-from namcs.enums import (
+from namcs.namcs.enums import (
     GenderEnum,
     NAMCSFieldEnum
 )
-
-# Third party modules
-# -N/A
 
 
 class MapperFunctionsTest(TestCase):
@@ -58,6 +58,15 @@ class MapperFunctionsTest(TestCase):
         # Validating decorator enforce_type
         # Setup
         date = 1297
+
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_year, actual_month = get_year_and_month_from_date(date)
+
+        # Validating use_regex parameter of decorator enforce_type
+        # Setup
+        date = 1497  # 14 is invalid month
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -139,6 +148,24 @@ class MapperFunctionsTest(TestCase):
             # Call to method
             actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
 
+        # Case 8: validating decorator enforce_type for parameter use_regex
+        # Setup
+        diagnosis_code = '-0001'  # Invalid diagnosis code
+
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
+
+        # Case 9: validating decorator enforce_type for parameter use_regex
+        # Setup
+        diagnosis_code = 'test_code'  # Invalid diagnosis code
+
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
+
     def test_get_month_from_date(self):
         """
         Test to check valid month from date.
@@ -172,6 +199,15 @@ class MapperFunctionsTest(TestCase):
             # Call to method
             actual_month = get_month_from_date(date)
 
+        # Validating use_regex parameter of decorator enforce_type
+        # Setup
+        date = '14'  # 14 is invalid month
+
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_month = get_month_from_date(date)
+
     def test_get_year_from_date(self):
         """
         Test to check valid month from date.
@@ -187,16 +223,14 @@ class MapperFunctionsTest(TestCase):
         # Assert to check for correct year
         self.assertEqual(expected_year, actual_year)
 
-        # Case 2: when numeric code for year is wrong
+        # Validating use_regex parameter of decorator enforce_type
         # Setup
-        date = '-1'
-        expected_year = 'XX'
+        date = '-10'  # -10 is invalid year
 
-        # Call to method
-        actual_year = get_year_from_date(date)
-
-        # Assert to check for correct year
-        self.assertEqual(expected_year, actual_year)
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_month = get_year_from_date(date)
 
         # Validating decorator enforce_type
         # Setup
@@ -231,20 +265,18 @@ class MapperFunctionsTest(TestCase):
         # Assert to check correctness of gender value
         self.assertEqual(expected_gender_value, actual_gender_value)
 
-        # Negative scenario: gender code is not defined.
-        # Setup
-        gender = '5'
-        expected_gender_value = 'CODE5'
-
-        # Call to method
-        actual_gender_value = get_gender(gender)
-
-        # Assert to check correctness of gender value
-        self.assertEqual(expected_gender_value, actual_gender_value)
-
         # Validating decorator enforce_type
         # Setup
         gender = 12
+
+        # Assert for exception raised from decorator
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_gender_value = get_gender(gender)
+
+        # Validating use_regex parameter of decorator enforce_type
+        # Setup
+        gender = '5'  # Gender '5' is invalid gender
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):

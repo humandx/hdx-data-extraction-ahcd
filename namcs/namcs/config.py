@@ -6,10 +6,10 @@ Each entity in this file represents a necessary yet configurable details.
 # Python modules
 import logging
 import os
-from namcs.enums import NAMCSFieldEnum
 
 # Other modules
-from utils.utils import RangeDict
+from namcs.namcs.enums import NAMCSFieldEnum
+from namcs.utils.utils import RangeDict
 
 # 3rd party modules
 # -N/A

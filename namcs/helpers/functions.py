@@ -8,7 +8,7 @@ from copy import deepcopy
 from datetime import datetime
 
 # Other modules
-from namcs.config import (
+from namcs.namcs.config import (
     BASE_FILE_NAME,
     EXTRACTED_DATA_DIR_PATH,
     NAMCS_FILE_NAME,
@@ -16,9 +16,9 @@ from namcs.config import (
     NAMCS_PUBLIC_FILE_URL,
     log
 )
-from namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
-from utils.context import try_except
-from utils.decorators import (
+from namcs.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
+from namcs.utils.context import try_except
+from namcs.utils.decorators import (
     catch_exception,
     CONVERSION_METHOD_MAPPING,
     create_path_if_does_not_exists
@@ -74,6 +74,7 @@ def populate_missing_fields(headers, field_codes_for_single_record):
         :class:`dict`: Modified dict containing ONLY `CONVERTED_CSV_FIELDS`.
     """
     data_dict = deepcopy(field_codes_for_single_record)
+    missing_field_value = None
 
     # Filtering missing fields from headers
     for missing_field in filter(
@@ -206,7 +207,7 @@ def get_conversion_method(field_name):
         if not CONVERSION_METHOD_MAPPING:
             # Required to construct mapping dictionary of
             # field name vs respective functions
-            __import__("mapper.functions")
+            __import__("namcs.mapper.functions")
 
         if field_name in CONVERSION_METHOD_MAPPING:
             return CONVERSION_METHOD_MAPPING.get(field_name)

@@ -7,18 +7,18 @@ import inspect
 import os
 from unittest import mock, TestCase
 
-# Other modules
-from general import namcs_convertor
-from general.namcs_convertor import (
-    get_generator_by_year,
-    export_to_csv, get_year_wise_generator)
-from helpers import functions
-from helpers.functions import get_namcs_source_file_info
-from namcs.config import YEARS_AVAILABLE
-
-
 # Third party modules
 # -N/A
+
+# Other modules
+from namcs.general.namcs_converter import (
+    get_generator_by_year,
+    get_year_wise_generator,
+    export_to_csv,
+)
+from namcs.helpers import functions
+from namcs.helpers.functions import get_namcs_source_file_info
+from namcs.config import YEARS_AVAILABLE
 
 
 class NAMCSConverterTest(TestCase):

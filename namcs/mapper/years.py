@@ -7,9 +7,9 @@ Module containing year specific NAMCSMetaMappings for all the years in
 import inspect
 
 # Other modules
-from namcs.enums import NAMCSFieldEnum
-from helpers.functions import get_slice_object
-from utils.utils import NAMCSMetaMappings
+from namcs.namcs.enums import NAMCSFieldEnum
+from namcs.helpers.functions import get_slice_object
+from namcs.utils.utils import NAMCSMetaMappings
 
 
 # 3rd party modules

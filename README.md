@@ -23,6 +23,50 @@ Extract and process NAMCS and NHMCS patient case data.
     - validation - validation of dataset and parameters provided while invoking script controllers
 * utils - contains useful decorators, context managers etc.
 
+### Installation
+-----
+Currently supported python version 3.6.x
+To check python version
+```sh
+python --version
+```
+Ensure pip, setuptools, and wheel are up to date
+```sh
+python -m pip install --upgrade pip setuptools wheel
+```
+If you have local copy of this repo and want to install directly from it.
+```sh
+pip install ${PATH_FOR_NAMCS-NHAMCS-data-extraction_REPO}
+```
+Similarly you can execute setup file
+```sh
+python3 ${PATH_FOR_NAMCS-NHAMCS-data-extraction_REPO}/setup.py install
+```
+for example:
+```sh
+pip install /var/tmp/NAMCS-NHAMCS-data-extraction/
+```
+You can also use pip directly for Installation.
+```sh
+pip install namcs
+```
+-----
+### Usage
+-----
+```sh
+>>> import namcs
+>>> from namcs.scripts.controllers import NAMCSController
+```
+### Uninstallation
+-----
+To uninstall you can use either
+```sh
+easy_install -m namcs
+```
+or
+```sh
+pip uninstall namcs
+```
 ### TODO
 -----
 - Support for all years

@@ -20,7 +20,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as \
 # Call to method
 setuptools.setup(
     name = 'namcs',
-    version = '0.0.2.2',
+    version = '0.0.2.3',
     author = 'HumanDx',
     author_email = 'rishab.parate@icc.humandx.org',
     description = 'NAMCS data extractor and converter',
@@ -35,3 +35,4 @@ setuptools.setup(
         'Operating System :: OS Independent',
     ),
 )
+

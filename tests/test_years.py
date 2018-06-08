@@ -6,8 +6,8 @@ Utility methods for NAMCS data model.
 from unittest import TestCase
 
 # Other modules
-from mapper.years import Year1973
-from namcs.enums import NAMCSFieldEnum
+from namcs.mapper.years import Year1973
+from namcs.namcs.enums import NAMCSFieldEnum
 
 
 # 3rd party modules

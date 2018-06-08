@@ -6,7 +6,7 @@ This module consists of utility classes and methods.
 # - N/A
 
 # 3rd party modules
-from namcs.config import log
+from namcs.namcs.config import log
 
 # Other modules
 # - N/A

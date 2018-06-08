@@ -4,15 +4,14 @@ Decorator file containing all decorators.
 """
 # Python modules
 import os
-
-# Other modules
 import re
 
+# Other modules
+from namcs.utils.utils import detailed_exception_info
 from .context import try_except
 
 # 3rd party modules
 # -N/A
-
 
 # Global vars
 CONVERSION_METHOD_MAPPING = {}  # Dict to for field name and method MAPPINGS
@@ -118,6 +117,7 @@ def catch_exception(reraise=False):
                 try:
                     return method_to_decorate(*arg, **kwargs)
                 except Exception as exc:
+                    detailed_exception_info(use_next_frame=True)
                     if method_to_decorate.__name__ in CONVERSION_METHOD_MAPPING:
                         raise \
                             Exception(
@@ -221,6 +221,10 @@ def enforce_type(*types, return_type=None, use_regex=None):
 
     Returns:
         :class:`function`: Decorated method.
+
+    Note:
+        All checks are enforced against ONLY positional parameters,
+        keyword parameters are not supported.
     """
 
     def _strict_type(method_to_decorate):
@@ -337,8 +341,7 @@ def enforce_type(*types, return_type=None, use_regex=None):
                     )
 
             # Returning method value
-            return method_return_value
-
+            return method_return_value[0] if len(method_return_value) == 1 \
+                else method_return_value
         return _wrapper
-
     return _strict_type

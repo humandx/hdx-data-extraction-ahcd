@@ -11,20 +11,24 @@ import zipfile
 from urllib import request
 
 # Other modules
-from helpers.functions import (
+from namcs.helpers.functions import (
     get_customized_file_name,
     get_namcs_source_file_info,
     rename_namcs_dataset_for_year,
     get_namcs_datset_path_for_year
 )
-from namcs.config import (
+from namcs.namcs.config import (
     EXTRACTED_DATA_DIR_PATH,
     DOWNLOADED_FILES_DIR_PATH,
     log,
     YEARS_AVAILABLE,
 )
-from utils.context import try_except
-from utils.decorators import catch_exception, create_path_if_does_not_exists
+from namcs.utils.context import try_except
+from namcs.utils.decorators import (
+    catch_exception,
+    create_path_if_does_not_exists
+)
+from namcs.utils.utils import detailed_exception_info
 
 
 # 3rd party modules
@@ -81,6 +85,7 @@ def extract_data_zipfile(namcs_year, zip_file_name,
             try:
                 file_handle.extractall(extract_path)
             except Exception as exc:
+                detailed_exception_info()
                 raise exc
             finally:
                 file_handle.close()

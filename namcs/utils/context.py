@@ -2,8 +2,18 @@
 """
 File for all context manager.
 """
+# Python modules
 from contextlib import contextmanager
-from namcs.config import log
+
+# 3rd party modules
+# -N/A
+
+# Other modules
+from namcs.namcs.config import log
+from namcs.utils.utils import detailed_exception_info
+
+# Global vars
+# -N/A
 
 
 @contextmanager
@@ -50,6 +60,7 @@ def try_except(*exceptions, method_name=None):
     try:
         yield
     except exceptions as exc:
+        detailed_exception_info(use_next_frame=True)
         if method_name:
             log.error(
                 "{} exception encountered while executing {} : {}".format(

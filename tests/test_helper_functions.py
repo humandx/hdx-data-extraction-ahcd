@@ -8,8 +8,8 @@ import os
 from unittest import mock, TestCase
 
 # Other modules
-from helpers import functions
-from helpers.functions import (
+from namcs.helpers import functions
+from namcs.helpers.functions import (
     get_namcs_source_file_info,
     get_year_from_dataset_file_name,
     get_string_representations_of_date,
@@ -23,7 +23,7 @@ from helpers.functions import (
     get_namcs_datset_path_for_year,
     rename_namcs_dataset_for_year, populate_missing_fields
 )
-from namcs.enums import NAMCSFieldEnum
+from namcs.namcs.enums import NAMCSFieldEnum
 
 # Third party modules
 # -N/A

@@ -30,43 +30,43 @@ class ImportModuleTest(TestCase):
         )
 
     def test_enums(self):
-        import namcs.enums
+        import namcs.namcs.enums
 
     def test_constants(self):
-        import namcs.constants
+        import namcs.namcs.constants
 
     def test_config(self):
-        import namcs.config
+        import namcs.namcs.config
 
     def test_controllers(self):
-        import scripts.controllers
+        import namcs.scripts.controllers
 
     def test_script_validation(self):
-        import scripts.validation
+        import namcs.scripts.validation
 
     def test_mapper_functions(self):
-        import mapper.functions
+        import namcs.mapper.functions
 
     def test_mapper_years(self):
-        import mapper.years
+        import namcs.mapper.years
 
     def test_helpers_functions(self):
-        import helpers.functions
+        import namcs.helpers.functions
 
     def test_general_namcs_extractor(self):
-        import general.namcs_extractor
+        import namcs.general.namcs_extractor
 
     def test_general_namcs_convertor(self):
-        import general.namcs_convertor
+        import namcs.general.namcs_convertor
 
     def test_utils_context(self):
-        import utils.context
+        import namcs.utils.context
 
     def test_utils_decorators(self):
-        import utils.decorators
+        import namcs.utils.decorators
 
     def test_utils_exceptions(self):
-        import utils.exceptions
+        import namcs.utils.exceptions
 
     def test_utils_utils(self):
-        import utils.utils
+        import namcs.utils.utils

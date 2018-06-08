@@ -5,3 +5,4 @@ namcs.egg-info/
 namcs/data/
 namcs/namcs/__pycache__/
 namcs/utils/__pycache__/
+test/
