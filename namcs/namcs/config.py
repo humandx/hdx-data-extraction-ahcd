@@ -42,11 +42,11 @@ NAMCS_ROOT_PATH = \
 # NAMCS data files directory path
 NAMCS_DATA_DIR_PATH = os.path.join(NAMCS_ROOT_PATH, "data")
 
-# Directory path where datasets files are downloaded from FTP server
+# Directory path where data sets files are downloaded from FTP server
 DOWNLOADED_FILES_DIR_PATH = \
     os.path.join(NAMCS_DATA_DIR_PATH, "downloaded_files")
 
-# Directory path where downloaded datasets files are extracted
+# Directory path where downloaded data sets files are extracted
 EXTRACTED_DATA_DIR_PATH = \
     os.path.join(NAMCS_DATA_DIR_PATH, "extracted_data")
 
@@ -76,7 +76,7 @@ BASE_FILE_NAME = RangeDict(
 NAMCS_FILE_NAME = RangeDict(
     {
         (1973, 2009): ["NAMCS", "NAM"],  # plus last 2 digits of the year
-        2010 : ["NAMCS20"],
+        2010: ["NAMCS20"],
         (2011, 2015): ["namcs20"]  # plus last 2 digits of the year
     }
 )

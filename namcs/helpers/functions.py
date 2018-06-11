@@ -20,8 +20,8 @@ from namcs.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
 from namcs.utils.context import try_except
 from namcs.utils.decorators import (
     catch_exception,
-    CONVERSION_METHOD_MAPPING,
-    create_path_if_does_not_exists
+    create_path_if_does_not_exists,
+    CONVERSION_METHOD_MAPPING
 )
 
 # 3rd party modules
@@ -32,6 +32,8 @@ from namcs.utils.decorators import (
 
 # Lambda function to get normalized namcs file name
 get_normalized_namcs_file_name = lambda year: "{}_NAMCS".format(year)
+get_iterable = lambda parameter: [parameter] \
+    if not isinstance(parameter, (list, tuple)) else parameter
 
 
 @catch_exception()
@@ -81,7 +83,8 @@ def populate_missing_fields(headers, field_codes_for_single_record):
             lambda key: True if key not in data_dict else False, headers):
         missing_field_mapped_function = get_conversion_method(missing_field)
         if missing_field_mapped_function:
-            with try_except():
+            with try_except(method_name=missing_field_mapped_function,
+                            reraise=True):
                 missing_field_value = missing_field_mapped_function(**data_dict)
             data_dict[missing_field] = missing_field_value
 
@@ -245,13 +248,10 @@ def get_icd_9_code_from_numeric_string(diagnosis_code):
             return ""
         return diagnosis_icd_9_code
 
-    # '-' is used to indicate missing or invalid
-    if diagnosis_code.startswith("-"):
-        diagnosis_code = diagnosis_code[1:]
-
     # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
     # classification, an ampersand (&) was used
-    if diagnosis_code.startswith("&"):
+    # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
+    if diagnosis_code.startswith("&") or diagnosis_code.startswith("-"):
         diagnosis_code = "Y{}".format(diagnosis_code[1:])
 
     # The prefix “1” preceding the 3-digit diagnostic codes represents
@@ -312,7 +312,7 @@ def get_field_code_from_record(line, field_name, slice_object):
     """
     raw_code = line[slice_object]
     mapping_func = get_conversion_method(field_name)
-    with try_except():
+    with try_except(method_name=mapping_func, reraise=True):
         return mapping_func(raw_code) if mapping_func else raw_code
 
 

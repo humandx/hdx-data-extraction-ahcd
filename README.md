@@ -25,7 +25,7 @@ Extract and process NAMCS and NHMCS patient case data.
 
 ### Installation
 -----
-Currently supported python version 3.6.x
+Currently supported python version 3.6.x,
 To check python version
 ```sh
 python --version
@@ -46,6 +46,11 @@ for example:
 ```sh
 pip install /var/tmp/NAMCS-NHAMCS-data-extraction/
 ```
+and
+for example:
+```sh
+python3 /var/tmp/NAMCS-NHAMCS-data-extraction/setup.py install
+```
 You can also use pip directly for Installation.
 ```sh
 pip install namcs
@@ -57,7 +62,7 @@ pip install namcs
 >>> import namcs
 >>> from namcs.scripts.controllers import NAMCSController
 ```
-### Uninstallation
+### Uninstall
 -----
 To uninstall you can use either
 ```sh

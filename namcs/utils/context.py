@@ -17,16 +17,18 @@ from namcs.utils.utils import detailed_exception_info
 
 
 @contextmanager
-def try_except(*exceptions, method_name=None):
+def try_except(*exceptions, method_name=None, reraise=False):
     """
     Method to catch and report exceptions occurred in block of code using
     context manger.
 
     Parameters:
-        method_name (:class:`str`): Method name if trying to enclose method call
-         in try-except block
+        method_name (:class:`str`): Method name for method call enclosed
+            in try-except block.
         exceptions (:class: `Exception`): Exceptions that needs to be
             explicitly caught.
+        reraise (:class:`bool`): To catch exception, perform logging and
+            again raise same exception in order to catch in parent block.
 
     Return:
         :class:`generator`: Generator object for method `try_except`.
@@ -60,14 +62,7 @@ def try_except(*exceptions, method_name=None):
     try:
         yield
     except exceptions as exc:
-        detailed_exception_info(use_next_frame=True)
-        if method_name:
-            log.error(
-                "{} exception encountered while executing {} : {}".format(
-                    exc.__class__.__name__, method_name, str(exc))
-            )
-        else:
-            log.error(
-                "{} exception encountered : {}".format(
-                    exc.__class__.__name__, str(exc))
-            )
+        detailed_exception_info(method_name=method_name,
+                                use_next_frame = True, logger = log)
+        if reraise:
+            raise Exception(str(exc))

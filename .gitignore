@@ -6,3 +6,10 @@ namcs/data/
 namcs/namcs/__pycache__/
 namcs/utils/__pycache__/
 test/
+all_namcs_data.tsv
+namcs/__pycache__/
+namcs/general/__pycache__/
+namcs/helpers/__pycache__/
+namcs/mapper/__pycache__/
+namcs/scripts/__pycache__/
+namcs_test.py

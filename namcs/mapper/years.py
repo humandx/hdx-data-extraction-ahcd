@@ -238,7 +238,7 @@ class Year1985(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("2", "5-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", "age")
+    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
     __physician_diagnosis_1 = NAMCSMetaMappings(
         "6", "57-62", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
@@ -261,7 +261,7 @@ class Year1989(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("2", "5-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", "age")
+    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
     __physician_diagnosis_1 = NAMCSMetaMappings(
         "6", "37-42", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
@@ -294,7 +294,7 @@ class Year1991(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("2", "5-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", "age")
+    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
     __physician_diagnosis_1 = NAMCSMetaMappings(
         "6", "39-44", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
@@ -327,7 +327,7 @@ class Year1999(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("4", "3-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", "age")
+    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # TODO: implement method convert_physician_diagnosis_code using Character
@@ -372,7 +372,7 @@ class Year2001(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("4", "3-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", "age")
+    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -447,7 +447,7 @@ class Year2005(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("4", "3-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", "age")
+    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -501,7 +501,7 @@ class Year2007(Year):
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
     year_of_visit = NAMCSMetaMappings("4", "3-6",
                                       NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", "age")
+    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -591,7 +591,7 @@ class Year2011(Year):
     """
     month_of_visit = NAMCSMetaMappings("2", "1-2",
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", "age")
+    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "7", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -629,7 +629,7 @@ class Year2012(Year):
     """
     month_of_visit = NAMCSMetaMappings("2", "1-2",
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", "age")
+    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -665,7 +665,7 @@ class Year2013(Year):
     """
     month_of_visit = NAMCSMetaMappings("2", "1-2",
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", "age")
+    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -702,7 +702,7 @@ class Year2014(Year):
     """
     month_of_visit = NAMCSMetaMappings("2", "1-2",
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", "age")
+    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format
@@ -750,7 +750,7 @@ class Year2015(Year):
     """
     month_of_visit = NAMCSMetaMappings("2", "1-2",
                                        NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", "age")
+    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
     sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
 
     # Character format

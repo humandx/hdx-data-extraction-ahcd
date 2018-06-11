@@ -19,7 +19,7 @@ from namcs.helpers.functions import (
     get_namcs_datset_path_for_year,
     get_year_from_dataset_file_name,
     rename_namcs_dataset_for_year,
-)
+    get_iterable)
 from namcs.scripts.validation import (
     validate_arguments,
     validate_dataset_records
@@ -76,8 +76,7 @@ class NAMCSController(object):
         # Case 1: when file_name is not given and year = 1973
         # Case 2: when file_name is not given and year = (1973,1975,1977)
         if year:
-            if not isinstance(year, (tuple, list)):
-                year = [year]
+            year = get_iterable(year)
             for _year in year:
                 # Checking if NAMCS dataset file already exists in the
                 # `EXTRACTED_DATA_DIR_PATH`
@@ -111,8 +110,7 @@ class NAMCSController(object):
 
         return year_wise_mld
 
-    @staticmethod
-    def validate(year, file_name):
+    def validate(self, year, file_name):
         """
         Method to validate NAMCS raw dataset files.
 

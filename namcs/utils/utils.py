@@ -111,7 +111,8 @@ class NAMCSMetaMappings(object):
         self.field_name = field_name
 
 
-def detailed_exception_info(use_next_frame=False):
+def detailed_exception_info(method_name=None, use_next_frame=False,
+                            logger=None):
     """
     Method to provide detailed information about exception, details contains
     exception type, file name/module name, operation/line number
@@ -122,6 +123,10 @@ def detailed_exception_info(use_next_frame=False):
             `tb_next` of `traceback_obj`, Set to true in case of decorated
             method/context manager exception will occur in method itself not in
             decorator/context manager. Default value False.
+        logger (:class:`logging.Logger`): Log errors to specific log handler.
+        method_name (:class:`str`): Method name for method call enclosed
+            in try-except block.
+
     """
     # Exception details objects
     exception_type, exception_obj, traceback_obj = sys.exc_info()
@@ -140,7 +145,13 @@ def detailed_exception_info(use_next_frame=False):
 
     linecache.checkcache(filename)
     line = linecache.getline(filename, line_no, module_globals)
-    print('Exception occurred in : {} at line : {}\nOperation : "{}",'
-          'exception_object:{}'
-          .format(filename, line_no, line.strip(), exception_obj)
-          )
+    if method_name is not None:
+        logger.error('Error in method:{}'.format(method_name))
+
+    error_msg = 'Exception occurred in : {} at line : {}\nOperation : "{}" ,' \
+                'exception_object:{}'\
+                .format(filename, line_no, line.strip(), exception_obj)
+    if logger:
+        logger.error(error_msg)
+    else:
+        print(error_msg)

@@ -14,8 +14,8 @@ from random import randint
 # Other modules
 from namcs.helpers.functions import (
     get_normalized_namcs_file_name,
-    get_year_from_dataset_file_name
-)
+    get_year_from_dataset_file_name,
+    get_iterable)
 from namcs.namcs.config import (
     YEARS_AVAILABLE,
     NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR)
@@ -170,13 +170,9 @@ def _validate_dataset_file_name(file_name):
         :class:`TrackValidationError`: TrackValidationError object having
             errors, if any.
     """
-    validation_objs = []
-
-    # Check if file exists
-    validation_objs.append(_check_if_file_exists(file_name))
-
-    # Validate file name format
-    validation_objs.append(_validate_dataset_file_name_format(file_name))
+    # Check if file exists and Validate file name format
+    validation_objs = [_check_if_file_exists(file_name),
+                       _validate_dataset_file_name_format(file_name)]
 
     # Reduce list of `TrackValidationError` object into single object
     validation_obj = reduce(TrackValidationError.add, validation_objs)
@@ -195,11 +191,9 @@ def _validate_namcs_year(year):
             errors, if any.
     """
     validation_obj = TrackValidationError()
-
-    if not isinstance(year, (tuple, list)):
-        year = [year]
+    year = get_iterable(year)
     for _year in year:
-        if _year not in YEARS_AVAILABLE:
+        if int(_year) not in YEARS_AVAILABLE:
             validation_obj.errors.append(
                 "Year {} is not valid year, please specify valid years"
                 ",valid years are :{}".format(_year, YEARS_AVAILABLE)

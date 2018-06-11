@@ -16,7 +16,7 @@ from namcs.helpers.functions import (
     get_namcs_source_file_info,
     process_multiple_slice_objects,
     populate_missing_fields,
-)
+    get_iterable)
 from namcs.mapper import years
 from namcs.namcs.config import (
     CONVERTED_CSV_FIELDS,
@@ -76,8 +76,8 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
 
     with open(dataset_file, "r") as dataset_file_handler:
         for line_no, line in enumerate(dataset_file_handler):
+            write_line = {}
             try:
-                write_line = {}
                 line = line.strip()
                 write_line[NAMCSFieldEnum.SOURCE_FILE_ID.value] = \
                     source_file_id
@@ -104,9 +104,8 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                 write_line = \
                     populate_missing_fields(CONVERTED_CSV_FIELDS,
                                             write_line)
-                yield write_line
             except Exception as exc:
-                detailed_exception_info()
+                detailed_exception_info(logger=log)
                 errors.append(
                     {
                         "record_no": line_no + 1,
@@ -114,6 +113,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                         "exception": str(exc)
                     }
                 )
+            yield write_line
         if errors:
             with open(error_file, "w") as error_file_handler:
                 writer = csv.DictWriter(error_file_handler,
@@ -122,6 +122,8 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                 writer.writeheader()
                 for _error in errors:
                     writer.writerow(_error)
+                log.info("\n******\n"
+                         "Finished writing to error file:{}".format(error_file))
 
 
 def export_to_csv(year, generator_object):
@@ -188,8 +190,8 @@ def get_year_wise_generator(year=None, namcs_raw_dataset_file=None,
     # If year not specified, get generator object
     if year is None:
         year = YEARS_AVAILABLE
-    if not isinstance(year, (tuple, list)):
-        year = [year]
+
+    year = get_iterable(year)
     for _year in year:
         year_wise_mld[_year]["generator"] = \
             get_generator_by_year(_year, namcs_raw_dataset_file)

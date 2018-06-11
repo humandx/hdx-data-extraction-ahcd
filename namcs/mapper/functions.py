@@ -174,13 +174,7 @@ def get_gender(gender):
 
 
 @catch_exception(reraise=True)
-@add_method_to_mapping_dict(
-    (
-            NAMCSFieldEnum.AGE.value,
-            NAMCSFieldEnum.PATIENT_AGE.value
-    )
-)
-# @enforce_type(return_type=int, use_regex='^[0-1]{0,1}[0-9]{0,2}$')
+@add_method_to_mapping_dict(NAMCSFieldEnum.PATIENT_AGE.value)
 @enforce_type(return_type=int)
 def age_reduced_to_days(age=None, **kwargs):
     """

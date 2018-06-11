@@ -5,16 +5,16 @@ Decorator file containing all decorators.
 # Python modules
 import os
 import re
+from functools import wraps
 
 # Other modules
-from namcs.utils.utils import detailed_exception_info
 from .context import try_except
 
 # 3rd party modules
 # -N/A
 
 # Global vars
-CONVERSION_METHOD_MAPPING = {}  # Dict to for field name and method MAPPINGS
+CONVERSION_METHOD_MAPPING = {}  # Key value pair for field and method name
 
 
 def add_method_to_mapping_dict(method_identifiers):
@@ -30,17 +30,17 @@ def add_method_to_mapping_dict(method_identifiers):
             to all `field_name`, mapping stored in `CONVERSION_METHOD_MAPPING`.
 
     Example:
-            @add_method_to_mapping_dict("age")
-            def age(*arg, **kargs):
-                "
-                    Block of code
-                "
-                return
+     >>> @add_method_to_mapping_dict("gender")
+    ... def get_gender():
+    ...     # Block of code
+    ...     pass
+    >>> CONVERSION_METHOD_MAPPING
+        {'gender': <function get_gender at 0x7f33644db268>}
     """
 
     def _add_method_to_mapping_dict(method_to_decorate):
         """
-        Inside decorator to decorate `method_to_decorate`.
+        Inside wrapper to decorate `method_to_decorate`.
 
         Parameters:
             method_to_decorate (:class:`function`): Method object.
@@ -48,13 +48,16 @@ def add_method_to_mapping_dict(method_identifiers):
         Returns:
             :class:`function`: Decorated method.
         """
-        if isinstance(method_identifiers, (list, tuple)):
-            # Adding all method name identifiers to global dict of MAPPINGS
-            for identifier in method_identifiers:
-                CONVERSION_METHOD_MAPPING[identifier] = method_to_decorate
-        elif isinstance(method_identifiers, str):
-            CONVERSION_METHOD_MAPPING[method_identifiers] = method_to_decorate
+        nonlocal method_identifiers
+        # Avoids cyclic import issue
+        from helpers.functions import get_iterable
+        method_identifiers = get_iterable(method_identifiers)
 
+        # Adding all method name identifiers to global dict of MAPPINGS
+        for identifier in method_identifiers:
+            CONVERSION_METHOD_MAPPING[identifier] = method_to_decorate
+
+        @wraps(method_to_decorate)
         def wrapper(*arg, **kwargs):
             """
             Inside wrapper.
@@ -81,7 +84,8 @@ def catch_exception(reraise=False):
     context manager.
 
     Parameters:
-        reraise (:class:`bool`): Set False to handle the exception.
+        reraise (:class:`bool`): To catch exception, perform logging and
+            again raise same exception to catch in parent block.
 
     Returns:
         :class:`function`: Decorated method with `try_except` context manager.
@@ -100,6 +104,7 @@ def catch_exception(reraise=False):
                 manager.
         """
 
+        @wraps(method_to_decorate)
         def _wrapper(*arg, **kwargs):
             """
             Inside wrapper.
@@ -113,31 +118,27 @@ def catch_exception(reraise=False):
             Returns:
                 class:`function`: Wrapper method.
             """
-            if reraise:
-                try:
+            try:
+                with try_except(method_name=method_to_decorate.__name__,
+                                reraise = reraise):
                     return method_to_decorate(*arg, **kwargs)
-                except Exception as exc:
-                    detailed_exception_info(use_next_frame=True)
-                    if method_to_decorate.__name__ in CONVERSION_METHOD_MAPPING:
-                        raise \
-                            Exception(
-                                "Exception occurred while mapping '{}' field".
-                                    format(
-                                    list(
-                                        filter(
-                                            lambda key:
-                                            CONVERSION_METHOD_MAPPING[key]
-                                            == method_to_decorate.__name__,
-                                            CONVERSION_METHOD_MAPPING.keys()
-                                        )
-                                    )[0]
-                                )
+            except Exception as exc:
+                if method_to_decorate.__name__ in CONVERSION_METHOD_MAPPING:
+                    raise \
+                        Exception(
+                            "Exception occurred while mapping '{}' field".
+                                format(
+                                list(
+                                    filter(
+                                        lambda key:
+                                        CONVERSION_METHOD_MAPPING[key]
+                                        == method_to_decorate.__name__,
+                                        CONVERSION_METHOD_MAPPING.keys()
+                                    )
+                                )[0]
                             )
-                    else:
-                        raise Exception(str(exc))
-            with try_except(method_name=method_to_decorate.__name__):
-                return method_to_decorate(*arg, **kwargs)
-
+                        )
+                raise Exception(str(exc))
         return _wrapper
 
     return _catch_exception
@@ -174,15 +175,16 @@ def create_path_if_does_not_exists(paths):
         Returns:
             :class:`function`: Decorated method.
         """
-        # Creating file path if doesn't exist
-        if isinstance(paths, (list, tuple)):
-            for path in paths:
-                if not os.path.exists(path):
-                    os.makedirs(path)
-        elif isinstance(paths, str):
-            if not os.path.exists(paths):
-                os.makedirs(paths)
+        # Avoids cyclic import issue
+        from helpers.functions import get_iterable
+        nonlocal paths
+        paths = get_iterable(paths)
+        for path in paths:
+            # Creating file path if doesn't exist
+            if not os.path.exists(path):
+                os.makedirs(path)
 
+        @wraps(method_to_decorate)
         def wrapper(*arg, **kwargs):
             """
             Inside wrapper.
@@ -239,6 +241,7 @@ def enforce_type(*types, return_type=None, use_regex=None):
             :class:`function`: Decorated method.
         """
 
+        @wraps(method_to_decorate)
         def _wrapper(*arg, **kwargs):
             """
             Inside wrapper.
@@ -276,9 +279,10 @@ def enforce_type(*types, return_type=None, use_regex=None):
                                 type(_arg)
                             )
                         )
+            # Avoids cyclic import issue
+            from helpers.functions import get_iterable
             if use_regex is not None:
-                if not isinstance(use_regex, (list, tuple)):
-                    use_regex = [use_regex]
+                use_regex = get_iterable(use_regex)
 
                 if len(use_regex) > len(arg):
                     raise Exception('More positional arguments are required '
@@ -306,11 +310,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
             # Call to method
             method_return_value = method_to_decorate(*arg, **kwargs)
 
-            if not isinstance(return_type, (list, tuple)):
-                return_type = [return_type]
-
-            if not isinstance(method_return_value, (list, tuple)):
-                method_return_value = [method_return_value]
+            return_type = get_iterable(return_type)
+            method_return_value = get_iterable(method_return_value)
 
             # Method returns less value than expected
             if len(return_type) > len(method_return_value):
