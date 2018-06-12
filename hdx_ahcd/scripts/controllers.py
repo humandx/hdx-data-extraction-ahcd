@@ -9,22 +9,23 @@ from functools import reduce
 # -N/A
 
 # Other modules
-from namcs.general.namcs_converter import get_year_wise_generator
-from namcs.general.namcs_extractor import (
+from hdx_ahcd.general.namcs_converter import get_year_wise_generator
+from hdx_ahcd.general.namcs_extractor import (
     extract_data_zipfile,
     download_namcs_zipfile,
     initiate_namcs_dataset_download,
 )
-from namcs.helpers.functions import (
+from hdx_ahcd.helpers.functions import (
     get_namcs_datset_path_for_year,
     get_year_from_dataset_file_name,
     rename_namcs_dataset_for_year,
-    get_iterable)
-from namcs.scripts.validation import (
+    get_iterable
+)
+from hdx_ahcd.scripts.validation import (
     validate_arguments,
     validate_dataset_records
 )
-from namcs.utils.exceptions import TrackValidationError
+from hdx_ahcd.utils.exceptions import TrackValidationError
 
 # Global vars
 # -N/A

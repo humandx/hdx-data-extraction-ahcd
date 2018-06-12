@@ -3,33 +3,42 @@
 Tests for namcs_extractor module.
 """
 # Python modules
+import os
 from unittest import mock, TestCase
 
 # Third party modules
 # -N/A
 
 # Other modules
-from namcs.general.namcs_extractor import (
+from hdx_ahcd.general.namcs_extractor import (
     download_namcs_zipfile,
     extract_data_zipfile,
     initiate_namcs_dataset_download,
-)
-from namcs.namcs.config import YEARS_AVAILABLE
+    delete_namcs_zipfile)
+from hdx_ahcd.namcs import config
+from hdx_ahcd.namcs.config import YEARS_AVAILABLE
 
 
 class NAMCSExtractorTest(TestCase):
     """
     TestCase class for NAMCS extractor.
     """
-    @mock.patch("general.namcs_extractor.download_namcs_zipfile")
-    @mock.patch("general.namcs_extractor.extract_data_zipfile")
-    def test_initiate_namcs_dataset_download(self, mocked_extract_data_zipfile,
-                                             mocked_download_namcs_zipfile):
+    @mock.patch("hdx_ahcd.general.namcs_extractor.download_namcs_zipfile")
+    @mock.patch("hdx_ahcd.general.namcs_extractor.extract_data_zipfile")
+    @mock.patch("hdx_ahcd.general.namcs_extractor.delete_namcs_zipfile")
+    def test_initiate_namcs_dataset_download(self,
+                                             mocked_download_namcs_zipfile,
+                                             mocked_extract_data_zipfile,
+                                             mocked_delete_namcs_zipfile):
         """
         Test if download and extraction of NAMCS public files is successful.
         """
         # Setup
         download_namcs_zipfile_mocked_return = "path-to-downloaded-file.zip"
+
+        # Patch `EXTRACTED_DATA_DIR_PATH`
+        config.DOWNLOADED_FILES_DIR_PATH = "/tmp/namcs_downloaded_files"
+        config.EXTRACTED_DATA_DIR_PATH = "/tmp/namcs_extracted_files"
 
         # Mocking return value of `download_namcs_zipfile` call
         mocked_download_namcs_zipfile.return_value = \
@@ -48,6 +57,7 @@ class NAMCSExtractorTest(TestCase):
         )
 
         # Assert `extract_data_zipfile` calls
+
         self.assertEqual(
             [
                 (year, download_namcs_zipfile_mocked_return)
@@ -59,7 +69,7 @@ class NAMCSExtractorTest(TestCase):
             ]
         )
 
-    @mock.patch("general.namcs_extractor.request.urlretrieve")
+    @mock.patch("hdx_ahcd.general.namcs_extractor.request.urlretrieve")
     def test_download_namcs_zipfile(self, mocked_urlretrieve):
         """
         Test if download NAMCS public file is successful.
@@ -83,8 +93,8 @@ class NAMCSExtractorTest(TestCase):
         # Assert `download_namcs_zipfile` return value
         self.assertEqual(expected_filename, actual_filename)
 
-    @mock.patch("general.namcs_extractor.zipfile.ZipFile")
-    @mock.patch("general.namcs_extractor.os")
+    @mock.patch("hdx_ahcd.general.namcs_extractor.zipfile.ZipFile")
+    @mock.patch("hdx_ahcd.general.namcs_extractor.os")
     def test_extract_data_zipfile(self, mocked_os, mocked_zipfile):
         """
         Test if extraction of downloaded NAMCS public file is successful.
@@ -103,3 +113,30 @@ class NAMCSExtractorTest(TestCase):
         # Assert :class:`zipfile.ZipFile` call args
         mocked_zipfile.assert_called_with(zip_file_name)
         mocked_zipfile.return_value.extractall.assert_called_with(extract_path)
+
+    @mock.patch('hdx_ahcd.general.namcs_extractor.os.remove')
+    @mock.patch('hdx_ahcd.general.namcs_extractor.os.path.exists')
+    def test_delete_namcs_zipfile(self, mocked_path_exists, mocked_os_remove):
+        """
+        Test to validate deletion of downloaded zip files.
+        """
+        # Setup
+        year = 2000
+
+        # Patch `DOWNLOADED_FILES_DIR_PATH` to `test/data` directory
+        config.DOWNLOADED_FILES_DIR_PATH = \
+            os.path.join(os.path.dirname(__file__), 'data')
+
+        zip_file_name = 'NAMCS_DATA_2000.zip'
+
+        # Mocking `os.path.exists` return value
+        mocked_path_exists.return_value = True
+
+        # Call to method
+        delete_namcs_zipfile(year,
+                             download_path = config.DOWNLOADED_FILES_DIR_PATH)
+
+        # Asserting os.remove call
+        mocked_os_remove.assert_called_with(
+            os.path.join(config.DOWNLOADED_FILES_DIR_PATH, zip_file_name)
+        )

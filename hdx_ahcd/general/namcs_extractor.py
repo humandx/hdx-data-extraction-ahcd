@@ -3,7 +3,7 @@
 This script downloads and extracts the data files from all
 the available public use NAMCS data.
 More about NAMCS here:
-http://www.cdc.gov/nchs/ahcd/about_ahcd.htm
+http://www.cdc.gov/nchs/hdx_ahcd/about_ahcd.htm
 """
 # Python modules
 import os
@@ -11,24 +11,24 @@ import zipfile
 from urllib import request
 
 # Other modules
-from namcs.helpers.functions import (
+from hdx_ahcd.helpers.functions import (
     get_customized_file_name,
     get_namcs_source_file_info,
     rename_namcs_dataset_for_year,
     get_namcs_datset_path_for_year
 )
-from namcs.namcs.config import (
+from hdx_ahcd.namcs.config import (
     EXTRACTED_DATA_DIR_PATH,
     DOWNLOADED_FILES_DIR_PATH,
     log,
     YEARS_AVAILABLE,
 )
-from namcs.utils.context import try_except
-from namcs.utils.decorators import (
+from hdx_ahcd.utils.context import try_except
+from hdx_ahcd.utils.decorators import (
     catch_exception,
     create_path_if_does_not_exists
 )
-from namcs.utils.utils import detailed_exception_info
+from hdx_ahcd.utils.utils import detailed_exception_info
 
 
 # 3rd party modules
@@ -39,8 +39,7 @@ from namcs.utils.utils import detailed_exception_info
 
 
 @create_path_if_does_not_exists(DOWNLOADED_FILES_DIR_PATH)
-def download_namcs_zipfile(namcs_year,
-                           download_path=DOWNLOADED_FILES_DIR_PATH):
+def download_namcs_zipfile(namcs_year, download_path=DOWNLOADED_FILES_DIR_PATH):
     """
     For a given year, download the zipped NAMCS data file into
     `download_path`.
@@ -91,8 +90,34 @@ def extract_data_zipfile(namcs_year, zip_file_name,
                 file_handle.close()
 
 
+@catch_exception(reraise=True)
+def delete_namcs_zipfile(namcs_year, download_path=DOWNLOADED_FILES_DIR_PATH):
+    """
+    For a given year, delete the zipped NAMCS data set file.
+
+    Parameters:
+        namcs_year(:class:`int`): The hdx_ahcd year for zip file.
+        download_path (:class:`str`): Download location for zip files,
+            default value `DOWNLOADED_FILES_DIR_PATH`.
+    """
+    zip_file_name = \
+        get_customized_file_name("NAMCS", "DATA", namcs_year, extension="zip")
+    full_file_name = os.path.join(download_path, zip_file_name)
+
+    if not os.path.exists(full_file_name):
+        raise Exception('Zip file for year:{} ,doesnt '
+                        'exists at {}'.format(namcs_year, download_path))
+
+    with try_except():
+        log.info("Deleting zip file:{} for "
+                 "year:{}".format(full_file_name, namcs_year))
+        os.remove(full_file_name)
+
+
 @catch_exception()
-def initiate_namcs_dataset_download(force_download=True):
+def initiate_namcs_dataset_download(force_download=True,
+                                    extract_path = EXTRACTED_DATA_DIR_PATH,
+                                    download_path = DOWNLOADED_FILES_DIR_PATH):
     """
     Download and extract all the NAMCS dataset files available for public use
     in ftp.cdc.gov FTP server
@@ -100,13 +125,21 @@ def initiate_namcs_dataset_download(force_download=True):
     Parameters:
         force_download (:class:`bool`): Whether to force download
             NAMCS raw dataset file even if it exists,Default value True.
+        extract_path(:class:`str`): Extract location for zip files,
+            default value `EXTRACTED_DATA_DIR_PATH`.
+        download_path (:class:`str`): Download location for zip files,
+            default value `DOWNLOADED_FILES_DIR_PATH`.
     """
     for year in YEARS_AVAILABLE:
         # Checking if raw NAMCS dataset file exists for year
         if get_namcs_datset_path_for_year(year) is None or force_download:
             # Download files for all the years
-            full_file_name = download_namcs_zipfile(year)
+            full_file_name = \
+                download_namcs_zipfile(year, download_path=download_path)
             # Extract downloaded zipped file
-            extract_data_zipfile(year, full_file_name)
+            extract_data_zipfile(year, full_file_name,
+                                 extract_path = extract_path)
             # Renaming NAMCS file
             rename_namcs_dataset_for_year(year)
+            # Deleting downloaded zip file.
+            delete_namcs_zipfile(year, download_path=download_path)

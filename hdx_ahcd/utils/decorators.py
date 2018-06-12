@@ -123,22 +123,25 @@ def catch_exception(reraise=False):
                                 reraise = reraise):
                     return method_to_decorate(*arg, **kwargs)
             except Exception as exc:
-                if method_to_decorate.__name__ in CONVERSION_METHOD_MAPPING:
-                    raise \
-                        Exception(
-                            "Exception occurred while mapping '{}' field".
-                                format(
-                                list(
-                                    filter(
-                                        lambda key:
-                                        CONVERSION_METHOD_MAPPING[key]
-                                        == method_to_decorate.__name__,
-                                        CONVERSION_METHOD_MAPPING.keys()
-                                    )
-                                )[0]
-                            )
+                if method_to_decorate.__name__ in map(
+                        lambda method: method.__name__,
+                        CONVERSION_METHOD_MAPPING.values()):
+                    method_name = list(
+                        filter(
+                            lambda key:
+                            CONVERSION_METHOD_MAPPING[key].__name__ ==
+                            method_to_decorate.__name__,
+                            CONVERSION_METHOD_MAPPING.keys()
                         )
-                raise Exception(str(exc))
+                    )[0]
+                else:
+                    method_name = None
+                if method_name:
+                    raise Exception("Exception occurred "
+                                    "while mapping '{}' field"
+                                    .format(method_name))
+                else:
+                    raise Exception(str(exc))
         return _wrapper
 
     return _catch_exception
@@ -255,8 +258,20 @@ def enforce_type(*types, return_type=None, use_regex=None):
             Returns:
                 class:`function`: Wrapper method.
             """
-            nonlocal types, return_type, use_regex
-            if types:
+            nonlocal types, return_type, use_regex, method_to_decorate
+            if method_to_decorate.__name__ in map(lambda method: method.__name__,
+                                               CONVERSION_METHOD_MAPPING.values()):
+                method_name = list(
+                    filter(
+                        lambda key:
+                        CONVERSION_METHOD_MAPPING[key].__name__ ==
+                        method_to_decorate.__name__,
+                        CONVERSION_METHOD_MAPPING.keys()
+                    )
+                )[0]
+            else:
+                method_name = None
+            if types and len(arg):
                 # Decorator called as @enforce_type((list, tuple))
                 if isinstance(types[0], (list, tuple)):
                     types = types[0]
@@ -281,7 +296,7 @@ def enforce_type(*types, return_type=None, use_regex=None):
                         )
             # Avoids cyclic import issue
             from helpers.functions import get_iterable
-            if use_regex is not None:
+            if use_regex is not None and len(arg):
                 use_regex = get_iterable(use_regex)
 
                 if len(use_regex) > len(arg):
@@ -297,15 +312,13 @@ def enforce_type(*types, return_type=None, use_regex=None):
                         try:
                             _regex_pattern = re.compile(_regex)
                             if not re.search(_regex_pattern, str(_arg)):
-                                raise Exception('Argument {} do not match with '
-                                                'specified regex pattern {}'.
-                                                format(_arg, _regex)
-                                                )
+                                raise Exception('Value {} for field {} '
+                                                'does not match '
+                                                'with specified '
+                                                'regex pattern.'.
+                                                format(_arg, method_name))
                         except Exception as ex:
-                            raise Exception('Exception occurred:{} '
-                                            'while compiling regex '
-                                            'pattern:{}'.format(str(ex), _regex)
-                                            )
+                            raise Exception('Error:{}'.format(str(ex),))
 
             # Call to method
             method_return_value = method_to_decorate(*arg, **kwargs)

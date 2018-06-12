@@ -17,56 +17,44 @@ class ImportModuleTest(TestCase):
     Test if modules can be imported successfully.
     Note: This is just a sanity check and does not validate any functionality.
     """
-    @classmethod
-    def setUpClass(cls):
-        """
-        Extended implementation of setUpClass
-        """
-        import os
-        import sys
-        sys.path.insert(
-            0,
-            os.path.join(os.path.dirname(os.path.dirname(__file__)), "namcs")
-        )
-
     def test_enums(self):
-        import namcs.namcs.enums
+        import hdx_ahcd.namcs.enums
 
     def test_constants(self):
-        import namcs.namcs.constants
+        import hdx_ahcd.namcs.constants
 
     def test_config(self):
-        import namcs.namcs.config
+        import hdx_ahcd.namcs.config
 
     def test_controllers(self):
-        import namcs.scripts.controllers
+        import hdx_ahcd.scripts.controllers
 
     def test_script_validation(self):
-        import namcs.scripts.validation
+        import hdx_ahcd.scripts.validation
 
     def test_mapper_functions(self):
-        import namcs.mapper.functions
+        import hdx_ahcd.mapper.functions
 
     def test_mapper_years(self):
-        import namcs.mapper.years
+        import hdx_ahcd.mapper.years
 
     def test_helpers_functions(self):
-        import namcs.helpers.functions
+        import hdx_ahcd.helpers.functions
 
     def test_general_namcs_extractor(self):
-        import namcs.general.namcs_extractor
+        import hdx_ahcd.general.namcs_extractor
 
     def test_general_namcs_convertor(self):
-        import namcs.general.namcs_convertor
+        import hdx_ahcd.general.namcs_converter
 
     def test_utils_context(self):
-        import namcs.utils.context
+        import hdx_ahcd.utils.context
 
     def test_utils_decorators(self):
-        import namcs.utils.decorators
+        import hdx_ahcd.utils.decorators
 
     def test_utils_exceptions(self):
-        import namcs.utils.exceptions
+        import hdx_ahcd.utils.exceptions
 
     def test_utils_utils(self):
-        import namcs.utils.utils
+        import hdx_ahcd.utils.utils

@@ -9,8 +9,8 @@ from contextlib import contextmanager
 # -N/A
 
 # Other modules
-from namcs.namcs.config import log
-from namcs.utils.utils import detailed_exception_info
+from hdx_ahcd.namcs.config import log
+from hdx_ahcd.utils.utils import detailed_exception_info
 
 # Global vars
 # -N/A

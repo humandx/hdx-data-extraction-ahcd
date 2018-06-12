@@ -13,3 +13,4 @@ namcs/helpers/__pycache__/
 namcs/mapper/__pycache__/
 namcs/scripts/__pycache__/
 namcs_test.py
+hdx_ahcd/data/

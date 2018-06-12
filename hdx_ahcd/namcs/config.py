@@ -8,8 +8,8 @@ import logging
 import os
 
 # Other modules
-from namcs.namcs.enums import NAMCSFieldEnum
-from namcs.utils.utils import RangeDict
+from hdx_ahcd.namcs.enums import NAMCSFieldEnum
+from hdx_ahcd.utils.utils import RangeDict
 
 # 3rd party modules
 # -N/A
@@ -37,7 +37,7 @@ CONVERTED_CSV_FIELDS = (
 
 # Path to NAMCS project root directory
 NAMCS_ROOT_PATH = \
-    os.path.realpath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+    os.path.realpath(os.path.join(os.path.expanduser("~"), ".hdx_ahcd"))
 
 # NAMCS data files directory path
 NAMCS_DATA_DIR_PATH = os.path.join(NAMCS_ROOT_PATH, "data")
@@ -60,9 +60,9 @@ NAMCS_DATASET_YEAR_PATTERNS = ("%y", "%Y")
 # Dataset pattern to extract month from NAMCS record
 NAMCS_DATASET_MONTH_PATTERNS = ("%m", "%b", "%B")
 
-# Creating "namcs" as logger.
+# Creating "hdx_ahcd" as logger.
 logging.basicConfig(level=logging.INFO)
-log = logging.getLogger("namcs")
+log = logging.getLogger("hdx_ahcd")
 
 # Defining Range dicts to make sure we can query the proper url for a given year
 BASE_FILE_NAME = RangeDict(

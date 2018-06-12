@@ -11,14 +11,15 @@ from unittest import mock, TestCase
 # -N/A
 
 # Other modules
-from namcs.general.namcs_converter import (
+from hdx_ahcd.general import namcs_converter
+from hdx_ahcd.general.namcs_converter import (
     get_generator_by_year,
     get_year_wise_generator,
     export_to_csv,
 )
-from namcs.helpers import functions
-from namcs.helpers.functions import get_namcs_source_file_info
-from namcs.config import YEARS_AVAILABLE
+from hdx_ahcd.helpers import functions
+from hdx_ahcd.helpers.functions import get_namcs_source_file_info
+from hdx_ahcd.namcs.config import YEARS_AVAILABLE
 
 
 class NAMCSConverterTest(TestCase):
@@ -53,47 +54,46 @@ class NAMCSConverterTest(TestCase):
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 1,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 2,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'patient_age': 799350,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 2190
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 3,
+                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
+                'sex': 'Female',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'patient_age': 7593825,
-                'year_of_visit': '2000',
-                'sex': 'Female'
+                'age': 20805
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 4,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 5728675,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 15695
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 5,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             }
         ], rows)
 
@@ -121,47 +121,46 @@ class NAMCSConverterTest(TestCase):
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 1,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 2,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'patient_age': 799350,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 2190
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 3,
+                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
+                'sex': 'Female',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'patient_age': 7593825,
-                'year_of_visit': '2000',
-                'sex': 'Female'
+                'age': 20805
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 4,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 5728675,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 15695
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 5,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             }
         ], rows)
 
@@ -176,52 +175,51 @@ class NAMCSConverterTest(TestCase):
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 1,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 2,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'patient_age': 799350,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 2190
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 3,
+                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
+                'sex': 'Female',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'patient_age': 7593825,
-                'year_of_visit': '2000',
-                'sex': 'Female'
+                'age': 20805
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 4,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 5728675,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 15695
             },
             {
                 'source_file_ID': '2000_NAMCS',
                 'source_file_row': 5,
+                'sex': 'Male',
+                'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'patient_age': 4796100,
-                'year_of_visit': '2000',
-                'sex': 'Male'
+                'age': 13140
             }
         ])
 
         # Patch `EXTRACTED_DATA_DIR_PATH` to `test/data` directory
-        namcs_convertor.NAMCS_DATA_DIR_PATH = \
+        namcs_converter.NAMCS_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to method
@@ -341,7 +339,7 @@ class NAMCSConverterTest(TestCase):
             year_wise_mld.get(2001).get("source_file_info")
         )
 
-    @mock.patch("general.namcs_convertor.export_to_csv")
+    @mock.patch("hdx_ahcd.general.namcs_converter.export_to_csv")
     def test_get_year_wise_generator_for_year_with_export(self,
                                                           mocked_export_to_csv):
         """

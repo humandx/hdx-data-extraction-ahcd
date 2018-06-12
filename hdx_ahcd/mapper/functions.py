@@ -9,15 +9,15 @@ from datetime import datetime
 # -N/A
 
 # Other modules
-from namcs.namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
+from hdx_ahcd.namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
     NAMCS_DATASET_MONTH_PATTERNS
-from namcs.utils.decorators import enforce_type
-from namcs.utils.decorators import (
+from hdx_ahcd.utils.decorators import enforce_type
+from hdx_ahcd.utils.decorators import (
     add_method_to_mapping_dict,
     catch_exception
 )
-from namcs.namcs.enums import GenderEnum, NAMCSFieldEnum
-from namcs.helpers.functions import (
+from hdx_ahcd.namcs.enums import GenderEnum, NAMCSFieldEnum
+from hdx_ahcd.helpers.functions import (
     get_icd_9_code_from_database,
     get_icd_9_code_from_numeric_string,
 )
@@ -126,16 +126,25 @@ def get_month_from_date(raw_format_date):
     )
 )
 @enforce_type(str, return_type=str, use_regex='^([1-2][0|9])?[0-9]{2}$')
-def get_year_from_date(raw_format_year):
+def get_year_from_date(raw_format_year=None, **kwargs):
     """
     Method to convert date into human readable format
 
     Parameters:
         raw_format_year (:class:`str`): String representation of year.
+        kwargs (:class:`dict`): Other fields used to calculate year when
+            `year_of_visit` is not provided.
 
     Returns:
         :class:`str`: Year in human readable format.
     """
+    if kwargs and not raw_format_year:
+        # Use `NAMCSFieldEnum.SOURCE_FILE_ID` to calculate year
+        source_file_id = kwargs.get(NAMCSFieldEnum.SOURCE_FILE_ID.value)
+        # example: 2011_NAMCS so year: 2011
+        year = source_file_id.split('_')[0]
+        return year
+
     date = None
     for pattern in NAMCS_DATASET_YEAR_PATTERNS:
         try:
@@ -175,7 +184,7 @@ def get_gender(gender):
 
 @catch_exception(reraise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.PATIENT_AGE.value)
-@enforce_type(return_type=int)
+@enforce_type(str, return_type=int, use_regex='^[0|1]{0,1}[0-9]{1,2}$')
 def age_reduced_to_days(age=None, **kwargs):
     """
     Method to normalize age into human readable format.

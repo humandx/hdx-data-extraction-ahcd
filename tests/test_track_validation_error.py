@@ -9,7 +9,7 @@ from unittest import TestCase
 # -NA-
 
 # Other modules
-from namcs.utils.exceptions import TrackValidationError
+from hdx_ahcd.utils.exceptions import TrackValidationError
 
 
 # Global vars

@@ -8,7 +8,7 @@ from copy import deepcopy
 from datetime import datetime
 
 # Other modules
-from namcs.namcs.config import (
+from hdx_ahcd.namcs.config import (
     BASE_FILE_NAME,
     EXTRACTED_DATA_DIR_PATH,
     NAMCS_FILE_NAME,
@@ -16,9 +16,9 @@ from namcs.namcs.config import (
     NAMCS_PUBLIC_FILE_URL,
     log
 )
-from namcs.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
-from namcs.utils.context import try_except
-from namcs.utils.decorators import (
+from hdx_ahcd.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
+from hdx_ahcd.utils.context import try_except
+from hdx_ahcd.utils.decorators import (
     catch_exception,
     create_path_if_does_not_exists,
     CONVERSION_METHOD_MAPPING
@@ -30,7 +30,7 @@ from namcs.utils.decorators import (
 # Global vars
 # -N/A
 
-# Lambda function to get normalized namcs file name
+# Lambda function to get normalized hdx_ahcd file name
 get_normalized_namcs_file_name = lambda year: "{}_NAMCS".format(year)
 get_iterable = lambda parameter: [parameter] \
     if not isinstance(parameter, (list, tuple)) else parameter
@@ -210,7 +210,7 @@ def get_conversion_method(field_name):
         if not CONVERSION_METHOD_MAPPING:
             # Required to construct mapping dictionary of
             # field name vs respective functions
-            __import__("namcs.mapper.functions")
+            __import__("hdx_ahcd.mapper.functions")
 
         if field_name in CONVERSION_METHOD_MAPPING:
             return CONVERSION_METHOD_MAPPING.get(field_name)
@@ -244,7 +244,8 @@ def get_icd_9_code_from_numeric_string(diagnosis_code):
         diagnosis_icd_9_code = \
             ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS.get(diagnosis_code)
         if diagnosis_icd_9_code in \
-                ("Blank", "Blank diagnosis", "Diagnosis of 'none'"):
+                ("Blank", "Blank diagnosis", "Diagnosis of 'none'",
+                 "Noncodable diagnosis", "Noncodable", "Illegible diagnosis"):
             return ""
         return diagnosis_icd_9_code
 
@@ -367,7 +368,7 @@ def get_namcs_source_file_info(year):
 
     Returns:
         :class:`dict`: Dict containing string representation of year,
-            public namcs file name, url for public namcs file name.
+            public hdx_ahcd file name, url for public hdx_ahcd file name.
     """
     year_value = get_string_representations_of_date(year=year).get("year_short")
     public_file_name = \
@@ -405,3 +406,23 @@ def get_year_from_dataset_file_name(file_name):
     year = base_file_name.split("_")[0]
 
     return year
+
+
+def safe_read_file(file_handle):
+    """
+    Method to read all records from file irrespective of errors occurred while
+    reading certain record.
+
+    Args:
+        file_handle (:class:`_io.TextIOWrapper`): File that needs to be read
+            completely irrespective of exception in certain record
+
+    Returns:
+        :class:`generator` : Record from file.
+    """
+    try:
+        for line_no, line in enumerate(file_handle):
+            yield line_no, line
+    except Exception:
+        for line_no, line in safe_read_file(file_handle):
+            yield line_no, line

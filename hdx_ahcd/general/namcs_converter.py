@@ -8,29 +8,31 @@ import os
 from collections import defaultdict
 
 # Other modules
-from namcs.helpers.functions import (
+from hdx_ahcd.helpers.functions import (
     get_customized_file_name,
     get_field_code_from_record,
+    get_iterable,
     get_namcs_datset_path_for_year,
     get_normalized_namcs_file_name,
     get_namcs_source_file_info,
     process_multiple_slice_objects,
     populate_missing_fields,
-    get_iterable)
-from namcs.mapper import years
-from namcs.namcs.config import (
+    safe_read_file
+)
+from hdx_ahcd.mapper import years
+from hdx_ahcd.namcs.config import (
     CONVERTED_CSV_FIELDS,
     CONVERTED_CSV_FILE_NAME_SUFFIX,
     ERROR_FILES_DIR_PATH,
     NAMCS_DATA_DIR_PATH,
     log,
     YEARS_AVAILABLE)
-from namcs.namcs.enums import NAMCSFieldEnum
-from namcs.utils.context import try_except
-from namcs.utils.decorators import (
+from hdx_ahcd.namcs.enums import NAMCSFieldEnum
+from hdx_ahcd.utils.context import try_except
+from hdx_ahcd.utils.decorators import (
     create_path_if_does_not_exists
 )
-from namcs.utils.utils import detailed_exception_info
+from hdx_ahcd.utils.utils import detailed_exception_info
 
 # 3rd party modules
 # -N/A
@@ -75,7 +77,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     field_mappings = year_class_object.get_field_slice_mapping()
 
     with open(dataset_file, "r") as dataset_file_handler:
-        for line_no, line in enumerate(dataset_file_handler):
+        for line_no, line in safe_read_file(dataset_file_handler):
             write_line = {}
             try:
                 line = line.strip()

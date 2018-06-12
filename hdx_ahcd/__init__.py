@@ -2,4 +2,4 @@
 """
 This file contains parameters related to initialization of package
 """
-name = "namcs"
+name = "hdx_ahcd"

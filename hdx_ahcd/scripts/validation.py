@@ -3,23 +3,23 @@
 File containing methods for validation.
 """
 # Python modules
-import linecache
 import os
 from functools import reduce
-from random import randint
+from random import choice
 
 # 3rd party modules
 # -N/A
 
 # Other modules
-from namcs.helpers.functions import (
+from hdx_ahcd.helpers.functions import (
     get_normalized_namcs_file_name,
     get_year_from_dataset_file_name,
-    get_iterable)
-from namcs.namcs.config import (
+    get_iterable,
+    safe_read_file)
+from hdx_ahcd.namcs.config import (
     YEARS_AVAILABLE,
     NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR)
-from namcs.utils.exceptions import TrackValidationError
+from hdx_ahcd.utils.exceptions import TrackValidationError
 
 # Global vars
 # -N/A
@@ -41,7 +41,10 @@ def validate_dataset_records(year, file_name):
             errors, if any.
     """
     validation_obj = TrackValidationError()
-    random_record = linecache.getline(file_name, randint(1, 5))
+    if not file_name and isinstance(year, (tuple, list)):
+        return validation_obj
+    with open(file_name, "r") as file_handle:
+        random_record = choice(list(safe_read_file(file_handle)))[1]
     random_record_length = len(random_record)
     if random_record_length != NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]:
         validation_obj.errors.append(

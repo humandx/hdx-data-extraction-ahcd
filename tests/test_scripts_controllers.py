@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for namcs controller module.
+Tests for hdx_ahcd controller module.
 """
 # Python modules
 import inspect
@@ -11,10 +11,10 @@ from unittest import TestCase, mock
 # -N/A
 
 # Other modules
-from namcs.helpers import functions
-from namcs.helpers.functions import get_namcs_source_file_info
-from namcs.namcs.config import YEARS_AVAILABLE
-from namcs.scripts.controllers import NAMCSController
+from hdx_ahcd.helpers import functions
+from hdx_ahcd.helpers.functions import get_namcs_source_file_info
+from hdx_ahcd.namcs.config import YEARS_AVAILABLE
+from hdx_ahcd.scripts.controllers import NAMCSController
 
 
 class ControllersTest(TestCase):
@@ -158,9 +158,9 @@ class ControllersTest(TestCase):
             year_wise_mld.get(2001).get("source_file_info")
         )
 
-    @mock.patch("scripts.controllers.download_namcs_zipfile")
-    @mock.patch("scripts.controllers.extract_data_zipfile")
-    @mock.patch("scripts.controllers.rename_namcs_dataset_for_year")
+    @mock.patch("hdx_ahcd.scripts.controllers.download_namcs_zipfile")
+    @mock.patch("hdx_ahcd.scripts.controllers.extract_data_zipfile")
+    @mock.patch("hdx_ahcd.scripts.controllers.rename_namcs_dataset_for_year")
     def test_execute_with_years_when_file_not_already_exists(
             self,
             mocked_download_namcs_zipfile,
@@ -207,7 +207,7 @@ class ControllersTest(TestCase):
             year_wise_mld.get(2003).get("source_file_info")
         )
 
-    @mock.patch("scripts.controllers.initiate_namcs_dataset_download")
+    @mock.patch("hdx_ahcd.scripts.controllers.initiate_namcs_dataset_download")
     def test_execute_without_year_and_filename(
             self, mocked_initiate_namcs_dataset_download
     ):

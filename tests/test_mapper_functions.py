@@ -9,7 +9,7 @@ from unittest import TestCase
 # -N/A
 
 # Other modules
-from namcs.mapper.functions import (
+from hdx_ahcd.mapper.functions import (
     age_reduced_to_days,
     convert_physician_diagnosis_code,
     get_gender,
@@ -17,7 +17,7 @@ from namcs.mapper.functions import (
     get_year_and_month_from_date,
     get_year_from_date,
 )
-from namcs.namcs.enums import (
+from hdx_ahcd.namcs.enums import (
     GenderEnum,
     NAMCSFieldEnum
 )
@@ -66,7 +66,7 @@ class MapperFunctionsTest(TestCase):
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
-        date = 1497  # 14 is invalid month
+        date = '1497'  # 14 is invalid month
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -132,7 +132,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 6: `diagnosis_code` starts with '-'
         diagnosis_code = '-00009'
-        expected_icd_9_code = '000.09'
+        expected_icd_9_code = 'Y00.009'
 
         # Call to method
         actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
@@ -219,6 +219,18 @@ class MapperFunctionsTest(TestCase):
 
         # Call to method
         actual_year = get_year_from_date(date)
+
+        # Assert to check for correct year
+        self.assertEqual(expected_year, actual_year)
+
+        # Case 2: When year needs to be calculated from source_file_id
+        required_fields_to_calculate_age = {
+            NAMCSFieldEnum.SOURCE_FILE_ID.value: '2011_NAMCS',
+        }
+        expected_year = '2011'
+
+        # Call to method
+        actual_year = get_year_from_date(**required_fields_to_calculate_age)
 
         # Assert to check for correct year
         self.assertEqual(expected_year, actual_year)

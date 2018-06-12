@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for namcs validation module.
+Tests for hdx_ahcd validation module.
 """
 # Python modules
 import os
@@ -10,7 +10,7 @@ from unittest import TestCase
 # -N/A
 
 # Other modules
-from namcs.scripts.validation import (
+from hdx_ahcd.scripts.validation import (
     _check_if_file_exists,
     _validate_dataset_file_name_format,
     _validate_year_from_dataset_file_name,
@@ -129,7 +129,7 @@ class ValidationTest(TestCase):
 
         # Case 2: year is not valid
         # Setup
-        year = 1993
+        year = 1991
 
         # Call to method
         validation_obj = _validate_namcs_year(year)

@@ -9,7 +9,7 @@ from unittest import TestCase, main
 # -N/A
 
 # Other modules
-from namcs.utils.utils import (
+from hdx_ahcd.utils.utils import (
     RangeDict,
     NAMCSMetaMappings
 )

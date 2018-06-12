@@ -8,8 +8,8 @@ import os
 from unittest import mock, TestCase
 
 # Other modules
-from namcs.helpers import functions
-from namcs.helpers.functions import (
+from hdx_ahcd.helpers import functions
+from hdx_ahcd.helpers.functions import (
     get_namcs_source_file_info,
     get_year_from_dataset_file_name,
     get_string_representations_of_date,
@@ -23,7 +23,7 @@ from namcs.helpers.functions import (
     get_namcs_datset_path_for_year,
     rename_namcs_dataset_for_year, populate_missing_fields
 )
-from namcs.namcs.enums import NAMCSFieldEnum
+from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 # Third party modules
 # -N/A
@@ -206,15 +206,13 @@ class HelperFunctionsTest(TestCase):
         # Field name gender
         field_name = NAMCSFieldEnum.GENDER.value
         slice_object = slice(11, 15, None)
-        expected_field_code = 'CODE1200'
 
-        # Call to method
-        actual_field_code = get_field_code_from_record(
-            line = record, field_name = field_name, slice_object = slice_object
-        )
-
-        # Assert to validate correct field code
-        self.assertEqual(expected_field_code, actual_field_code)
+        # Asserting Exception is raised
+        with self.assertRaises(Exception):
+            # Call to method
+            actual_field_code = \
+                get_field_code_from_record(line=record, field_name=field_name,
+                                           slice_object = slice_object)
 
     def test_get_file_path_by_year(self):
         """
@@ -329,7 +327,7 @@ class HelperFunctionsTest(TestCase):
 
         # Case 6: `diagnosis_code` starts with '-'
         diagnosis_code = '-00009'
-        expected_diagnosis_icd_9_code = '000.09'
+        expected_diagnosis_icd_9_code = 'Y00.009'
 
         # Call to method
         actual_diagnosis_icd_9_code = \
@@ -470,7 +468,7 @@ class HelperFunctionsTest(TestCase):
                 'source_file_row',
                 'sex',
                 'physician_diagnosis',
-                'patient_age',
+                'age',
                 'month_of_visit',
                 'year_of_visit',
             )
@@ -480,7 +478,7 @@ class HelperFunctionsTest(TestCase):
                 'source_file_row': 1,
                 'sex': 'Female',
                 'physician_diagnosis': '470.0,Y03.2,',
-                'patient_age': 22889,
+                'age': 22889,
                 'month_of_visit': 'June',
                 'year_of_visit': '1973'
             }
