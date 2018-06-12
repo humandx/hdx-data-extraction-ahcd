@@ -70,7 +70,8 @@ class NAMCSConverterTest(TestCase):
                 'age': 2190
             },
             {
-                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
+                'source_file_ID': '2000_NAMCS',
+                'source_file_row': 3,
                 'sex': 'Female',
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
