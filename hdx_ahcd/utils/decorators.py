@@ -8,7 +8,7 @@ import re
 from functools import wraps
 
 # Other modules
-from .context import try_except
+from hdx_ahcd.utils.context import try_except
 
 # 3rd party modules
 # -N/A
@@ -50,7 +50,7 @@ def add_method_to_mapping_dict(method_identifiers):
         """
         nonlocal method_identifiers
         # Avoids cyclic import issue
-        from helpers.functions import get_iterable
+        from hdx_ahcd.helpers.functions import get_iterable
         method_identifiers = get_iterable(method_identifiers)
 
         # Adding all method name identifiers to global dict of MAPPINGS
@@ -179,7 +179,7 @@ def create_path_if_does_not_exists(paths):
             :class:`function`: Decorated method.
         """
         # Avoids cyclic import issue
-        from helpers.functions import get_iterable
+        from hdx_ahcd.helpers.functions import get_iterable
         nonlocal paths
         paths = get_iterable(paths)
         for path in paths:
@@ -295,7 +295,7 @@ def enforce_type(*types, return_type=None, use_regex=None):
                             )
                         )
             # Avoids cyclic import issue
-            from helpers.functions import get_iterable
+            from hdx_ahcd.helpers.functions import get_iterable
             if use_regex is not None and len(arg):
                 use_regex = get_iterable(use_regex)
 
