@@ -1,6 +1,6 @@
 # NAMCS-NHAMCS-data-extraction
 ------
-Extract and process NAMCS and NHMCS patient case data.
+Code to parse and clean the CDC's Ambulatory Health Care Data (AHCD) (NAMCS and NHAMCS): https://www.cdc.gov/nchs/ahcd/about_ahcd.htm.
   - # NAMCS
     The National Ambulatory Medical Care Survey (NAMCS) is a national survey designed to meet the need for objective, reliable information about the provision and use of ambulatory medical care services in the United States. Findings are based on a sample of visits to nonfederally employed office-based physicians who are primarily engaged in direct patient care.
   - # NHAMCS
