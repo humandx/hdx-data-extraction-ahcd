@@ -1,4 +1,4 @@
-# NAMCS-NHAMCS-data-extraction
+# HDX-data-extraction-AHCD
 ------
 Code to parse and clean the CDC's Ambulatory Health Care Data (AHCD) (NAMCS and NHAMCS): https://www.cdc.gov/nchs/ahcd/about_ahcd.htm.
   - # NAMCS
@@ -7,7 +7,6 @@ Code to parse and clean the CDC's Ambulatory Health Care Data (AHCD) (NAMCS and 
     The National Hospital Ambulatory Medical Care Survey (NHAMCS) is designed to collect data on the utilization and provision of ambulatory care services in hospital emergency and outpatient departments, and in ambulatory surgery centers
 
 # Code Structure
---------
 >   namcs serves as base directory
   * data  - contains all public NAMCS data and dataset for all years
   * general
@@ -22,6 +21,7 @@ Code to parse and clean the CDC's Ambulatory Health Care Data (AHCD) (NAMCS and 
     - controllers - provide common entry point for execution
     - validation - validation of dataset and parameters provided while invoking script controllers
 * utils - contains useful decorators, context managers etc.
+* namcs_test.py - script to perfrom regression for all namcs year(DEV purpose only).
 
 ### Installation
 -----
@@ -36,41 +36,41 @@ python -m pip install --upgrade pip setuptools wheel
 ```
 If you have local copy of this repo and want to install directly from it.
 ```sh
-pip install ${PATH_FOR_NAMCS-NHAMCS-data-extraction_REPO}
+pip install ${PATH_FOR_HDX-data-extraction-AHCD_REPO}
 ```
 Similarly you can execute setup file
 ```sh
-python3 ${PATH_FOR_NAMCS-NHAMCS-data-extraction_REPO}/setup.py install
+python3 ${PATH_FOR_HDX-data-extraction-AHCD_REPO}/setup.py install
 ```
 for example:
 ```sh
-pip install /var/tmp/NAMCS-NHAMCS-data-extraction/
+pip install /var/tmp/HDX-data-extraction-AHCD/
 ```
 and
 for example:
 ```sh
-python3 /var/tmp/NAMCS-NHAMCS-data-extraction/setup.py install
+python3 /var/tmp/HDX-data-extraction-AHCD/setup.py install
 ```
 You can also use pip directly for Installation.
 ```sh
-pip install namcs
+pip install hdx_ahcd
 ```
 -----
 ### Usage
 -----
 ```sh
->>> import namcs
->>> from namcs.scripts.controllers import NAMCSController
+>>> import hdx_ahcd
+>>> from hdx_ahcd import get_cleaned_data_by_year
 ```
 ### Uninstall
 -----
 To uninstall you can use either
 ```sh
-easy_install -m namcs
+easy_install -m hdx_ahcd
 ```
 or
 ```sh
-pip uninstall namcs
+pip uninstall hdx_ahcd
 ```
 ### TODO
 -----

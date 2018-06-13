@@ -90,21 +90,44 @@ class Year1973(Year):
     """
     Year 1973 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "3-4",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    month_of_birth = NAMCSMetaMappings("2", "5-6",
-                                       NAMCSFieldEnum.MONTH_OF_BIRTH.value)
-    year_of_birth = NAMCSMetaMappings("2", "7-8",
-                                      NAMCSFieldEnum.YEAR_OF_BIRTH.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "3-4",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    month_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6", 
+        field_name = NAMCSFieldEnum.MONTH_OF_BIRTH.value)
+    year_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value)
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "4", "39-42", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "4",
+        field_location = "39-42",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "4", "43-46", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "4",
+        field_location = "43-46",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "4", "47-50", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "4",
+        field_location = "47-50",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -136,21 +159,46 @@ class Year1977(Year):
     """
     Year 1977 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "3-4",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    month_of_birth = NAMCSMetaMappings("2", "5-6",
-                                       NAMCSFieldEnum.MONTH_OF_BIRTH.value)
-    year_of_birth = NAMCSMetaMappings("2", "7-8",
-                                      NAMCSFieldEnum.YEAR_OF_BIRTH.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "3-4",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    month_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.MONTH_OF_BIRTH.value
+    )
+    year_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "4", "28-31", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "4",
+        field_location = "28-31",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "4", "32-35", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "4",
+        field_location = "32-35",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "4", "36-39", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "4",
+        field_location = "36-39",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -172,21 +220,46 @@ class Year1979(Year):
     """
     Year 1979 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "3-4",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    month_of_birth = NAMCSMetaMappings("2", "5-6",
-                                       NAMCSFieldEnum.MONTH_OF_BIRTH.value)
-    year_of_birth = NAMCSMetaMappings("2", "7-8",
-                                      NAMCSFieldEnum.YEAR_OF_BIRTH.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "3-4",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    month_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.MONTH_OF_BIRTH.value
+    )
+    year_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "29-34", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6",
+        field_location = "29-34",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "35-40", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6",
+        field_location = "35-40",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "41-46", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6",
+        field_location = "41-46",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -198,21 +271,46 @@ class Year1980(Year):
     """
     Year 1980 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "3-4",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    month_of_birth = NAMCSMetaMappings("2", "5-6",
-                                       NAMCSFieldEnum.MONTH_OF_BIRTH.value)
-    year_of_birth = NAMCSMetaMappings("2", "7-8",
-                                      NAMCSFieldEnum.YEAR_OF_BIRTH.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "3-4",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    month_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.MONTH_OF_BIRTH.value
+    )
+    year_of_birth = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "40-45", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6",
+        field_location = "40-45",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "46-51", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6",
+        field_location = "46-51",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "52-57", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6",
+        field_location = "52-57",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -234,18 +332,41 @@ class Year1985(Year):
     """
     Year 1985 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "5-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "57-62", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6",
+        field_location = "57-62",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "63-68", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6",
+        field_location = "63-68",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "69-74", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6",
+        field_location = "69-74",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -257,18 +378,41 @@ class Year1989(Year):
     """
     Year 1989 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "5-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "37-42", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6",
+        field_location = "37-42",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "43-48", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6",
+        field_location = "43-48",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "49-54", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6",
+        field_location = "49-54",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -290,18 +434,34 @@ class Year1991(Year):
     """
     Year 1991 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("2", "5-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "7-8", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "9", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value)
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "5-6",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value)
+    age = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "7-8",
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value)
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "9",
+        field_name = NAMCSFieldEnum.GENDER.value)
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "39-44", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6",
+        field_location = "39-44",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "45-50", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6",
+        field_location = "45-50",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "51-56", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6",
+        field_location = "51-56",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -319,34 +479,186 @@ class Year1992(Year1991):
     pass
 
 
+class Year1993(Year1991):
+    """
+    Year 1993 data with specified fields
+
+    Note:
+        Year 1993 and Year 1991 have same `NAMCSMetaMappings`
+    """
+    pass
+
+
+class Year1994(Year1991):
+    """
+    Year 1994 data with specified fields
+
+    Note:
+        Year 1994 and Year 1991 have same `NAMCSMetaMappings`
+    """
+    pass
+
+
+class Year1995(Year1991):
+    """
+    Year 1995 data with specified fields
+    """
+    age = NAMCSMetaMappings(
+        field_length = "3",
+        field_location = "7-9",
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "10",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
+    __physician_diagnosis_1 = NAMCSMetaMappings(
+        field_length = "5",
+        field_location = "52-56",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
+    __physician_diagnosis_2 = NAMCSMetaMappings(
+        field_length = "5",
+        field_location = "57-61",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
+    __physician_diagnosis_3 = NAMCSMetaMappings(
+        field_length = "5",
+        field_location = "62-66",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
+    physician_diagnosis = (
+        __physician_diagnosis_1,
+        __physician_diagnosis_2,
+        __physician_diagnosis_3
+    )
+
+
+class Year1996(Year1995):
+    """
+    Year 1996 data with specified fields
+
+    Note:
+        Year 1996 and Year 1995 have same `NAMCSMetaMappings`
+    """
+    pass
+
+
+class Year1997(Year):
+    """
+    Year 1997 data with specified fields
+    """
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "4",
+        field_location = "3-6",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "3",
+        field_location = "8-10",
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1",
+        field_location = "11",
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
+    __physician_diagnosis_1 = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "567-572",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
+    __physician_diagnosis_2 = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "573-578",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
+    __physician_diagnosis_3 = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "579-584",
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
+    physician_diagnosis = (
+        __physician_diagnosis_1,
+        __physician_diagnosis_2,
+        __physician_diagnosis_3
+    )
+
+
+class Year1998(Year1997):
+    """
+    Year 1998 data with specified fields
+
+    Note:
+        Year 1998 and Year 1997 have same `NAMCSMetaMappings`
+    """
+    pass
+
+
 class Year1999(Year):
     """
     Year 1999 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("4", "3-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2",
+        field_location = "1-2",
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value)
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "4",
+        field_location = "3-6",
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value)
+    age = NAMCSMetaMappings(
+        field_length = "3", 
+        field_location = "8-10", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # TODO: implement method convert_physician_diagnosis_code using Character
     # format
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "154-158", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    # field_length = "5", 
+    # field_location = "154-158", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "159-163", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
-    # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "164-168", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    # field_length = "5", 
+    # field_location = "159-163", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
+    # __physician_diagnosis_3 = NAMCSMetaMappings(f
+    # field_length = "5", 
+    # field_location = "164-168", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "577-582", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "577-582", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "583-588", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "583-588", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "589-594", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "589-594", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -368,28 +680,60 @@ class Year2001(Year):
     """
     Year 2001 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("4", "3-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "4", 
+        field_location = "3-6", 
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "3", 
+        field_location = "8-10", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "126-130", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    # field_length  = "5", 
+    # field_location = "126-130", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "131-135", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    # field_length  = "5", 
+    # field_location = "131-135", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "136-140", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    # field_length  = "5", 
+    # field_location = "136-140", 
+    # field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "547-552", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "547-552", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "553-558", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "553-558", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "559-564", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "559-564", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -416,11 +760,21 @@ class Year2003(Year2001):
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "723-728", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "723-728", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "729-734", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "729-734", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "735-740", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "735-740", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -443,28 +797,60 @@ class Year2005(Year):
     """
     Year 2005 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("4", "3-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "4", 
+        field_location = "3-6", 
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "3", 
+        field_location = "8-10", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "126-130", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    # 	field_length = "5", 
+    # 	field_location = "126-130", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "131-135", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    # 	field_length = "5", 
+    # 	field_location = "131-135", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "136-140", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    # 	field_length = "5", 
+    # 	field_location = "136-140", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "703-708", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "703-708", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "709-714", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "709-714", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "715-720", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "715-720", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -481,11 +867,20 @@ class Year2006(Year2005):
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "826-831", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "826-831", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "832-837", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "832-837", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "838-843", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "838-843", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -497,20 +892,43 @@ class Year2007(Year):
     """
     Year 2007 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    year_of_visit = NAMCSMetaMappings("4", "3-6",
-                                      NAMCSFieldEnum.YEAR_OF_VISIT.value)
-    age = NAMCSMetaMappings("3", "8-10", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
-
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    year_of_visit = NAMCSMetaMappings(
+        field_length = "4", 
+        field_location = "3-6", 
+        field_name = NAMCSFieldEnum.YEAR_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "3", 
+        field_location = "8-10", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
+     
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "55-59", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    # 	field_length = "5", 
+    # 	field_location = "55-59", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "60-64", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    # 	field_length = "5", 
+    # 	field_location = "60-64", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "65-69", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    # 	field_length = "5", 
+    # 	field_location = "65-69", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
@@ -519,11 +937,20 @@ class Year2007(Year):
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "909-914", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "909-914", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "915-920", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "915-920", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "921-926", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "921-926", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -551,11 +978,20 @@ class Year2009(Year2007):
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "892-897", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "892-897", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "898-903", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "898-903", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "904-909", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "904-909", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -572,11 +1008,20 @@ class Year2010(Year2007):
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "919-924", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "919-924", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "925-930", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "925-930", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "931-936", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "931-936", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -589,18 +1034,38 @@ class Year2011(Year):
     """
     Year 2011 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "7", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "4-6", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "7", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "51-55", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    # 	field_length = "5", 
+    # 	field_location = "51-55", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "56-60", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    # 	field_length = "5", 
+    # 	field_location = "56-60", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "61-65", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    # 	field_length = "5", 
+    # 	field_location = "61-65", 
+    # 	field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
@@ -609,11 +1074,20 @@ class Year2011(Year):
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "919-924", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "919-924", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "925-930", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "925-930", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "931-936", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "931-936", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -627,31 +1101,60 @@ class Year2012(Year):
     """
     Year 2012 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "4-6", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "75-79", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS.value)
+    #     field_length = "5", 
+    #     field_location = "75-79", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "82-86", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    #     field_length = "5", 
+    #     field_location = "82-86", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "89-93", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    #     field_length = "5", 
+    #     field_location = "89-93", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
     #     __physician_diagnosis_3
     # )
-
+    
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "96-101", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "96-101", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "102-107", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "102-107", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "108-113", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "108-113", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -663,18 +1166,38 @@ class Year2013(Year):
     """
     Year 2013 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
-
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "4-6", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
+    # 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "75-79", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    #     field_length = "5", 
+    #     field_location = "75-79", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "82-86", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    #     field_length = "5", 
+    #     field_location = "82-86", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "89-93", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    #     field_length = "5", 
+    #     field_location = "89-93", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
@@ -683,16 +1206,25 @@ class Year2013(Year):
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "96-101", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "96-101", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "102-107", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "102-107", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "108-113", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "108-113", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
         __physician_diagnosis_3
-    )
+)
 
 
 # Note: new diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` onwards
@@ -700,22 +1232,48 @@ class Year2014(Year):
     """
     Year 2014 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "4-6", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "111-115", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    #     field_length = "5", 
+    #     field_location = "111-115", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "118-122", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    #     field_length = "5", 
+    #     field_location = "118-122", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "125-129", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    #     field_length = "5", 
+    #     field_location = "125-129", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # __physician_diagnosis_4 = NAMCSMetaMappings(
-    #     "5", "132-136", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value)
+    #     field_length = "5", 
+    #     field_location = "132-136", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value
+    # )
     # __physician_diagnosis_5 = NAMCSMetaMappings(
-    #     "5", "139-143", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value)
+    #     field_length = "5", 
+    #     field_location = "139-143", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
@@ -726,15 +1284,30 @@ class Year2014(Year):
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "146-151", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "146-151", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "152-157", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "152-157", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "158-163", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "158-163", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     __physician_diagnosis_4 = NAMCSMetaMappings(
-        "6", "164-169", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value)
+        field_length = "6", 
+        field_location = "164-169", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value
+    )
     __physician_diagnosis_5 = NAMCSMetaMappings(
-        "6", "170-175", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value)
+        field_length = "6", 
+        field_location = "170-175", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,
@@ -748,22 +1321,48 @@ class Year2015(Year):
     """
     Year 2015 data with specified fields
     """
-    month_of_visit = NAMCSMetaMappings("2", "1-2",
-                                       NAMCSFieldEnum.MONTH_OF_VISIT.value)
-    age = NAMCSMetaMappings("2", "4-6", NAMCSFieldEnum.PATIENT_AGE.value)
-    sex = NAMCSMetaMappings("1", "11", NAMCSFieldEnum.GENDER.value)
+    month_of_visit = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "1-2", 
+        field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
+    )
+    age = NAMCSMetaMappings(
+        field_length = "2", 
+        field_location = "4-6", 
+        field_name = NAMCSFieldEnum.PATIENT_AGE.value
+    )
+    sex = NAMCSMetaMappings(
+        field_length = "1", 
+        field_location = "11", 
+        field_name = NAMCSFieldEnum.GENDER.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
-    #     "5", "113-117", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+    #     field_length = "5", 
+    #     field_location = "113-117", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    # )
     # __physician_diagnosis_2 = NAMCSMetaMappings(
-    #     "5", "120-124", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+    #     field_length = "5", 
+    #     field_location = "120-124", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    # )
     # __physician_diagnosis_3 = NAMCSMetaMappings(
-    #     "5", "127-131", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+    #     field_length = "5", 
+    #     field_location = "127-131", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    # )
     # __physician_diagnosis_4 = NAMCSMetaMappings(
-    #     "5", "134-138", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value)
+    #     field_length = "5", 
+    #     field_location = "134-138", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value
+    # )
     # __physician_diagnosis_5 = NAMCSMetaMappings(
-    #     "5", "141-145", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value)
+    #     field_length = "5", 
+    #     field_location = "141-145", 
+    #     field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value
+    # )
     # physician_diagnosis = (
     #     __physician_diagnosis_1,
     #     __physician_diagnosis_2,
@@ -774,15 +1373,30 @@ class Year2015(Year):
 
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
-        "6", "148-153", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value)
+        field_length = "6", 
+        field_location = "148-153", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value
+    )
     __physician_diagnosis_2 = NAMCSMetaMappings(
-        "6", "154-159", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value)
+        field_length = "6", 
+        field_location = "154-159", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value
+    )
     __physician_diagnosis_3 = NAMCSMetaMappings(
-        "6", "160-165", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value)
+        field_length = "6", 
+        field_location = "160-165", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value
+    )
     __physician_diagnosis_4 = NAMCSMetaMappings(
-        "6", "166-171", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value)
+        field_length = "6", 
+        field_location = "166-171", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_4.value
+    )
     __physician_diagnosis_5 = NAMCSMetaMappings(
-        "6", "172-177", NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value)
+        field_length = "6", 
+        field_location = "172-177", 
+        field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_5.value
+    )
     physician_diagnosis = (
         __physician_diagnosis_1,
         __physician_diagnosis_2,

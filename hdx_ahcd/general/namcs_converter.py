@@ -69,6 +69,11 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                                                        extension = "err")
     )
 
+    # Removing existing error file
+    if os.path.exists(error_file):
+        with try_except():
+            os.remove(error_file)
+
     # Error file name headers
     error_file_headers = ("record_no", "exception", "record")
 

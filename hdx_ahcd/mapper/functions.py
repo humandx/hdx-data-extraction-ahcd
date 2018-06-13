@@ -62,7 +62,7 @@ def get_year_and_month_from_date(raw_format_date):
     )
 )
 @enforce_type(str, return_type=str, use_regex='^[V|Y|\-|\&|0-9]'
-                                              '([0-9]{3}|[0-9]{5})$')
+                                              '([0-9]{3,5})$')
 def convert_physician_diagnosis_code(diagnosis_code):
     """
     Method to convert raw physician `diagnosis_code` into ICD-9 format.

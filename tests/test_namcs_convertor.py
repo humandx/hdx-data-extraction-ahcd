@@ -24,7 +24,7 @@ from hdx_ahcd.namcs.config import YEARS_AVAILABLE
 
 class NAMCSConverterTest(TestCase):
     """
-    TestCase class for NAMCS convertor.
+    TestCase class for NAMCS converter.
     """
 
     def test_get_generator_by_year(self):
