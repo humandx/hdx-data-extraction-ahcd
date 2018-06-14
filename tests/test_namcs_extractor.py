@@ -27,9 +27,10 @@ class NAMCSExtractorTest(TestCase):
     @mock.patch("hdx_ahcd.general.namcs_extractor.extract_data_zipfile")
     @mock.patch("hdx_ahcd.general.namcs_extractor.delete_namcs_zipfile")
     def test_initiate_namcs_dataset_download(self,
-                                             mocked_download_namcs_zipfile,
+                                             mocked_delete_namcs_zipfile,
                                              mocked_extract_data_zipfile,
-                                             mocked_delete_namcs_zipfile):
+                                             mocked_download_namcs_zipfile,
+                                             ):
         """
         Test if download and extraction of NAMCS public files is successful.
         """

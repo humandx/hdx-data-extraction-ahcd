@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-File containing methods to evaluate fields in raw data set file.
+Methods to evaluate fields in raw data set file and convert them
+in respective format.
 """
 # Python modules
 from datetime import datetime
@@ -19,14 +20,14 @@ from hdx_ahcd.utils.decorators import (
 from hdx_ahcd.namcs.enums import GenderEnum, NAMCSFieldEnum
 from hdx_ahcd.helpers.functions import (
     get_icd_9_code_from_database,
-    get_icd_9_code_from_numeric_string,
+    get_icd_9_code_from_raw_code,
 )
 
 # Global vars
-# -N/A1
+# -N/A
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(
     (
             NAMCSFieldEnum.DATE_OF_VISIT.value,
@@ -37,10 +38,10 @@ from hdx_ahcd.helpers.functions import (
               use_regex='^(0[1-9]|1[012])([0-9]{2})$')
 def get_year_and_month_from_date(raw_format_date):
     """
-    Method to convert date into human readable format.
+    Fetch year and month from provided date string.
 
     Parameters:
-        raw_format_date (:class:`str`): String representation of month with year.
+        raw_format_date (:class:`str`): Date string in format mmyy.
 
     Returns:
         :class:`tuple`: Year and month in human readable format.
@@ -53,7 +54,7 @@ def get_year_and_month_from_date(raw_format_date):
     return year, month
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(
     (
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value,
@@ -61,28 +62,28 @@ def get_year_and_month_from_date(raw_format_date):
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
     )
 )
-@enforce_type(str, return_type=str, use_regex='^[V|Y|\-|\&|0-9]'
-                                              '([0-9]{3,5})$')
+@enforce_type(str, return_type=str, use_regex='^([V|Y|\-|\&|0-9][0-9]{3,5}|'
+                                              '[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})'
+                                              '$')
 def convert_physician_diagnosis_code(diagnosis_code):
     """
     Method to convert raw physician `diagnosis_code` into ICD-9 format.
 
     Parameters:
-        diagnosis_code (:class:`str`): String representation of physician
-            diagnosis_code.
+        diagnosis_code (:class:`str`): Raw physician diagnosis_code.
 
     Returns:
         :class:`str`: Corresponding ICD-9 code for physician `diagnosis_code`.
     """
     # Get ICD9 code for given diagnosis code
-    diagnosis_icd_9_code = get_icd_9_code_from_numeric_string(diagnosis_code)
+    diagnosis_icd_9_code = get_icd_9_code_from_raw_code(diagnosis_code)
 
     # Finding relative ICD-9 code for diagnosis code
     icd_9_code = get_icd_9_code_from_database(diagnosis_icd_9_code)
     return icd_9_code
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(
     (
             NAMCSFieldEnum.MONTH_OF_VISIT.value,
@@ -93,7 +94,7 @@ def convert_physician_diagnosis_code(diagnosis_code):
                                               '|([A-Z][a-z]{2,8}))$')
 def get_month_from_date(raw_format_date):
     """
-    Method to get convert raw `diagnosis_code` into ICD-9 format.
+    Fetch month from date string.
 
     Parameters:
         raw_format_date (:class:`str`): String representation of month.
@@ -118,7 +119,7 @@ def get_month_from_date(raw_format_date):
     return month
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(
     (
             NAMCSFieldEnum.YEAR_OF_VISIT.value,
@@ -128,7 +129,7 @@ def get_month_from_date(raw_format_date):
 @enforce_type(str, return_type=str, use_regex='^([1-2][0|9])?[0-9]{2}$')
 def get_year_from_date(raw_format_year=None, **kwargs):
     """
-    Method to convert date into human readable format
+    Fetch year from date string.
 
     Parameters:
         raw_format_year (:class:`str`): String representation of year.
@@ -141,7 +142,7 @@ def get_year_from_date(raw_format_year=None, **kwargs):
     if kwargs and not raw_format_year:
         # Use `NAMCSFieldEnum.SOURCE_FILE_ID` to calculate year
         source_file_id = kwargs.get(NAMCSFieldEnum.SOURCE_FILE_ID.value)
-        # example: 2011_NAMCS so year: 2011
+        # Example: 2011_NAMCS so year: 2011
         year = source_file_id.split('_')[0]
         return year
 
@@ -162,18 +163,18 @@ def get_year_from_date(raw_format_year=None, **kwargs):
     return year
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.GENDER.value)
 @enforce_type(str, return_type=str, use_regex='^[1|2]$')
 def get_gender(gender):
     """
-    Method to convert gender into human readable format
+    Method to fetch gender from field code into human readable format.
 
     Parameters:
         gender (:class:`str`): Raw code for gender.
 
     Returns:
-        :class:`str`: Human readable gender.
+        :class:`str`: Respective gender.
     """
     gender_long_name = {
         "1": GenderEnum.FEMALE.value,
@@ -182,7 +183,7 @@ def get_gender(gender):
     return gender_long_name.get(gender)
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.PATIENT_AGE.value)
 @enforce_type(str, return_type=int, use_regex='^[0|1]{0,1}[0-9]{1,2}$')
 def age_reduced_to_days(age=None, **kwargs):
@@ -195,7 +196,7 @@ def age_reduced_to_days(age=None, **kwargs):
             `age` is not provided.
 
     Returns:
-        :class:`int`: Integer indicating age in years.
+        :class:`int`: Age in days.
 
     Example:
         >>> age_reduced_to_days(10)

@@ -19,10 +19,11 @@ CONVERSION_METHOD_MAPPING = {}  # Key value pair for field and method name
 
 def add_method_to_mapping_dict(method_identifiers):
     """
-    Decorator to associate method name with `field_name`.
+    Decorator to associate method name with `field_name`. In the form of
+    key value pair as `field_name` and method name.
 
     Parameters:
-        method_identifiers (:class:`tuple`): Tuple of `field_name` to be
+        method_identifiers (:class:`tuple`): Collection of `field_name` to be
             mapped to method name.
 
     Returns:
@@ -40,7 +41,7 @@ def add_method_to_mapping_dict(method_identifiers):
 
     def _add_method_to_mapping_dict(method_to_decorate):
         """
-        Inside wrapper to decorate `method_to_decorate`.
+        Inside wrapper to construct key value pair for `method_to_decorate`.
 
         Parameters:
             method_to_decorate (:class:`function`): Method object.
@@ -69,7 +70,7 @@ def add_method_to_mapping_dict(method_identifiers):
                     `method_to_decorate`.
 
             Returns:
-                :class:`function`: Wrapper method.
+                :class:`object`: Return value of `method_to_decorate`.
             """
             return method_to_decorate(*arg, **kwargs)
 
@@ -78,13 +79,13 @@ def add_method_to_mapping_dict(method_identifiers):
     return _add_method_to_mapping_dict
 
 
-def catch_exception(reraise=False):
+def catch_exception(re_raise=False):
     """
     Decorator to decorate method name with try except block using `try_except`
     context manager.
 
     Parameters:
-        reraise (:class:`bool`): To catch exception, perform logging and
+        re_raise (:class:`bool`): To catch exception, perform logging and
             again raise same exception to catch in parent block.
 
     Returns:
@@ -116,13 +117,17 @@ def catch_exception(reraise=False):
                     `method_to_decorate`.
 
             Returns:
-                class:`function`: Wrapper method.
+                :class:`object`: Return value of `method_to_decorate`.
             """
             try:
                 with try_except(method_name=method_to_decorate.__name__,
-                                reraise = reraise):
+                                re_raise = re_raise):
                     return method_to_decorate(*arg, **kwargs)
             except Exception as exc:
+
+                method_name = None
+                # Method is already present in `CONVERSION_METHOD_MAPPING`,
+                # find respective field_name
                 if method_to_decorate.__name__ in map(
                         lambda method: method.__name__,
                         CONVERSION_METHOD_MAPPING.values()):
@@ -134,14 +139,12 @@ def catch_exception(reraise=False):
                             CONVERSION_METHOD_MAPPING.keys()
                         )
                     )[0]
-                else:
-                    method_name = None
-                if method_name:
-                    raise Exception("Exception occurred "
-                                    "while mapping '{}' field"
-                                    .format(method_name))
-                else:
-                    raise Exception(str(exc))
+                exception_msg = "Exception occurred while mapping '{}' " \
+                                "field".format(method_name) \
+                    if method_name else str(exc)
+
+                # re_raise=True
+                raise Exception(exception_msg)
         return _wrapper
 
     return _catch_exception
@@ -157,17 +160,14 @@ def create_path_if_does_not_exists(paths):
 
     Returns:
         :class:`function`: Decorated method which will create path as
-        specified by `paths`, if does not exists.
+            specified by `paths`, if does not exists.
 
     Example:
-            @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
-            def read_all_data(*arg, **kargs):
-                "
-                    Block of code
-                "
-                return
-    """
+        >>> @create_path_if_does_not_exists("/var/tmp/temp_directory")
+        ... def method_name():
+        ...     pass
 
+    """
     def _create_path_if_does_not_exists(method_to_decorate):
         """
         Inside decorator to decorate `method_to_decorate`.
@@ -178,9 +178,10 @@ def create_path_if_does_not_exists(paths):
         Returns:
             :class:`function`: Decorated method.
         """
+        nonlocal paths
+
         # Avoids cyclic import issue
         from hdx_ahcd.helpers.functions import get_iterable
-        nonlocal paths
         paths = get_iterable(paths)
         for path in paths:
             # Creating file path if doesn't exist
@@ -199,7 +200,7 @@ def create_path_if_does_not_exists(paths):
                     `method_to_decorate`.
 
             Returns:
-                :class:`function`: Wrapper method.
+                :class:`object`: Return value of `method_to_decorate`.
             """
             return method_to_decorate(*arg, **kwargs)
 
@@ -219,7 +220,7 @@ def enforce_type(*types, return_type=None, use_regex=None):
             against positional parameters to the method. The decorated
             method will be then called with positional parameters with
             specified type.
-        return_type (:class:`type`): expected `type` for value returned by
+        return_type (:class:`type`): Expected `type` for value returned by
             method call.
         use_regex (:class:`tuple` or :class:`str`): Regular expression patterns
             that needs to be matched against positional arguments.
@@ -256,11 +257,14 @@ def enforce_type(*types, return_type=None, use_regex=None):
                     `method_to_decorate`.
 
             Returns:
-                class:`function`: Wrapper method.
+                :class:`object`: Return value of `method_to_decorate`.
             """
             nonlocal types, return_type, use_regex, method_to_decorate
-            if method_to_decorate.__name__ in map(lambda method: method.__name__,
-                                               CONVERSION_METHOD_MAPPING.values()):
+            method_name = None
+            if method_to_decorate.__name__ in map(
+                    lambda method: method.__name__,
+                    CONVERSION_METHOD_MAPPING.values()
+            ):
                 method_name = list(
                     filter(
                         lambda key:
@@ -269,8 +273,6 @@ def enforce_type(*types, return_type=None, use_regex=None):
                         CONVERSION_METHOD_MAPPING.keys()
                     )
                 )[0]
-            else:
-                method_name = None
             if types and len(arg):
                 # Decorator called as @enforce_type((list, tuple))
                 if isinstance(types[0], (list, tuple)):

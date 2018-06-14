@@ -15,7 +15,7 @@ from hdx_ahcd.helpers.functions import (
     get_customized_file_name,
     get_namcs_source_file_info,
     rename_namcs_dataset_for_year,
-    get_namcs_datset_path_for_year
+    get_namcs_dataset_path_for_year
 )
 from hdx_ahcd.namcs.config import (
     EXTRACTED_DATA_DIR_PATH,
@@ -29,7 +29,6 @@ from hdx_ahcd.utils.decorators import (
     create_path_if_does_not_exists
 )
 from hdx_ahcd.utils.utils import detailed_exception_info
-
 
 # 3rd party modules
 # -N/A
@@ -90,13 +89,13 @@ def extract_data_zipfile(namcs_year, zip_file_name,
                 file_handle.close()
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 def delete_namcs_zipfile(namcs_year, download_path=DOWNLOADED_FILES_DIR_PATH):
     """
     For a given year, delete the zipped NAMCS data set file.
 
     Parameters:
-        namcs_year(:class:`int`): The hdx_ahcd year for zip file.
+        namcs_year(:class:`int`): The year of zip file.
         download_path (:class:`str`): Download location for zip files,
             default value `DOWNLOADED_FILES_DIR_PATH`.
     """
@@ -132,7 +131,7 @@ def initiate_namcs_dataset_download(force_download=True,
     """
     for year in YEARS_AVAILABLE:
         # Checking if raw NAMCS dataset file exists for year
-        if get_namcs_datset_path_for_year(year) is None or force_download:
+        if get_namcs_dataset_path_for_year(year) is None or force_download:
             # Download files for all the years
             full_file_name = \
                 download_namcs_zipfile(year, download_path=download_path)

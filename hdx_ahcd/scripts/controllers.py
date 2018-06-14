@@ -16,7 +16,7 @@ from hdx_ahcd.general.namcs_extractor import (
     initiate_namcs_dataset_download,
 )
 from hdx_ahcd.helpers.functions import (
-    get_namcs_datset_path_for_year,
+    get_namcs_dataset_path_for_year,
     get_year_from_dataset_file_name,
     rename_namcs_dataset_for_year,
     get_iterable
@@ -62,7 +62,7 @@ class NAMCSController(object):
         if year or file_name:
             if not isinstance(year, (tuple, list)):
                 year = int(year or get_year_from_dataset_file_name(file_name))
-                file_name = file_name or get_namcs_datset_path_for_year(year)
+                file_name = file_name or get_namcs_dataset_path_for_year(year)
             # Do validation if multiple years are specified to
             # check each year is present in `YEARS_AVAILABLE`
         else:
@@ -81,7 +81,7 @@ class NAMCSController(object):
             for _year in year:
                 # Checking if NAMCS dataset file already exists in the
                 # `EXTRACTED_DATA_DIR_PATH`
-                if get_namcs_datset_path_for_year(_year) is None or \
+                if get_namcs_dataset_path_for_year(_year) is None or \
                         force_download:
                     # Download and process file for year
                     full_file_name = download_namcs_zipfile(_year)

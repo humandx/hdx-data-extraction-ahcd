@@ -17,18 +17,19 @@ from hdx_ahcd.utils.utils import detailed_exception_info
 
 
 @contextmanager
-def try_except(*exceptions, method_name=None, reraise=False):
+def try_except(*exceptions, method_name=None, re_raise=False):
     """
     Method to catch and report exceptions occurred in block of code using
-    context manger.
+    context manger with try except block.
 
     Parameters:
+        exceptions (:class: `Exception`): Collection of exceptions that
+            needs to be explicitly caught.
         method_name (:class:`str`): Method name for method call enclosed
             in try-except block.
-        exceptions (:class: `Exception`): Exceptions that needs to be
-            explicitly caught.
-        reraise (:class:`bool`): To catch exception, perform logging and
-            again raise same exception in order to catch in parent block.
+        re_raise (:class:`bool`): Catch exception, perform logging and
+            again raise same exception in order to catch in parent block,
+            default value False
 
     Return:
         :class:`generator`: Generator object for method `try_except`.
@@ -41,28 +42,22 @@ def try_except(*exceptions, method_name=None, reraise=False):
         Block of exception safe code.
 
     Example:
-            # Exception occurred
-            with try_except() as handle:
-                print("Inside try-exception block")
-                print(10/0)
-            print("Out of Exception block")
-
-            # Exception not occurred
-            with try_except() as handle:
-                print("Inside try-exception block")
-                print(10/1)
-            print("Out of Exception block")
-
-            # Enclosing method call in try except
-            with try_except(method = method_to_catch_exception) as handle:
-                method_to_catch_exception()
+        >>> with try_except() as handle:
+        ...     print("Inside try-exception block")
+        ...     print(10/0)
+        ... print("Out of Exception block")
+        ...
+        >>> with try_except(method = method_to_catch_exception) as handle:
+        ...     method_to_catch_exception()
+        ...
     """
     if not exceptions:
         exceptions = Exception
     try:
         yield
     except exceptions as exc:
+        # Details of exception , using traceback
         detailed_exception_info(method_name=method_name,
                                 use_next_frame = True, logger = log)
-        if reraise:
+        if re_raise:
             raise Exception(str(exc))

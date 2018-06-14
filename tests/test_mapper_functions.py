@@ -132,7 +132,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 6: `diagnosis_code` starts with '-'
         diagnosis_code = '-00009'
-        expected_icd_9_code = 'Y00.009'
+        expected_icd_9_code = 'V00.009'
 
         # Call to method
         actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
@@ -150,21 +150,38 @@ class MapperFunctionsTest(TestCase):
 
         # Case 8: validating decorator enforce_type for parameter use_regex
         # Setup
-        diagnosis_code = '-0001'  # Invalid diagnosis code
-
-        # Assert for exception raised from decorator
-        with self.assertRaises(Exception):
-            # Call to method
-            actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
-
-        # Case 9: validating decorator enforce_type for parameter use_regex
-        # Setup
         diagnosis_code = 'test_code'  # Invalid diagnosis code
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
             # Call to method
             actual_icd_9_code = convert_physician_diagnosis_code(diagnosis_code)
+
+        # Case 9: `diagnosis_code` has fifth digit as '-'
+        diagnosis_code = '0010-'
+        expected_icd_9_code = '001.00'
+
+        # Call to method
+        actual_icd_9_code = \
+            convert_physician_diagnosis_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_icd_9_code, actual_icd_9_code
+        )
+
+        # Case 10: `diagnosis_code` has fourth digit as '-'
+        diagnosis_code = '082-9'
+        expected_icd_9_code = '082.09'
+
+        # Call to method
+        actual_icd_9_code = \
+            convert_physician_diagnosis_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_icd_9_code, actual_icd_9_code
+        )
 
     def test_get_month_from_date(self):
         """

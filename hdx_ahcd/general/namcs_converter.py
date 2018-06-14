@@ -12,7 +12,7 @@ from hdx_ahcd.helpers.functions import (
     get_customized_file_name,
     get_field_code_from_record,
     get_iterable,
-    get_namcs_datset_path_for_year,
+    get_namcs_dataset_path_for_year,
     get_normalized_namcs_file_name,
     get_namcs_source_file_info,
     process_multiple_slice_objects,
@@ -58,7 +58,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     """
     year_class_object = vars(years).get("Year{}".format(year))
     dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file else \
-        get_namcs_datset_path_for_year(year)
+        get_namcs_dataset_path_for_year(year)
 
     # Calculating `SOURCE_FILE_ID`
     source_file_id = get_normalized_namcs_file_name(year)
@@ -85,7 +85,6 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
         for line_no, line in safe_read_file(dataset_file_handler):
             write_line = {}
             try:
-                line = line.strip()
                 write_line[NAMCSFieldEnum.SOURCE_FILE_ID.value] = \
                     source_file_id
                 write_line[NAMCSFieldEnum.SOURCE_FILE_ROW.value] = \

@@ -15,12 +15,12 @@ from hdx_ahcd.helpers.functions import (
     get_string_representations_of_date,
     get_slice_object,
     process_multiple_slice_objects,
-    get_icd_9_code_from_numeric_string,
+    get_icd_9_code_from_raw_code,
     get_icd_9_code_from_database,
     get_customized_file_name,
     get_conversion_method,
     get_field_code_from_record,
-    get_namcs_datset_path_for_year,
+    get_namcs_dataset_path_for_year,
     rename_namcs_dataset_for_year, populate_missing_fields
 )
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
@@ -229,7 +229,7 @@ class HelperFunctionsTest(TestCase):
             os.path.join(functions.EXTRACTED_DATA_DIR_PATH, '2000_NAMCS')
 
         # Call to method
-        actual_file_path = get_namcs_datset_path_for_year(year)
+        actual_file_path = get_namcs_dataset_path_for_year(year)
 
         # Assert for valid file name for year 2000
         self.assertEqual(expected_file_path, actual_file_path)
@@ -255,7 +255,7 @@ class HelperFunctionsTest(TestCase):
             expected_icd_9_code, actual_icd_9_code
         )
 
-    def test_get_icd_9_code_from_numeric_string(self):
+    def test_get_icd_9_code_from_raw_code(self):
         """
         Test for validating correctness of ICD-9 code from raw `diagnosis_code`.
         """
@@ -266,7 +266,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -279,7 +279,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -292,7 +292,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -305,7 +305,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -318,7 +318,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -327,11 +327,37 @@ class HelperFunctionsTest(TestCase):
 
         # Case 6: `diagnosis_code` starts with '-'
         diagnosis_code = '-00009'
-        expected_diagnosis_icd_9_code = 'Y00.009'
+        expected_diagnosis_icd_9_code = 'V00.009'
 
         # Call to method
         actual_diagnosis_icd_9_code = \
-            get_icd_9_code_from_numeric_string(diagnosis_code)
+            get_icd_9_code_from_raw_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_diagnosis_icd_9_code, actual_diagnosis_icd_9_code
+        )
+
+        # Case 7: `diagnosis_code` has fifth digit as '-'
+        diagnosis_code = '0010-'
+        expected_diagnosis_icd_9_code = '001.00'
+
+        # Call to method
+        actual_diagnosis_icd_9_code = \
+            get_icd_9_code_from_raw_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_diagnosis_icd_9_code, actual_diagnosis_icd_9_code
+        )
+
+        # Case 8: `diagnosis_code` has fourth digit as '-'
+        diagnosis_code = '082-9'
+        expected_diagnosis_icd_9_code = '082.09'
+
+        # Call to method
+        actual_diagnosis_icd_9_code = \
+            get_icd_9_code_from_raw_code(diagnosis_code)
 
         # Assert for valid ICD-9 code
         self.assertEqual(
@@ -441,7 +467,7 @@ class HelperFunctionsTest(TestCase):
         iterable_slice_object = [
             slice(38, 42, None), slice(42, 46, None), slice(46, 50, None)
         ]
-        expected_field_codes = ['470.0', 'Y03.2', '']
+        expected_field_codes = ['470.0', 'V03.2', '']
 
         # Call to method
         actual_field_codes = process_multiple_slice_objects(

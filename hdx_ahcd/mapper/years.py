@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Module containing year specific NAMCSMetaMappings for all the years in
-`YEAR_AVAILABLE` config parameter.
+Year specific NAMCSMetaMappings for all the namcs year, all years are defined 
+by `YEAR_AVAILABLE` config parameter.
 """
 # Python modules
 import inspect
@@ -11,10 +11,8 @@ from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 from hdx_ahcd.helpers.functions import get_slice_object
 from hdx_ahcd.utils.utils import NAMCSMetaMappings
 
-
 # 3rd party modules
 # -N/A
-
 
 # Global vars
 # -N/A
@@ -22,17 +20,20 @@ from hdx_ahcd.utils.utils import NAMCSMetaMappings
 
 class Year(object):
     """
-    Base class for all classes of NAMCSMetaMappings per year
+    Base class for all classes of NAMCSMetaMappings per year,
+    defines method to fetch attributes for specific year.
     """
 
     @classmethod
     def get_attributes(cls):
         """
-        Method to get all class attributes
+        Method to get all attributes defined in class, excluding inbuilt 
+        arguments.
 
         Returns:
-            :class:`tuple`: tuple containing all class variables
+            :class:`list`: All explicitly defined attributes of class
         """
+        # Inspect for class methods and attributes.
         attributes = dict(inspect.getmembers(cls,
                                              lambda attribute: not (
                                                  inspect.isroutine(attribute))))
@@ -49,8 +50,8 @@ class Year(object):
         slice operator
 
         Returns:
-            :class:`dict`: dict containing mappings as field name
-            and corresponding slice operator
+            :class:`dict`: Key value pair of field name and corresponding 
+                slice operator indicating location of field in raw record.
         """
         mappings_dict = {}
         for mapping in cls.get_attributes():
@@ -88,7 +89,7 @@ class Year(object):
 
 class Year1973(Year):
     """
-    Year 1973 data with specified fields
+    Year 1973 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -137,27 +138,27 @@ class Year1973(Year):
 
 class Year1975(Year1973):
     """
-    Year 1975 data with specified fields
+    Year 1975 data with specified fields...
 
     Note:
-        Year 1975 and 1973 have same `NAMCSMetaMappings`
+        Year 1975 and 1973 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1976(Year1973):
     """
-    Year 1976 data with specified fields
+    Year 1976 data with specified fields...
 
     Note:
-        Year 1976 and 1973 have same `NAMCSMetaMappings`
+        Year 1976 and 1973 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1977(Year):
     """
-    Year 1977 data with specified fields
+    Year 1977 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -208,17 +209,17 @@ class Year1977(Year):
 
 class Year1978(Year1977):
     """
-    Year 1978 data with specified fields
+    Year 1978 data with specified fields..
 
     Note:
-        Year 1978 and Year 1977 have same `NAMCSMetaMappings`
+        Year 1978 and Year 1977 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1979(Year):
     """
-    Year 1979 data with specified fields
+    Year 1979 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -269,7 +270,7 @@ class Year1979(Year):
 
 class Year1980(Year):
     """
-    Year 1980 data with specified fields
+    Year 1980 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -320,17 +321,17 @@ class Year1980(Year):
 
 class Year1981(Year1980):
     """
-    Year 1981 data with specified fields
+    Year 1981 data with specified fields..
 
     Note:
-        Year 1981 and Year 1980 have same `NAMCSMetaMappings`
+        Year 1981 and Year 1980 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1985(Year):
     """
-    Year 1985 data with specified fields
+    Year 1985 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -376,7 +377,7 @@ class Year1985(Year):
 
 class Year1989(Year):
     """
-    Year 1989 data with specified fields
+    Year 1989 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -422,17 +423,17 @@ class Year1989(Year):
 
 class Year1990(Year1989):
     """
-    Year 1990 data with specified fields
+    Year 1990 data with specified fields..
 
     Note:
-        Year 1990 and Year 1989 have same `NAMCSMetaMappings`
+        Year 1990 and Year 1989 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1991(Year):
     """
-    Year 1991 data with specified fields
+    Year 1991 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -471,37 +472,37 @@ class Year1991(Year):
 
 class Year1992(Year1991):
     """
-    Year 1992 data with specified fields
+    Year 1992 data with specified fields..
 
     Note:
-        Year 1992 and Year 1991 have same `NAMCSMetaMappings`
+        Year 1992 and Year 1991 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1993(Year1991):
     """
-    Year 1993 data with specified fields
+    Year 1993 data with specified fields..
 
     Note:
-        Year 1993 and Year 1991 have same `NAMCSMetaMappings`
+        Year 1993 and Year 1991 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1994(Year1991):
     """
-    Year 1994 data with specified fields
+    Year 1994 data with specified fields..
 
     Note:
-        Year 1994 and Year 1991 have same `NAMCSMetaMappings`
+        Year 1994 and Year 1991 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1995(Year1991):
     """
-    Year 1995 data with specified fields
+    Year 1995 data with specified fields..
     """
     age = NAMCSMetaMappings(
         field_length = "3",
@@ -537,17 +538,17 @@ class Year1995(Year1991):
 
 class Year1996(Year1995):
     """
-    Year 1996 data with specified fields
+    Year 1996 data with specified fields..
 
     Note:
-        Year 1996 and Year 1995 have same `NAMCSMetaMappings`
+        Year 1996 and Year 1995 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1997(Year):
     """
-    Year 1997 data with specified fields
+    Year 1997 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -593,17 +594,17 @@ class Year1997(Year):
 
 class Year1998(Year1997):
     """
-    Year 1998 data with specified fields
+    Year 1998 data with specified fields..
 
     Note:
-        Year 1998 and Year 1997 have same `NAMCSMetaMappings`
+        Year 1998 and Year 1997 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1999(Year):
     """
-    Year 1999 data with specified fields
+    Year 1999 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2",
@@ -668,17 +669,17 @@ class Year1999(Year):
 
 class Year2000(Year1999):
     """
-    Year 2000 data with specified fields
+    Year 2000 data with specified fields..
 
     Note:
-        Year 2000 and Year 1999 have same `NAMCSMetaMappings`
+        Year 2000 and Year 1999 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year2001(Year):
     """
-    Year 2001 data with specified fields
+    Year 2001 data with specified fields..
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -743,20 +744,20 @@ class Year2001(Year):
 
 class Year2002(Year2001):
     """
-    Year 2002 data with specified fields
+    Year 2002 data with specified fields..
 
     Note:
-        Year 2002 and Year 2001 have same `NAMCSMetaMappings`
+        Year 2002 and Year 2001 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year2003(Year2001):
     """
-    Year 2003 data with specified fields
+    Year 2003 data with specified fields..
 
     Note:
-        Year 2003 and Year 2001 have same Character format `NAMCSMetaMappings`
+        Year 2003 and Year 2001 have same Character format `NAMCSMetaMappings`..
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -784,18 +785,18 @@ class Year2003(Year2001):
 
 class Year2004(Year2003):
     """
-    Year 2004 data with specified fields
+    Year 2004 data with specified fields.
 
     Note:
-        - Year 2004 and Year 2001 have same Character format `NAMCSMetaMappings`
-        - Year 2004 and Year 2003 have same Numeric format `NAMCSMetaMappings`
+        - Year 2004 and Year 2001 have same Character format `NAMCSMetaMappings`.
+        - Year 2004 and Year 2003 have same Numeric format `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year2005(Year):
     """
-    Year 2005 data with specified fields
+    Year 2005 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -860,10 +861,10 @@ class Year2005(Year):
 
 class Year2006(Year2005):
     """
-    Year 2006 data with specified fields
+    Year 2006 data with specified fields.
 
     Note:
-        Year 2006 and Year 2005 have same Character format `NAMCSMetaMappings`
+        Year 2006 and Year 2005 have same Character format `NAMCSMetaMappings`.
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -890,7 +891,7 @@ class Year2006(Year2005):
 
 class Year2007(Year):
     """
-    Year 2007 data with specified fields
+    Year 2007 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -960,21 +961,21 @@ class Year2007(Year):
 
 class Year2008(Year2007):
     """
-    Year 2008 data with specified fields
+    Year 2008 data with specified fields.
 
     Note:
-        Year 2008 and Year 2007 have same Character format `NAMCSMetaMappings`
-        Year 2008 and Year 2007 have same Numeric format `NAMCSMetaMappings`
+        Year 2008 and Year 2007 have same Character format `NAMCSMetaMappings`.
+        Year 2008 and Year 2007 have same Numeric format `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year2009(Year2007):
     """
-    Year 2009 data with specified fields
+    Year 2009 data with specified fields.
 
     Note:
-        Year 2009 and Year 2007 have same Character format `NAMCSMetaMappings`
+        Year 2009 and Year 2007 have same Character format `NAMCSMetaMappings`.
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -1001,10 +1002,10 @@ class Year2009(Year2007):
 
 class Year2010(Year2007):
     """
-    Year 2010 data with specified fields
+    Year 2010 data with specified fields.
 
     Note:
-        Year 2010 and Year 2007 have same Character format `NAMCSMetaMappings`
+        Year 2010 and Year 2007 have same Character format `NAMCSMetaMappings`.
     """
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -1029,10 +1030,10 @@ class Year2010(Year2007):
     )
 
 
-# Note: field `Year_of_visit` in document  NOT present
+# Note: field `Year_of_visit` has been removed from records.
 class Year2011(Year):
     """
-    Year 2011 data with specified fields
+    Year 2011 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -1095,11 +1096,12 @@ class Year2011(Year):
     )
 
 
-# Note:extra field  in document `AGE RECODE`,
-# `AGE IN DAYS FOR PATIENTS LESS THAN ONE YEAR OF AGE` onwards
+# Note:extra field  in record `AGE RECODE`,
+# `AGE IN DAYS FOR PATIENTS LESS THAN ONE YEAR OF AGE`, for year 2012
+# and onwards
 class Year2012(Year):
     """
-    Year 2012 data with specified fields
+    Year 2012 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -1164,7 +1166,7 @@ class Year2012(Year):
 
 class Year2013(Year):
     """
-    Year 2013 data with specified fields
+    Year 2013 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -1227,10 +1229,11 @@ class Year2013(Year):
 )
 
 
-# Note: new diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` onwards
+# Note: new diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` in record
+# for year 2014 and onwards
 class Year2014(Year):
     """
-    Year 2014 data with specified fields
+    Year 2014 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
@@ -1319,7 +1322,7 @@ class Year2014(Year):
 
 class Year2015(Year):
     """
-    Year 2015 data with specified fields
+    Year 2015 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 

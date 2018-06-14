@@ -101,10 +101,13 @@ class NAMCSMetaMappings(object):
                 dataset.
 
         Example:
-            - Mappings("2", "1-2", "Date_of_birth")
-                - field_length = 2
-                - field_location = "1-2" index at which field data is present
-                - field_name = "Date_of_birth" field name
+            >>> obj = NAMCSMetaMappings("2", "1-2", "Date_of_birth")
+            >>> obj.field_location
+            '1-2'
+            >>> obj.field_length
+            '2'
+            >>> obj.field_name
+            'Date_of_birth'
         """
         self.field_length = field_length
         self.field_location = field_location
@@ -126,6 +129,9 @@ def detailed_exception_info(method_name=None, use_next_frame=False,
         logger (:class:`logging.Logger`): Log errors to specific log handler.
         method_name (:class:`str`): Method name for method call enclosed
             in try-except block.
+
+    Example:
+
 
     """
     # Exception details objects

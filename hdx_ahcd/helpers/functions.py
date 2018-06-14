@@ -49,6 +49,7 @@ def get_string_representations_of_date(year=1, month=1, day=1):
     Returns:
         :class:`dict` : Dict containing various string representation of date.
     """
+    # Datetime object
     date = datetime(year=year, month=month, day=day)
     return {
         "year_short": date.strftime("%y"),
@@ -81,13 +82,17 @@ def populate_missing_fields(headers, field_codes_for_single_record):
     # Filtering missing fields from headers
     for missing_field in filter(
             lambda key: True if key not in data_dict else False, headers):
+
+        # Finding conversion method for missing field
         missing_field_mapped_function = get_conversion_method(missing_field)
         if missing_field_mapped_function:
             with try_except(method_name=missing_field_mapped_function,
-                            reraise=True):
+                            re_raise=True):
                 missing_field_value = missing_field_mapped_function(**data_dict)
-            data_dict[missing_field] = missing_field_value
 
+        data_dict[missing_field] = missing_field_value
+
+    # Extra fields that are not required in output field.
     extra_fields = list(filter(
         lambda key: True if key not in headers else False, data_dict))
 
@@ -113,6 +118,8 @@ def get_customized_file_name(*names, separator="_", extension=None):
         :class:`str`: Customized file name.
     """
     names = names[0] if isinstance(names[0], (list, tuple)) else names
+
+    # Converting all names to string
     names = list(
         map(lambda name: name if isinstance(name, str) else str(name), names)
     )
@@ -125,7 +132,7 @@ def get_customized_file_name(*names, separator="_", extension=None):
 
 @catch_exception()
 @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
-def get_namcs_datset_path_for_year(year):
+def get_namcs_dataset_path_for_year(year):
     """
     Method to return full file path for specified year.
 
@@ -162,6 +169,8 @@ def rename_namcs_dataset_for_year(year):
 
     """
     new_file_name = None
+
+    # Date details for namcs year
     date_details = get_string_representations_of_date(year=year)
     year_value = date_details.get("year_short")
     year_value_long = date_details.get("year_long")
@@ -174,12 +183,15 @@ def rename_namcs_dataset_for_year(year):
                                              year_value, separator = "")
                 )
         ):
+            # Existing file name
             file_name = \
                 os.path.join(
                     EXTRACTED_DATA_DIR_PATH, get_customized_file_name(
                         namcs_file, year_value, separator = ""
                     )
                 )
+
+            # File name in format <YEAR>_NAMCS
             new_file_name = os.path.join(
                 EXTRACTED_DATA_DIR_PATH,
                 get_normalized_namcs_file_name(year_value_long)
@@ -191,7 +203,7 @@ def rename_namcs_dataset_for_year(year):
     return new_file_name
 
 
-@catch_exception(reraise=True)
+@catch_exception(re_raise=True)
 def get_conversion_method(field_name):
     """
     Method to get corresponding method for `field_name`.
@@ -221,7 +233,7 @@ def get_conversion_method(field_name):
 
 
 @catch_exception()
-def get_icd_9_code_from_numeric_string(diagnosis_code):
+def get_icd_9_code_from_raw_code(diagnosis_code):
     """
     Method to get convert raw `diagnosis_code` into ICD-9 format.
 
@@ -252,8 +264,15 @@ def get_icd_9_code_from_numeric_string(diagnosis_code):
     # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
     # classification, an ampersand (&) was used
     # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
-    if diagnosis_code.startswith("&") or diagnosis_code.startswith("-"):
-        diagnosis_code = "Y{}".format(diagnosis_code[1:])
+    if diagnosis_code.startswith("&") or diagnosis_code.startswith("-") or \
+            diagnosis_code.startswith("Y"):
+        diagnosis_code = "V{}".format(diagnosis_code[1:])
+
+    # Character format
+    # For inapplicable fourth or fifth digits, a dash is inserted.
+    # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
+    elif '-' in diagnosis_code[3:]:
+        diagnosis_code = diagnosis_code.replace('-', '0')
 
     # The prefix “1” preceding the 3-digit diagnostic codes represents
     # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
@@ -311,9 +330,13 @@ def get_field_code_from_record(line, field_name, slice_object):
     Example:
         - Raw code : "1" ,field code : "Female" for `field_name = Gender`
     """
+    # Fetching specific field code from record
     raw_code = line[slice_object]
+
+    # Find conversion method for field name
     mapping_func = get_conversion_method(field_name)
-    with try_except(method_name=mapping_func, reraise=True):
+
+    with try_except(method_name=mapping_func, re_raise=True):
         return mapping_func(raw_code) if mapping_func else raw_code
 
 
@@ -345,11 +368,11 @@ def process_multiple_slice_objects(record, field_name, iterable_slice_object):
     Parameters:
         record (:class:`str`): Actual record from raw data set file.
         field_name (:class:`str`): Actual field name.
-        iterable_slice_object (:class:`list`): Tuple of `MAPPINGS`.
+        iterable_slice_object (:class:`list`): Collection of slice objects for
+            field.
 
     Returns:
-        :class:`generator`: Generator having corresponding field code for each
-            `MAPPINGS`.
+        :class:`list`: Corresponding field code for each `MAPPINGS`.
     """
     return [
         get_field_code_from_record(
@@ -422,7 +445,11 @@ def safe_read_file(file_handle):
     """
     try:
         for line_no, line in enumerate(file_handle):
+            line = line.strip()
             yield line_no, line
     except Exception:
+        # In case of exception skip current record and process
+        # file for remaining records till all records are not finished
         for line_no, line in safe_read_file(file_handle):
+            line = line.strip()
             yield line_no, line

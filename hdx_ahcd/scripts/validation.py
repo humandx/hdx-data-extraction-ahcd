@@ -5,7 +5,7 @@ File containing methods for validation.
 # Python modules
 import os
 from functools import reduce
-from random import choice
+from random import choice, randint
 
 # 3rd party modules
 # -N/A
@@ -44,7 +44,9 @@ def validate_dataset_records(year, file_name):
     if not file_name and isinstance(year, (tuple, list)):
         return validation_obj
     with open(file_name, "r") as file_handle:
-        random_record = choice(list(safe_read_file(file_handle)))[1]
+        random_records = map(lambda record: record[1],
+                             safe_read_file(file_handle))
+        random_record = list(random_records)[randint(0, 4)]
     random_record_length = len(random_record)
     if random_record_length != NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]:
         validation_obj.errors.append(
