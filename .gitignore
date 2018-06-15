@@ -1,0 +1,23 @@
+# This file contains directory and files that needs to ignored.
+build/
+dist/
+namcs.egg-info/
+namcs/data/
+namcs/namcs/__pycache__/
+namcs/utils/__pycache__/
+test/
+all_namcs_data.tsv
+namcs/__pycache__/
+namcs/general/__pycache__/
+namcs/helpers/__pycache__/
+namcs/mapper/__pycache__/
+namcs/scripts/__pycache__/
+namcs_test.py
+hdx_ahcd/data/
+hdx_ahcd/__pycache__/
+hdx_ahcd/general/__pycache__/
+hdx_ahcd/helpers/__pycache__/
+hdx_ahcd/mapper/__pycache__/
+hdx_ahcd/namcs/__pycache__/
+hdx_ahcd/scripts/__pycache__/
+hdx_ahcd/utils/__pycache__/
