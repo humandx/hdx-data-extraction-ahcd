@@ -10,14 +10,19 @@ from datetime import datetime
 # -N/A
 
 # Other modules
-from hdx_ahcd.namcs.config import NAMCS_DATASET_YEAR_PATTERNS, \
-    NAMCS_DATASET_MONTH_PATTERNS
+from hdx_ahcd.namcs.config import (
+    NAMCS_DATASET_MONTH_PATTERNS,
+    NAMCS_DATASET_YEAR_PATTERNS,
+)
 from hdx_ahcd.utils.decorators import enforce_type
 from hdx_ahcd.utils.decorators import (
     add_method_to_mapping_dict,
     catch_exception
 )
-from hdx_ahcd.namcs.enums import GenderEnum, NAMCSFieldEnum
+from hdx_ahcd.namcs.enums import (
+    GenderEnum,
+    NAMCSFieldEnum,
+)
 from hdx_ahcd.helpers.functions import (
     get_icd_9_code_from_database,
     get_icd_9_code_from_raw_code,
@@ -111,9 +116,6 @@ def get_month_from_date(raw_format_date):
         except ValueError:
             continue
 
-    if not date:
-        return "XXXX"[:len(raw_format_date)]
-
     # Get string representation of date for month
     month = date.strftime("%B")
     return month
@@ -154,9 +156,6 @@ def get_year_from_date(raw_format_year=None, **kwargs):
                 break
         except ValueError:
             continue
-
-    if not date:
-        return "XXXX"[:len(raw_format_year)]
 
     # Get string representation of date for year
     year = date.strftime("%Y")
@@ -229,3 +228,52 @@ def age_reduced_to_days(age=None, **kwargs):
         # Note: Using age as stand alone data to convert it to days
         age = int(age) * 365
         return int(age)
+
+
+@catch_exception(re_raise=True)
+@add_method_to_mapping_dict(NAMCSFieldEnum.VISIT_WEIGHT.value)
+@enforce_type(str, return_type=float, use_regex='^(([0-9.]{5,6})|'
+                                                '([0-9.]{10,11}))$')
+def get_patient_visit_weight(visit_weight):
+    """
+    Method to convert raw visit weight from record to human readable format.
+
+    Parameters:
+         (:class:`str`): Patient visit weight.
+
+    Returns:
+        :class:`float`: Translated patient visit weight.
+
+    Reference:
+
+        The "patient visit weight" is a vital component in the
+        process of producing national estimates from sample data,
+        and its use should be   clearly understood by all micro-data file
+        users. The statistics contained on the micro-data
+        file reflect data concerning only a sample of
+        patient visits, not a complete count of all the
+        visits that occurred in the United States. Each
+        record on the data file represents one
+        visit in the sample of 27,369 visits. In order to obtain
+        national estimates from the sample,
+        each record is assigned an inflation factor called the
+        "patient visit weight."
+
+        By aggregating the patient visit weights on the 27,369 sample records
+        for 2000, the user  can obtain the estimated
+        total of 823,541,999 office visits made in the United States.
+
+    Note:
+        `visit_weight` is a right-justified integer.
+
+    Example:
+        >>> get_patient_visit_weight('0000013479')
+            13479.0
+    """
+    try:
+        return float(visit_weight)
+    except ValueError:
+        raise ValueError("Could not convert visit weight "
+                         "{} to float value".format(visit_weight))
+
+

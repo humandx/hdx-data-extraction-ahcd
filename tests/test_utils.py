@@ -53,7 +53,6 @@ class RangeDictTest(TestCase):
         for _key in expected_keys:
             self.assertIn(_key, range_dict)
 
-        # TODO :set
         # Checking operation : get all keys from dict
         self.assertSetEqual(set(expected_keys), set(range_dict.keys()))
 

@@ -337,7 +337,7 @@ def get_field_code_from_record(line, field_name, slice_object):
     mapping_func = get_conversion_method(field_name)
 
     with try_except(method_name=mapping_func, re_raise=True):
-        return mapping_func(raw_code) if mapping_func else raw_code
+        return mapping_func(raw_code) if mapping_func is not None else raw_code
 
 
 @catch_exception()
@@ -358,6 +358,25 @@ def get_slice_object(indexes):
     # Case 2: When indexes is provided as ["3"]
     else:
         return slice(int(indexes[0]) - 1, int(indexes[0]))
+
+
+@catch_exception()
+def get_field_length(indexes):
+    """
+    Method to calculate field length from slice indexes for field location.
+
+    Parameters:
+        indexes (:class:`list`): List of start and stop index to build slice
+            object.
+
+    Returns:
+        :class `int`: Calculated Field length.
+    """
+    # `indexes` with integer index value
+    indexes = list(map(lambda index: int(index), indexes))
+    # Case 1: ['23' , '32'] , field_length = 10
+    # Case 2: ['23'] , field_length = 1
+    return (indexes[1]-indexes[0])+1 if not len(indexes) == 1 else 1
 
 
 @catch_exception()
@@ -437,7 +456,7 @@ def safe_read_file(file_handle):
     reading certain record.
 
     Args:
-        file_handle (:class:`_io.TextIOWrapper`): File that needs to be read
+        file_handle (:class:`_io.TextIO`): File that needs to be read
             completely irrespective of exception in certain record
 
     Returns:

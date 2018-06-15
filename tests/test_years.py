@@ -34,6 +34,7 @@ class Year1973Test(TestCase):
                 NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value,
                 NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value,
                 NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
+                NAMCSFieldEnum.VISIT_WEIGHT.value,
             ]
 
         # Calling method  `get_attributes` for Year1973
@@ -58,6 +59,10 @@ class Year1973Test(TestCase):
             'month_of_birth': {
                 'start': 4,
                 'stop': 6
+            },
+            'patient_visit_weight': {
+                'start': 70,
+                'stop': 80
             },
             'physician_diagnosis': [
                 {

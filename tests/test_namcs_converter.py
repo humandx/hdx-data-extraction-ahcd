@@ -58,7 +58,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -67,7 +68,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'age': 2190
+                'age': 2190,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -76,7 +78,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'age': 20805
+                'age': 20805,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -85,7 +88,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 15695
+                'age': 15695,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -94,7 +98,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             }
         ], rows)
 
@@ -126,7 +131,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -135,7 +141,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'age': 2190
+                'age': 2190,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
@@ -143,7 +150,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'age': 20805
+                'age': 20805,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -152,7 +160,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 15695
+                'age': 15695,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -161,7 +170,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             }
         ], rows)
 
@@ -180,7 +190,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -189,7 +200,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V20.20,,',
-                'age': 2190
+                'age': 2190,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
@@ -197,7 +209,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V67.59,,',
-                'age': 20805
+                'age': 20805,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -206,7 +219,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 15695
+                'age': 15695,
+                'patient_visit_weight': 86790.0
             },
             {
                 'source_file_ID': '2000_NAMCS',
@@ -215,7 +229,8 @@ class NAMCSConverterTest(TestCase):
                 'year_of_visit': '2000',
                 'month_of_visit': 'September',
                 'physician_diagnosis': 'V70.00,,',
-                'age': 13140
+                'age': 13140,
+                'patient_visit_weight': 86790.0
             }
         ])
 

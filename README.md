@@ -7,9 +7,37 @@ Code to parse and clean the CDC's Ambulatory Health Care Data (AHCD) (NAMCS and 
     The National Hospital Ambulatory Medical Care Survey (NHAMCS) is designed to collect data on the utilization and provision of ambulatory care services in hospital emergency and outpatient departments, and in ambulatory surgery centers
 
 # Code Structure
->   namcs serves as base directory
-  * data  - contains all public NAMCS data and dataset for all years
-  * general
+>   **hdx_ahcd** serves as base directory
+```sh
+hdx_ahcd
+├── general
+│   ├── __init__.py
+│   ├── namcs_converter.py
+│   └── namcs_extractor.py
+├── helpers
+│   ├── functions.py
+│   └── __init__.py
+├── mapper
+│   ├── functions.py
+│   ├── __init__.py
+│   └── years.py
+├── namcs
+│   ├── config.py
+│   ├── constants.py
+│   ├── enums.py
+│   └── __init__.py
+├── scripts
+│   ├── controllers.py
+│   ├── __init__.py
+│   └── validation.py
+└── utils
+    ├── context.py
+    ├── decorators.py
+    ├── exceptions.py
+    ├── __init__.py
+    └── utils.py
+```
+* general
     - namcs_extractor.py - download and extract public NAMCS data
     -  namcs_converter.py - process and convert NAMCS data in human readable format
 * helpers - various methods for manipulating dataset and it's details

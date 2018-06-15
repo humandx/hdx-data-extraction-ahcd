@@ -8,7 +8,10 @@ import inspect
 
 # Other modules
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
-from hdx_ahcd.helpers.functions import get_slice_object
+from hdx_ahcd.helpers.functions import (
+    get_slice_object,
+    get_field_length
+)
 from hdx_ahcd.utils.utils import NAMCSMetaMappings
 
 # 3rd party modules
@@ -71,15 +74,41 @@ class Year(object):
                     if clubbed_mapping.field_name in mappings_dict:
                         del mappings_dict[clubbed_mapping.field_name]
 
+                    # Verifying field location and field length
+                    indexes = clubbed_mapping.field_location.replace(
+                        " ", "").split("-")
+
+                    if int(clubbed_mapping.field_length) != \
+                            get_field_length(indexes):
+                        raise Exception(
+                            'For field:{}, field_length does not match with '
+                            'field_location, for year :{}'. format(
+                                clubbed_mapping.field_name,
+                                cls.__name__
+                            )
+                        )
+
                 mappings_dict[mapping[0].field_name] = [
                     get_slice_object(
-                        clubbed_mapping.field_location.split("-")
+                        clubbed_mapping.field_location.replace(
+                            " ", "").split("-")
                     )
                     for clubbed_mapping in mapping
                 ]
             else:
-                indexes = mapping.field_location.split("-")
+                # Replace white space and then split by '-'
+                # "23-32" = ['23', '32']
+                indexes = mapping.field_location.replace(" ", "").split("-")
 
+                if int(mapping.field_length) != \
+                        get_field_length(indexes):
+                    raise Exception(
+                        'For field:{}, field_length does not match with '
+                        'field_location, for year :{}'.format(
+                            mapping.field_name,
+                            cls.__name__
+                        )
+                    )
                 # Avoiding over writing the value of existing key
                 if mapping.field_name not in mappings_dict:
                     mappings_dict[mapping.field_name] = \
@@ -134,6 +163,11 @@ class Year1973(Year):
         __physician_diagnosis_2,
         __physician_diagnosis_3
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "10",
+        field_location = "71-80",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
 
 class Year1975(Year1973):
@@ -143,15 +177,19 @@ class Year1975(Year1973):
     Note:
         Year 1975 and 1973 have same `NAMCSMetaMappings`.
     """
-    pass
+    visit_weight = NAMCSMetaMappings(
+        field_length = "10",
+        field_location = "78-87",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
 
-class Year1976(Year1973):
+class Year1976(Year1975):
     """
     Year 1976 data with specified fields...
 
     Note:
-        Year 1976 and 1973 have same `NAMCSMetaMappings`.
+        Year 1976 and 1975 have same `NAMCSMetaMappings`.
     """
     pass
 
@@ -204,6 +242,11 @@ class Year1977(Year):
         __physician_diagnosis_1,
         __physician_diagnosis_2,
         __physician_diagnosis_3
+    )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "10",
+        field_location = "75-84",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
     )
 
 
@@ -267,6 +310,12 @@ class Year1979(Year):
         __physician_diagnosis_3
     )
 
+    visit_weight = NAMCSMetaMappings(
+        field_length = "10",
+        field_location = "84-93",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
+
 
 class Year1980(Year):
     """
@@ -316,6 +365,11 @@ class Year1980(Year):
         __physician_diagnosis_1,
         __physician_diagnosis_2,
         __physician_diagnosis_3
+    )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "10",
+        field_location = "122-131",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
     )
 
 
@@ -373,6 +427,11 @@ class Year1985(Year):
         __physician_diagnosis_2,
         __physician_diagnosis_3
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "5",
+        field_location = "135-139",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
 
 class Year1989(Year):
@@ -419,6 +478,11 @@ class Year1989(Year):
         __physician_diagnosis_2,
         __physician_diagnosis_3
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "135-140",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
 
 class Year1990(Year1989):
@@ -451,6 +515,11 @@ class Year1991(Year):
         field_length = "1",
         field_location = "9",
         field_name = NAMCSFieldEnum.GENDER.value)
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "153-158",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6",
         field_location = "39-44",
@@ -487,15 +556,19 @@ class Year1993(Year1991):
     Note:
         Year 1993 and Year 1991 have same `NAMCSMetaMappings`.
     """
-    pass
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "160-165",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
 
-class Year1994(Year1991):
+class Year1994(Year1993):
     """
     Year 1994 data with specified fields..
 
     Note:
-        Year 1994 and Year 1991 have same `NAMCSMetaMappings`.
+        Year 1994 and Year 1994 have same `NAMCSMetaMappings`.
     """
     pass
 
@@ -513,6 +586,11 @@ class Year1995(Year1991):
         field_length = "1",
         field_location = "10",
         field_name = NAMCSFieldEnum.GENDER.value
+    )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "196-201",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
     )
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "5",
@@ -570,6 +648,11 @@ class Year1997(Year):
         field_location = "11",
         field_name = NAMCSFieldEnum.GENDER.value
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "297-302",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6",
         field_location = "567-572",
@@ -624,9 +707,12 @@ class Year1999(Year):
         field_location = "11", 
         field_name = NAMCSFieldEnum.GENDER.value
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "307-312",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
-    # TODO: implement method convert_physician_diagnosis_code using Character
-    # format
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
     # field_length = "5", 
@@ -701,6 +787,11 @@ class Year2001(Year):
         field_location = "11", 
         field_name = NAMCSFieldEnum.GENDER.value
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "273-278",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -759,6 +850,11 @@ class Year2003(Year2001):
     Note:
         Year 2003 and Year 2001 have same Character format `NAMCSMetaMappings`..
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "288-293",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6", 
@@ -818,6 +914,11 @@ class Year2005(Year):
         field_location = "11", 
         field_name = NAMCSFieldEnum.GENDER.value
     )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "271-276",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
 
     # Character format
     # __physician_diagnosis_1 = NAMCSMetaMappings(
@@ -866,6 +967,12 @@ class Year2006(Year2005):
     Note:
         Year 2006 and Year 2005 have same Character format `NAMCSMetaMappings`.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "276-281",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
+
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6", 
@@ -912,6 +1019,11 @@ class Year2007(Year):
         field_length = "1", 
         field_location = "11", 
         field_name = NAMCSFieldEnum.GENDER.value
+    )
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "303-308",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
     )
      
     # Character format
@@ -977,6 +1089,12 @@ class Year2009(Year2007):
     Note:
         Year 2009 and Year 2007 have same Character format `NAMCSMetaMappings`.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "294-299",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
+
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6", 
@@ -1007,6 +1125,11 @@ class Year2010(Year2007):
     Note:
         Year 2010 and Year 2007 have same Character format `NAMCSMetaMappings`.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "294-299",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     # Numeric format
     __physician_diagnosis_1 = NAMCSMetaMappings(
         field_length = "6", 
@@ -1035,13 +1158,18 @@ class Year2011(Year):
     """
     Year 2011 data with specified fields.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "6",
+        field_location = "286-291",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
         field_location = "1-2", 
         field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
     )
     age = NAMCSMetaMappings(
-        field_length = "2", 
+        field_length = "3",
         field_location = "4-6", 
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
@@ -1099,17 +1227,33 @@ class Year2011(Year):
 # Note:extra field  in record `AGE RECODE`,
 # `AGE IN DAYS FOR PATIENTS LESS THAN ONE YEAR OF AGE`, for year 2012
 # and onwards
+# [PATWT] PATIENT VISIT WEIGHT (NOT FOR STATE ESTIMATES)
+# This variable has been produced as an un rounded integer in 2012,
+# which will make estimates slightly more precise. It is ONLY for use in
+# producing national, regional, division, and MSA-level estimates, NOT
+# state estimates.
+# 168.792 – 82313.10758
+# [PATWTST] PATIENT VISIT WEIGHT FOR STATE ESTIMATES
+# This variable has been produced as an un rounded integer in 2012,
+# which will make estimates slightly more precise. It is ONLY for use in
+# producing state estimates, NOT national, regional, division, or MSA-
+# level estimates.
 class Year2012(Year):
     """
     Year 2012 data with specified fields.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "11",
+        field_location = "1383-1393",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
         field_location = "1-2", 
         field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
     )
     age = NAMCSMetaMappings(
-        field_length = "2", 
+        field_length = "3",
         field_location = "4-6", 
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
@@ -1168,13 +1312,18 @@ class Year2013(Year):
     """
     Year 2013 data with specified fields.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "11",
+        field_location = "1363-1373",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
         field_location = "1-2", 
         field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
     )
     age = NAMCSMetaMappings(
-        field_length = "2", 
+        field_length = "3",
         field_location = "4-6", 
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
@@ -1235,13 +1384,18 @@ class Year2014(Year):
     """
     Year 2014 data with specified fields.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "11",
+        field_location = "2722-2732",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
         field_location = "1-2", 
         field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
     )
     age = NAMCSMetaMappings(
-        field_length = "2", 
+        field_length = "3",
         field_location = "4-6", 
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
@@ -1324,13 +1478,18 @@ class Year2015(Year):
     """
     Year 2015 data with specified fields.
     """
+    visit_weight = NAMCSMetaMappings(
+        field_length = "11",
+        field_location = "2682-2692",
+        field_name = NAMCSFieldEnum.VISIT_WEIGHT.value
+    )
     month_of_visit = NAMCSMetaMappings(
         field_length = "2", 
         field_location = "1-2", 
         field_name = NAMCSFieldEnum.MONTH_OF_VISIT.value
     )
     age = NAMCSMetaMappings(
-        field_length = "2", 
+        field_length = "3",
         field_location = "4-6", 
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )

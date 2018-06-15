@@ -19,7 +19,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as \
 
 config = {
     'name': 'hdx_ahcd',
-    'version': '0.0.2.3',
+    'version': '1.0.0',
     'author': 'HumanDx',
     'author_email': 'engineering@humandx.org',
     'description': 'NAMCS data extractor and converter',

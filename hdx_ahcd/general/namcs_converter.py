@@ -121,6 +121,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                 )
             yield write_line
         if errors:
+            # TODO: discard record or replace None value for erroneous field
             with open(error_file, "w") as error_file_handler:
                 writer = csv.DictWriter(error_file_handler,
                                         delimiter = ',',

@@ -33,6 +33,7 @@ class NAMCSFieldEnum(Enum):
     MONTH_OF_BIRTH = "month_of_birth"
     PATIENT_AGE = "age"
     GENDER = "sex"
+    VISIT_WEIGHT = "patient_visit_weight"
     PHYSICIANS_DIAGNOSIS = "physician_diagnosis"
     PHYSICIANS_DIAGNOSIS_1 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_1"
     PHYSICIANS_DIAGNOSIS_2 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_2"

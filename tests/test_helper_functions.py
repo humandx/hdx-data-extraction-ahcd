@@ -21,7 +21,9 @@ from hdx_ahcd.helpers.functions import (
     get_conversion_method,
     get_field_code_from_record,
     get_namcs_dataset_path_for_year,
-    rename_namcs_dataset_for_year, populate_missing_fields
+    rename_namcs_dataset_for_year,
+    populate_missing_fields,
+    get_field_length
 )
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
@@ -391,8 +393,8 @@ class HelperFunctionsTest(TestCase):
         Test for valid slice object based on the `indexes` passed.
         """
         # Setup
-        # Case 1: When indexes is provided as ["2", "3"]
-        indexes = [4, 10]
+        # Case 1: When indexes is provided as ["4", "10"]
+        indexes = ["4", "10"]
         expected_slice_object = slice(3, 10)
 
         # Call to method
@@ -401,8 +403,8 @@ class HelperFunctionsTest(TestCase):
         # Assert for valid slice object
         self.assertEqual(expected_slice_object, actual_slice_object)
 
-        # Case 2: When indexes is provided as ["3"]
-        indexes = [4]
+        # Case 2: When indexes is provided as ["4"]
+        indexes = ["4"]
         expected_slice_object = slice(3, 4)
 
         # Call to method
@@ -410,6 +412,32 @@ class HelperFunctionsTest(TestCase):
 
         # Assert for valid slice object
         self.assertEqual(expected_slice_object, actual_slice_object)
+
+    def test_get_field_length(self):
+        """
+        Test to valid correct field length from filed location provided in the
+        form of indexes
+        """
+        # Setup
+        # Case 1: When indexes is provided as ["71", "80"]
+        indexes = ["71", "80"]
+        expected_field_length = 10
+
+        # Call to method
+        actual_field_length = get_field_length(indexes)
+
+        # Assert for valid field length
+        self.assertEqual(expected_field_length, actual_field_length)
+
+        # Case 2: When indexes is provided as ["3"]
+        indexes = ["3"]
+        expected_field_length = 1
+
+        # Call to method
+        actual_field_length = get_field_length(indexes)
+
+        # Assert for valid field length
+        self.assertEqual(expected_field_length, actual_field_length)
 
     def test_get_string_format_date_time(self):
         """

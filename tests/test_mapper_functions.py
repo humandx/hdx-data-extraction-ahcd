@@ -14,6 +14,7 @@ from hdx_ahcd.mapper.functions import (
     convert_physician_diagnosis_code,
     get_gender,
     get_month_from_date,
+    get_patient_visit_weight,
     get_year_and_month_from_date,
     get_year_from_date,
 )
@@ -343,4 +344,63 @@ class MapperFunctionsTest(TestCase):
 
         # Assert to check correctness of age in days
         self.assertEqual(expected_age_in_days, actual_age_in_days)
+
+    def test_get_patient_visit_weight(self):
+        """
+        Test to validate patient visit weight.
+        """
+        # Case 1: When visit weight is integer value of length 10.
+        # Setup
+        visit_weight = '0000019129'
+        expected_visit_weight = 19129.0
+
+        # Call to method
+        actual_visit_weight = get_patient_visit_weight(visit_weight)
+
+        # Assert to check patient visit weight
+        self.assertEqual(expected_visit_weight, actual_visit_weight)
+
+        # Case 2: When visit weight is integer value of length 11.
+        # Setup
+        visit_weight = '00000191129'
+        expected_visit_weight = 191129.0
+
+        # Call to method
+        actual_visit_weight = get_patient_visit_weight(visit_weight)
+
+        # Assert to check patient visit weight
+        self.assertEqual(expected_visit_weight, actual_visit_weight)
+
+        # Case 3: When visit weight is float value of length 5.
+        # Setup
+        visit_weight = '15.62'
+        expected_visit_weight = 15.62
+
+        # Call to method
+        actual_visit_weight = get_patient_visit_weight(visit_weight)
+
+        # Assert to check patient visit weight
+        self.assertEqual(expected_visit_weight, actual_visit_weight)
+
+        # Case 4: When visit weight is float value of length 6.
+        # Setup
+        visit_weight = '152.62'
+        expected_visit_weight = 152.62
+
+        # Call to method
+        actual_visit_weight = get_patient_visit_weight(visit_weight)
+
+        # Assert to check patient visit weight
+        self.assertEqual(expected_visit_weight, actual_visit_weight)
+
+        # Case 5: When visit weight is invalid
+        # Setup
+        visit_weight = '000..19129'
+
+        # Assert for exception
+        with self.assertRaises((ValueError, Exception)):
+            # Call to method
+            actual_visit_weight = get_patient_visit_weight(visit_weight)
+
+
 

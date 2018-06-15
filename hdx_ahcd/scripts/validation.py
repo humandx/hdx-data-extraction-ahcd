@@ -5,7 +5,7 @@ File containing methods for validation.
 # Python modules
 import os
 from functools import reduce
-from random import choice, randint
+from random import randint
 
 # 3rd party modules
 # -N/A
