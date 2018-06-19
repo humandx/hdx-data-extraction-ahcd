@@ -82,7 +82,7 @@ def validate_arguments(year, file_name):
         validation_objs.append(_validate_namcs_year(year))
 
     # Dataset file name provided
-    if file_name:
+    if file_name and not year:
         validation_objs.append(_validate_dataset_file_name(file_name))
         validation_objs.append(_validate_year_from_dataset_file_name(file_name))
 
