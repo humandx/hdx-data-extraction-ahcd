@@ -21,8 +21,8 @@ class RangeDict(dict):
 
     Example:
         >>> range_dict = RangeDict()
-        >>> range_dict[(100,105)] =5
-        >>> range_dict[107] =3
+        >>> range_dict[(100,105)] = 5
+        >>> range_dict[107] = 3
         >>> range_dict[101]
         5
         >>> range_dict.get(101)
@@ -46,7 +46,7 @@ class RangeDict(dict):
         key with value as value of that `Iterable` key else Error
 
         Parameters:
-            key (:class:`int`) : Key to be searched in the dict.
+            key (:class:`int`): Key to be searched in the dict.
 
         Returns:
              :class:`int` or :class:`str` or :class:`tuple` or :class:`list` :
@@ -65,7 +65,7 @@ class RangeDict(dict):
         Method to override method get()
 
         Parameters:
-            key (:class:`int`) : Key to be searched in the dict.
+            key (:class:`int`): Key to be searched in the dict.
 
         Returns:
              :class:`int` or :class:`str` or :class:`tuple` or :class:`list` :
@@ -137,7 +137,8 @@ def detailed_exception_info(method_name=None, use_next_frame=False,
     # Exception details objects
     exception_type, exception_obj, traceback_obj = sys.exc_info()
 
-    # Decide `traceback_frame`
+    # Use the `traceback_frame` based on `use_next_frame`. This will be required
+    # when the method is called indirectly from decorator
     if not use_next_frame:
         _frame = traceback_obj.tb_frame
         filename = _frame.f_code.co_filename
@@ -152,10 +153,10 @@ def detailed_exception_info(method_name=None, use_next_frame=False,
     linecache.checkcache(filename)
     line = linecache.getline(filename, line_no, module_globals)
     if method_name is not None:
-        logger.error('Error in method:{}'.format(method_name))
+        logger.error('Error in method: {}'.format(method_name))
 
-    error_msg = 'Exception occurred in : {} at line : {}\nOperation : "{}" ,' \
-                'exception_object:{}'\
+    error_msg = 'Exception occurred in {} at line {}\nOperation: "{}" ,' \
+                'exception_object: {}'\
                 .format(filename, line_no, line.strip(), exception_obj)
     if logger:
         logger.error(error_msg)

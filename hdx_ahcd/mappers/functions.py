@@ -62,9 +62,9 @@ def get_year_and_month_from_date(raw_format_date):
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(
     (
-            NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value,
-            NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value,
-            NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_1.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_2.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
     )
 )
 @enforce_type(str, return_type=str, use_regex='^([V|Y|\-|\&|0-9][0-9]{3,5}|'
@@ -273,7 +273,5 @@ def get_patient_visit_weight(visit_weight):
     try:
         return float(visit_weight)
     except ValueError:
-        raise ValueError("Could not convert visit weight "
-                         "{} to float value".format(visit_weight))
-
-
+        raise ValueError("Could not convert visit weight {} to float "
+                         "value".format(visit_weight))

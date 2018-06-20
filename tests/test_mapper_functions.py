@@ -9,7 +9,7 @@ from unittest import TestCase
 # -N/A
 
 # Other modules
-from hdx_ahcd.mapper.functions import (
+from hdx_ahcd.mappers.functions import (
     age_reduced_to_days,
     convert_physician_diagnosis_code,
     get_gender,
@@ -26,7 +26,7 @@ from hdx_ahcd.namcs.enums import (
 
 class MapperFunctionsTest(TestCase):
     """
-    TestCase class for mapper functions.
+    TestCase class for mappers functions.
     """
     def test_get_year_and_month_from_date(self):
         """

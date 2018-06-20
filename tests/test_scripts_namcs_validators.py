@@ -10,7 +10,7 @@ from unittest import TestCase
 # -N/A
 
 # Other modules
-from hdx_ahcd.scripts.validation import (
+from hdx_ahcd.scripts.namcs_validators import (
     _check_if_file_exists,
     _validate_dataset_file_name_format,
     _validate_year_from_dataset_file_name,

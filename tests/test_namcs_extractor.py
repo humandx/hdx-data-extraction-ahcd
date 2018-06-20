@@ -10,7 +10,7 @@ from unittest import mock, TestCase
 # -N/A
 
 # Other modules
-from hdx_ahcd.general.namcs_extractor import (
+from hdx_ahcd.controllers.namcs_extractor import (
     download_namcs_zipfile,
     extract_data_zipfile,
     initiate_namcs_dataset_download,
@@ -23,9 +23,9 @@ class NAMCSExtractorTest(TestCase):
     """
     TestCase class for NAMCS extractor.
     """
-    @mock.patch("hdx_ahcd.general.namcs_extractor.download_namcs_zipfile")
-    @mock.patch("hdx_ahcd.general.namcs_extractor.extract_data_zipfile")
-    @mock.patch("hdx_ahcd.general.namcs_extractor.delete_namcs_zipfile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.download_namcs_zipfile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.extract_data_zipfile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.delete_namcs_zipfile")
     def test_initiate_namcs_dataset_download(self,
                                              mocked_delete_namcs_zipfile,
                                              mocked_extract_data_zipfile,
@@ -46,7 +46,7 @@ class NAMCSExtractorTest(TestCase):
             download_namcs_zipfile_mocked_return
 
         # Call to method
-        initiate_namcs_dataset_download()
+        initiate_namcs_dataset_download(force_download=True)
 
         # Assert `download_namcs_zipfile` calls
         self.assertEqual(
@@ -70,7 +70,7 @@ class NAMCSExtractorTest(TestCase):
             ]
         )
 
-    @mock.patch("hdx_ahcd.general.namcs_extractor.request.urlretrieve")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.request.urlretrieve")
     def test_download_namcs_zipfile(self, mocked_urlretrieve):
         """
         Test if download NAMCS public file is successful.
@@ -94,8 +94,8 @@ class NAMCSExtractorTest(TestCase):
         # Assert `download_namcs_zipfile` return value
         self.assertEqual(expected_filename, actual_filename)
 
-    @mock.patch("hdx_ahcd.general.namcs_extractor.zipfile.ZipFile")
-    @mock.patch("hdx_ahcd.general.namcs_extractor.os")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.zipfile.ZipFile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.os")
     def test_extract_data_zipfile(self, mocked_os, mocked_zipfile):
         """
         Test if extraction of downloaded NAMCS public file is successful.
@@ -115,8 +115,8 @@ class NAMCSExtractorTest(TestCase):
         mocked_zipfile.assert_called_with(zip_file_name)
         mocked_zipfile.return_value.extractall.assert_called_with(extract_path)
 
-    @mock.patch('hdx_ahcd.general.namcs_extractor.os.remove')
-    @mock.patch('hdx_ahcd.general.namcs_extractor.os.path.exists')
+    @mock.patch('hdx_ahcd.controllers.namcs_extractor.os.remove')
+    @mock.patch('hdx_ahcd.controllers.namcs_extractor.os.path.exists')
     def test_delete_namcs_zipfile(self, mocked_path_exists, mocked_os_remove):
         """
         Test to validate deletion of downloaded zip files.

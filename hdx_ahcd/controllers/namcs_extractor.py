@@ -47,8 +47,9 @@ def download_namcs_zipfile(namcs_year, download_path=DOWNLOADED_FILES_DIR_PATH):
         namcs_year(:class:`int`): The year for which data is requested.
         download_path (:class:`str`): Download location for zip files,
             default value `DOWNLOADED_FILES_DIR_PATH`.
+
     Returns:
-        :class `str`: Download zip file name for provided `year`
+        :class `str`: Download zip file name for provided `year`.
     """
     url = get_namcs_source_file_info(namcs_year).get("url")
     zip_file_name = \
@@ -75,7 +76,7 @@ def extract_data_zipfile(namcs_year, zip_file_name,
         extract_path(:class:`str`): Extract location for zip files,
             default value `EXTRACTED_DATA_DIR_PATH`.
     """
-    log.info("Extracting data for year: {}".format(namcs_year))
+    log.debug("Extracting data for year: {}".format(namcs_year))
     if os.path.exists(zip_file_name):
         # Enclosing block of code in try - except
         with try_except(zipfile.BadZipfile, zipfile.LargeZipFile):
@@ -108,22 +109,22 @@ def delete_namcs_zipfile(namcs_year, download_path=DOWNLOADED_FILES_DIR_PATH):
                         'exists at {}'.format(namcs_year, download_path))
 
     with try_except():
-        log.info("Deleting zip file:{} for "
-                 "year:{}".format(full_file_name, namcs_year))
+        log.debug("Deleting zip file:{} for "
+                  "year:{}".format(full_file_name, namcs_year))
         os.remove(full_file_name)
 
 
 @catch_exception()
-def initiate_namcs_dataset_download(force_download=True,
+def initiate_namcs_dataset_download(force_download=False,
                                     extract_path = EXTRACTED_DATA_DIR_PATH,
                                     download_path = DOWNLOADED_FILES_DIR_PATH):
     """
     Download and extract all the NAMCS dataset files available for public use
-    in ftp.cdc.gov FTP server
+    in ftp.cdc.gov FTP server.
 
     Parameters:
         force_download (:class:`bool`): Whether to force download
-            NAMCS raw dataset file even if it exists,Default value True.
+            NAMCS raw dataset file even if it exists,Default value False.
         extract_path(:class:`str`): Extract location for zip files,
             default value `EXTRACTED_DATA_DIR_PATH`.
         download_path (:class:`str`): Download location for zip files,

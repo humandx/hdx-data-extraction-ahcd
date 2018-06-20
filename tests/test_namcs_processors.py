@@ -14,7 +14,7 @@ from unittest import TestCase, mock
 from hdx_ahcd.helpers import functions
 from hdx_ahcd.helpers.functions import get_namcs_source_file_info
 from hdx_ahcd.namcs.config import YEARS_AVAILABLE
-from hdx_ahcd.scripts.controllers import NAMCSController
+from hdx_ahcd.controllers.namcs_processors import NAMCSProcessor
 
 
 class ControllersTest(TestCase):
@@ -25,7 +25,7 @@ class ControllersTest(TestCase):
         """
         Override of :func:`setUp` implementation
         """
-        self.controller = NAMCSController()
+        self.controller = NAMCSProcessor()
 
     def test_execute_with_year_and_filename(self):
         """
@@ -158,9 +158,10 @@ class ControllersTest(TestCase):
             year_wise_mld.get(2001).get("source_file_info")
         )
 
-    @mock.patch("hdx_ahcd.scripts.controllers.download_namcs_zipfile")
-    @mock.patch("hdx_ahcd.scripts.controllers.extract_data_zipfile")
-    @mock.patch("hdx_ahcd.scripts.controllers.rename_namcs_dataset_for_year")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.download_namcs_zipfile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor.extract_data_zipfile")
+    @mock.patch("hdx_ahcd.controllers.namcs_extractor."
+                "rename_namcs_dataset_for_year")
     def test_execute_with_years_when_file_not_already_exists(
             self,
             mocked_download_namcs_zipfile,
@@ -207,7 +208,8 @@ class ControllersTest(TestCase):
             year_wise_mld.get(2003).get("source_file_info")
         )
 
-    @mock.patch("hdx_ahcd.scripts.controllers.initiate_namcs_dataset_download")
+    @mock.patch("hdx_ahcd.controllers.namcs_"
+                "extractor.initiate_namcs_dataset_download")
     def test_execute_without_year_and_filename(
             self, mocked_initiate_namcs_dataset_download
     ):
@@ -244,7 +246,8 @@ class ControllersTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
         # Call to method
-        is_valid = self.controller.validate(year, test_file_path)
+        is_valid, validation_obj = \
+            self.controller.validate(year, test_file_path)
 
         # Assert returned generator
         self.assertTrue(is_valid)

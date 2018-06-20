@@ -47,7 +47,7 @@ def get_string_representations_of_date(year=1, month=1, day=1):
           day (:class: `int`): Integer indicating day default value 1.
 
     Returns:
-        :class:`dict` : Dict containing various string representation of date.
+        :class:`dict`: Dict containing various string representation of date.
     """
     # Datetime object
     date = datetime(year=year, month=month, day=day)
@@ -151,8 +151,6 @@ def get_namcs_dataset_path_for_year(year):
 
     if os.path.exists(file_path):
         return file_path
-
-    log.error("For year {}, raw data set file not found".format(year_value))
     return None
 
 
@@ -222,7 +220,7 @@ def get_conversion_method(field_name):
         if not CONVERSION_METHOD_MAPPING:
             # Required to construct mapping dictionary of
             # field name vs respective functions
-            __import__("hdx_ahcd.mapper.functions")
+            __import__("hdx_ahcd.mappers.functions")
 
         if field_name in CONVERSION_METHOD_MAPPING:
             return CONVERSION_METHOD_MAPPING.get(field_name)
@@ -308,7 +306,7 @@ def get_icd_9_code_from_database(diagnosis_icd_9_code):
         :class:`str`: String representation of corresponding ICD-9 code for
             `diagnosis_code`.
     """
-    # TODO : Fetch corresponding ICD-9 code for `diagnosis_code` from database
+    # TODO: Fetch corresponding ICD-9 code for `diagnosis_code` from database
     icd_9_code = diagnosis_icd_9_code
     return icd_9_code
 
@@ -328,7 +326,7 @@ def get_field_code_from_record(line, field_name, slice_object):
             if `mapping_func` is present else raw code of `field_name`
             from dataset.
     Example:
-        - Raw code : "1" ,field code : "Female" for `field_name = Gender`
+        - Raw code: "1" ,field code : "Female" for `field_name = Gender`
     """
     # Fetching specific field code from record
     raw_code = line[slice_object]
@@ -341,42 +339,31 @@ def get_field_code_from_record(line, field_name, slice_object):
 
 
 @catch_exception()
-def get_slice_object(indexes):
+def get_slice_object(field_location, field_length):
     """
-    Method to return slice object based on the `indexes` passed.
+    Method to return slice object based on the `field_location`
+    and `field_length`.
 
     Parameters:
-        indexes (:class:`list`): List of start and stop index to build slice
-            object.
+        field_location (:class:`int`): Start index of field in the record.
+        field_length (:class:`int`): Length of field.
 
     Returns:
-        :class `slice`: Slice object based on `indexes`.
+        :class `slice`: Slice object based on based on the `field_location`
+            and `field_length`.
+
+    Note:
+        Records are 1 indexed.
     """
-    # Case 1: When indexes is provided as ["2", "3"]
-    if len(indexes) > 1:
-        return slice(int(indexes[0]) - 1, int(indexes[1]))
-    # Case 2: When indexes is provided as ["3"]
-    else:
-        return slice(int(indexes[0]) - 1, int(indexes[0]))
+    start_index = field_location - 1
 
+    # Case 1: When `field_length` > 1
+    # Case 2: When `field_length` is 1
 
-@catch_exception()
-def get_field_length(indexes):
-    """
-    Method to calculate field length from slice indexes for field location.
+    end_index = start_index + field_length if field_length > 1 \
+        else field_location
 
-    Parameters:
-        indexes (:class:`list`): List of start and stop index to build slice
-            object.
-
-    Returns:
-        :class `int`: Calculated Field length.
-    """
-    # `indexes` with integer index value
-    indexes = list(map(lambda index: int(index), indexes))
-    # Case 1: ['23' , '32'] , field_length = 10
-    # Case 2: ['23'] , field_length = 1
-    return (indexes[1]-indexes[0])+1 if not len(indexes) == 1 else 1
+    return slice(start_index, end_index)
 
 
 @catch_exception()
@@ -447,7 +434,7 @@ def get_year_from_dataset_file_name(file_name):
     # NAMCS file format: <YEAR>_NAMCS
     year = base_file_name.split("_")[0]
 
-    return year
+    return int(year)
 
 
 def safe_read_file(file_handle):
@@ -460,11 +447,11 @@ def safe_read_file(file_handle):
             completely irrespective of exception in certain record
 
     Returns:
-        :class:`generator` : Record from file.
+        :class:`generator`: Record from file and record number.
     """
     try:
         for line_no, line in enumerate(file_handle):
-            line = line.strip()
+            line = line.strip('\n')
             yield line_no, line
     except Exception:
         # In case of exception skip current record and process

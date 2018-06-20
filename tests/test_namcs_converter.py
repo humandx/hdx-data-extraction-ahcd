@@ -11,8 +11,8 @@ from unittest import mock, TestCase
 # -N/A
 
 # Other modules
-from hdx_ahcd.general import namcs_converter
-from hdx_ahcd.general.namcs_converter import (
+from hdx_ahcd.controllers import namcs_converter
+from hdx_ahcd.controllers.namcs_converter import (
     get_generator_by_year,
     get_year_wise_generator,
     export_to_csv,
@@ -52,54 +52,51 @@ class NAMCSConverterTest(TestCase):
         # Assert rows by field details
         self.assertListEqual([
             {
-                'source_file_ID': '2000_NAMCS',
+                'age': 13140,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 13140,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 2,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V20.20,,',
                 'age': 2190,
-                'patient_visit_weight': 86790.0
-            },
-            {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 3,
-                'sex': 'Female',
-                'year_of_visit': '2000',
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 2, 'sex': 'Male',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V67.59,,',
-                'age': 20805,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V20.20', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
+                'age': 20805,
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 3, 'sex': 'Female',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
+            },
+            {
+                'age': 15695,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 15695,
-                'patient_visit_weight': 86790.0
-            },
-            {
+                'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'source_file_row': 5,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
+                'year_of_visit': '2000'
+             },
+            {
                 'age': 13140,
-                'patient_visit_weight': 86790.0
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 5, 'sex': 'Male',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             }
         ], rows)
 
@@ -125,53 +122,51 @@ class NAMCSConverterTest(TestCase):
         # Assert rows by field details
         self.assertListEqual([
             {
-                'source_file_ID': '2000_NAMCS',
+                'age': 13140,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 13140,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 2,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V20.20,,',
                 'age': 2190,
-                'patient_visit_weight': 86790.0
-            },
-            {
-                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
-                'sex': 'Female',
-                'year_of_visit': '2000',
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 2, 'sex': 'Male',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V67.59,,',
-                'age': 20805,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V20.20', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
+                'age': 20805,
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 3, 'sex': 'Female',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
+            },
+            {
+                'age': 15695,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 15695,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 5,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
                 'age': 13140,
-                'patient_visit_weight': 86790.0
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 5, 'sex': 'Male',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             }
         ], rows)
 
@@ -184,53 +179,51 @@ class NAMCSConverterTest(TestCase):
         year = 2000
         generator_object = (row for row in [
             {
-                'source_file_ID': '2000_NAMCS',
+                'age': 13140,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 13140,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 2,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V20.20,,',
                 'age': 2190,
-                'patient_visit_weight': 86790.0
-            },
-            {
-                'source_file_ID': '2000_NAMCS', 'source_file_row': 3,
-                'sex': 'Female',
-                'year_of_visit': '2000',
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 2, 'sex': 'Male',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V67.59,,',
-                'age': 20805,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V20.20', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
+                'age': 20805,
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 3, 'sex': 'Female',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
+            },
+            {
+                'age': 15695,
+                'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'year_of_visit': '2000',
                 'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
-                'age': 15695,
-                'patient_visit_weight': 86790.0
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             },
             {
-                'source_file_ID': '2000_NAMCS',
-                'source_file_row': 5,
-                'sex': 'Male',
-                'year_of_visit': '2000',
-                'month_of_visit': 'September',
-                'physician_diagnosis': 'V70.00,,',
                 'age': 13140,
-                'patient_visit_weight': 86790.0
+                'patient_visit_weight': 86790.0,
+                'source_file_row': 5, 'sex': 'Male',
+                'month_of_visit': 'September',
+                'physician_diagnoses': ['V70.00', '', ''],
+                'source_file_ID': '2000_NAMCS',
+                'year_of_visit': '2000'
             }
         ])
 
@@ -355,7 +348,7 @@ class NAMCSConverterTest(TestCase):
             year_wise_mld.get(2001).get("source_file_info")
         )
 
-    @mock.patch("hdx_ahcd.general.namcs_converter.export_to_csv")
+    @mock.patch("hdx_ahcd.controllers.namcs_converter.export_to_csv")
     def test_get_year_wise_generator_for_year_with_export(self,
                                                           mocked_export_to_csv):
         """

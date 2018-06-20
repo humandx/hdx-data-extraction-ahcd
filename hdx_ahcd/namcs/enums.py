@@ -21,7 +21,7 @@ class NAMCSFieldEnum(Enum):
 
     Note:
         Implicitly represent key for creating a dict row in
-        `NAMCS.general.translate_namcs_dataset_file`.
+        `NAMCS.controllers.translate_namcs_dataset_file`.
     """
     SOURCE_FILE_ID = "source_file_ID"
     SOURCE_FILE_ROW = "source_file_row"
@@ -34,12 +34,12 @@ class NAMCSFieldEnum(Enum):
     PATIENT_AGE = "age"
     GENDER = "sex"
     VISIT_WEIGHT = "patient_visit_weight"
-    PHYSICIANS_DIAGNOSIS = "physician_diagnosis"
-    PHYSICIANS_DIAGNOSIS_1 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_1"
-    PHYSICIANS_DIAGNOSIS_2 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_2"
-    PHYSICIANS_DIAGNOSIS_3 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_3"
-    PHYSICIANS_DIAGNOSIS_4 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_4"
-    PHYSICIANS_DIAGNOSIS_5 = PHYSICIANS_DIAGNOSIS  # "physician_diagnosis_5"
+    PHYSICIANS_DIAGNOSES = "physician_diagnoses"
+    PHYSICIANS_DIAGNOSES_1 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_1"
+    PHYSICIANS_DIAGNOSES_2 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_2"
+    PHYSICIANS_DIAGNOSES_3 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_3"
+    PHYSICIANS_DIAGNOSES_4 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_4"
+    PHYSICIANS_DIAGNOSES_5 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_5"
 
 
 class GenderEnum(Enum):

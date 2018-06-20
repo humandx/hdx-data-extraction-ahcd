@@ -3,14 +3,15 @@
 Controller file to initiate NAMCS processing.
 """
 # Python modules
+from collections import defaultdict
 from functools import reduce
 
 # 3rd party modules
 # -N/A
 
 # Other modules
-from hdx_ahcd.general.namcs_converter import get_year_wise_generator
-from hdx_ahcd.general.namcs_extractor import (
+from hdx_ahcd.controllers.namcs_converter import get_year_wise_generator
+from hdx_ahcd.controllers.namcs_extractor import (
     extract_data_zipfile,
     download_namcs_zipfile,
     initiate_namcs_dataset_download,
@@ -21,7 +22,7 @@ from hdx_ahcd.helpers.functions import (
     rename_namcs_dataset_for_year,
     get_iterable
 )
-from hdx_ahcd.scripts.validation import (
+from hdx_ahcd.scripts.namcs_validators import (
     validate_arguments,
     validate_dataset_records
 )
@@ -31,12 +32,12 @@ from hdx_ahcd.utils.exceptions import TrackValidationError
 # -N/A
 
 
-class NAMCSController(object):
+class NAMCSProcessor(object):
     """
     Class to validate and process NAMCS raw dataset files.
     """
     def execute(self, year=None, file_name=None, do_validation=True,
-                do_export=False, force_download=True):
+                do_export=False, force_download=False):
         """
         Method to process NAMCS raw dataset files.
 
@@ -46,18 +47,20 @@ class NAMCSController(object):
             do_validation (:class:`bool`): Flag to indicate if perform
                 validation on `year` and `file_name` default value True to
                 perform validation.
-            do_export (:class:`bool`) : Flag to indicate if to dump the
+            do_export (:class:`bool`): Flag to indicate if to dump the
                 converted raw NAMCS patient case data into CSV file as
                 defined by `CONVERTED_CSV_FILE_NAME_SUFFIX` for
                 given year default value False.
-            force_download (:class:`bool`) : Whether to force download
-                NAMCS raw dataset file even if it exists,Default value True.
+            force_download (:class:`bool`): Whether to force download
+                NAMCS raw dataset file even if it exists,Default value False.
         
         Returns:
-            :class:`defaultdict` : Dictionary containing generator of
-                converted raw NAMCS patient case data for given year.
+            :class:`defaultdict`: Dictionary containing
+                generator of converted raw NAMCS patient case data
+                for given year, if any errors occurred, log errors and return
+                empty dict.
         """
-        year_wise_mld = dict()
+        year_wise_mld = defaultdict(dict)
 
         if year or file_name:
             if not isinstance(year, (tuple, list)):
@@ -70,8 +73,12 @@ class NAMCSController(object):
             do_validation = False
 
         if do_validation:
-            if not self.validate(year, file_name):
-                return TrackValidationError()
+            validation_success, validation_object = \
+                self.validate(year, file_name)
+            if not validation_success:
+                # Log all the validation errors
+                validation_object.show_errors()
+                return year_wise_mld
 
         # Process file
         # Case 1: when file_name is not given and year = 1973
@@ -118,8 +125,15 @@ class NAMCSController(object):
         Parameters:
             year (:class:`int`): NAMCS year.
             file_name (:class:`str`): NAMCS raw dataset file name.
+
+        Returns:
+            :class:`tuple`: With elements as
+                :class:`bool`: Flag to indicate if any errors occurred
+                    during execution.
+                 :class:`TrackValidationError`: TrackValidationError
+                    object having errors, if any.
         """
-        validation_objs = []
+        validation_objects = []
 
         # Tuple of methods to invoke when performing validation
         methods_to_call = (
@@ -127,13 +141,9 @@ class NAMCSController(object):
             validate_dataset_records
         )
         for method in methods_to_call:
-            validation_objs.append(method(year, file_name))
+            validation_objects.append(method(year, file_name))
 
         # Reduce TrackValidationError object into single object
-        validation_obj = reduce(TrackValidationError.add, validation_objs)
+        validation_obj = reduce(TrackValidationError.add, validation_objects)
 
-        # Log all the validation errors
-        if not validation_obj.is_valid:
-            validation_obj.show_errors()
-
-        return validation_obj.is_valid
+        return validation_obj.is_valid, validation_obj

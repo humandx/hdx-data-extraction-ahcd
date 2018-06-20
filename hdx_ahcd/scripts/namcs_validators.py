@@ -41,12 +41,16 @@ def validate_dataset_records(year, file_name):
             errors, if any.
     """
     validation_obj = TrackValidationError()
-    if not file_name and isinstance(year, (tuple, list)):
+    if not file_name or isinstance(year, (tuple, list)):
         return validation_obj
+    _validation_object = _check_if_file_exists(file_name)
+    if not _validation_object.is_valid:
+        return _validation_object
     with open(file_name, "r") as file_handle:
-        random_records = map(lambda record: record[1],
-                             safe_read_file(file_handle))
-        random_record = list(random_records)[randint(0, 4)]
+        random_records = list(map(lambda record: record[1],
+                                  safe_read_file(file_handle)))
+        random_record_choice = randint(0, 4)
+        random_record = random_records[random_record_choice]
     random_record_length = len(random_record)
     if random_record_length != NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]:
         validation_obj.errors.append(

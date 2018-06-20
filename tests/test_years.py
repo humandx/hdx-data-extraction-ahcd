@@ -6,7 +6,7 @@ Utility methods for NAMCS data model.
 from unittest import TestCase
 
 # Other modules
-from hdx_ahcd.mapper.years import Year1973
+from hdx_ahcd.mappers.years import Year1973
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 
@@ -31,9 +31,9 @@ class Year1973Test(TestCase):
                 NAMCSFieldEnum.MONTH_OF_BIRTH.value,
                 NAMCSFieldEnum.YEAR_OF_BIRTH.value,
                 NAMCSFieldEnum.GENDER.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_1.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_2.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSIS_3.value,
+                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_1.value,
+                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_2.value,
+                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
                 NAMCSFieldEnum.VISIT_WEIGHT.value,
             ]
 
@@ -64,7 +64,7 @@ class Year1973Test(TestCase):
                 'start': 70,
                 'stop': 80
             },
-            'physician_diagnosis': [
+            'physician_diagnoses': [
                 {
                     'start': 38,
                     'stop': 42,
