@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Utility methods for NAMCS data model.
+Tests for module utils.utils
 """
 # Python modules
-from unittest import TestCase, main
+from unittest import TestCase
 
 # 3rd party modules
 # -N/A
@@ -17,7 +17,7 @@ from hdx_ahcd.utils.utils import (
 
 class RangeDictTest(TestCase):
     """
-    Test cases for class RangeDict.
+    Test cases for :class:`RangeDict`.
     """
     def test_verify_new_object(self):
         """
@@ -126,7 +126,7 @@ class RangeDictTest(TestCase):
         expected_keys = ["key_1", "key_2", "key_3"]
         expected_values = ["value_1", "value_2", "value_3"]
         expected_items = \
-            [("key_1","value_1"), ("key_2","value_2"), ("key_3","value_3")]
+            [("key_1", "value_1"), ("key_2", "value_2"), ("key_3", "value_3")]
 
         # Creating object of RangeDict and inserting keys in dictionary
         range_dict = RangeDict(
@@ -163,7 +163,7 @@ class RangeDictTest(TestCase):
 
 class NAMCSMetaMappingsTest(TestCase):
     """
-    Test cases for class NAMCSMetaMappings.
+    Test cases for :class:`NAMCSMetaMappings`.
     """
     def test_verify_new_object(self):
         """
@@ -171,8 +171,8 @@ class NAMCSMetaMappingsTest(TestCase):
         """
         # Expected attributes
         expected_attributes = {
-            "test_field_length": "10",
-            "test_field_location": "5-6",
+            "test_field_length": 10,
+            "test_field_location": 5,
             "test_field_name": "test"
         }
 
@@ -204,8 +204,8 @@ class NAMCSMetaMappingsTest(TestCase):
         """
         # Expected attributes
         expected_attributes = {
-            "test_field_length": "10",
-            "test_field_location": "5",
+            "test_field_length": 11,
+            "test_field_location": 5,
             "test_field_name": "test"
         }
 
@@ -229,7 +229,3 @@ class NAMCSMetaMappingsTest(TestCase):
             expected_attributes.get("test_field_location"),
             namcs_meta_mappings_object.field_location
         )
-
-
-if __name__ == '__main__':
-    main()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-This file contains parameters related to initialization of package.
+Module to expose API for processing NAMCS dataset file(s).
 """
 # Other modules
 from hdx_ahcd.controllers.namcs_processors import NAMCSProcessor as \
@@ -17,22 +17,21 @@ def get_cleaned_data_by_year(**kwargs):
     Args:
         **kwargs (:class:`dict`) : Following are permissible parameters.
             year (:class:`int` or :class:`tuple` or :class:`list`): NAMCS year.
-            file_name (:class:`str`): NAMCS raw dataset file name.
-            do_validation (:class:`bool`): Flag to indicate if perform
-                validation on `year` and `file_name` default value True to
-                perform validation.
-            do_export (:class:`bool`) : Flag to indicate if to dump the
-                converted raw NAMCS patient case data into CSV file as
-                defined by `CONVERTED_CSV_FILE_NAME_SUFFIX` for
-                given year default value False.
-            force_download (:class:`bool`) : Whether to force download
-                NAMCS raw dataset file even if it exists,Default value False.
+            file_name (:class:`str`): NAMCS dataset file name.
+            do_validation (:class:`bool`): If to perform validation
+                on `year` and `file_name`. *Default** :const:`True`.
+            do_export (:class:`bool`): Output translated  data into csv file.
+            *Default** :const:`False`.
+            force_download (:class:`bool`): Whether to force download
+                NAMCS raw dataset file even if data set file exists locally.
+                *Default** :const:`False`.
     Returns:
-        :class:`defaultdict`: Dictionary containing
-            generator of converted raw NAMCS patient case data
-            for given year, if any errors occurred, log errors and return
-            empty dict.
+        :class:`defaultdict`: Dictionary containing generator of converted
+            NAMCS patient case data for given year along with source file info.
+            Further if `do_export` is True, it returns the absolute path of csv
+            file where the data is exported.
     Usage:
+
     Case 1: Downloading NAMCS data for single year (say, 1973). If the file is
         already present in the downloaded_files then process the downloaded
         file.
@@ -151,8 +150,8 @@ def get_cleaned_data_by_year(**kwargs):
                           'year': '75',
                           'zip_file_name': 'namcs75.exe'}}})
 
-    Case 5: Forcefully download and then export the processed NAMCS data for all
-        years.
+        Case 5: Forcefully download and then export the processed NAMCS data for all
+            years.
     >>> gen =  get_cleaned_data_by_year(force_download=True)
     INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe for year:1973
     INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe for year:1975
@@ -368,4 +367,3 @@ def get_cleaned_data_by_year(**kwargs):
     ERROR:hdx_ahcd:NAMCS dataset file:/var/tmp/2015 doesn't exist
     """
     return __Processor().execute(**kwargs)
-

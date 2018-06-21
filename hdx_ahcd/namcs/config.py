@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-This file contains all configurable data,
+HDX AHCD configuration module.
 Each entity in this file represents a necessary yet configurable details.
 """
 # Python modules
@@ -30,9 +30,6 @@ CONVERTED_CSV_FIELDS = (
     NAMCSFieldEnum.GENDER.value,
     NAMCSFieldEnum.PATIENT_AGE.value,
     NAMCSFieldEnum.PHYSICIANS_DIAGNOSES.value,
-    # NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_1.value,
-    # NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_2.value,
-    # NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value
     NAMCSFieldEnum.VISIT_WEIGHT.value,
 )
 

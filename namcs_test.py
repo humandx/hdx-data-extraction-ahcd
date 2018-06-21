@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Script to perform regression for extraction and conversion for all namcs year.
+Module to test extraction and conversion process of NAMCS dataset(s) for all
+NAMCS year.
 """
 # Python modules
 import csv
@@ -32,8 +33,17 @@ TSV_FILE_PATH = "/tmp/namcs_data_for_all_years.tsv"
 
 def namcs_regression_test():
     """
-    To extract and translate namcs data for all years, and report errors
-    during same.
+    Invoke method `get_cleaned_data_by_year` for all NAMCS years configured
+    by parameter `YEARS_AVAILABLE` and report errors occurred during execution
+    for any NAMCS year it includes reporting of errors occurred while accessing
+    `generator` returned by `get_cleaned_data_by_year`.If no errors are occurred
+    append all the records for in the output file denoted by `TSV_FILE_PATH`.
+    On successful execution file `TSV_FILE_PATH` will contain all records for
+    for all NAMCS years.
+
+    Note:
+        This is strictly for dev  purpose, no actual test case or test suite
+        are used to perform regression.
     """
     with open(TSV_FILE_PATH, "w") as file_handle:
         tsv_writer = csv.DictWriter(file_handle,
@@ -46,19 +56,19 @@ def namcs_regression_test():
 
         namcs_data_all_years = get_cleaned_data_by_year()
         for year in YEARS_AVAILABLE:
-            LOG.info("Processing year:{}".format(year))
-            namcs_data_year = namcs_data_all_years[year]
+            LOG.debug("Processing year:{}".format(year))
+            namcs_data_year = namcs_data_all_years.get(year)
             try:
-                LOG.info("Using generator for year:{}".format(year))
-                translated_data_gen = namcs_data_year['generator']
-            except Exception as e:
+                LOG.debug("Using generator for year:{}".format(year))
+                translated_data_gen_obj = namcs_data_year.get('generator')
+            except Exception as exc:
                 LOG.error("Error:'{}', while "
                           "processing generator "
                           "for year:{}, moving "
-                          "to next year".format(str(e), year))
+                          "to next year".format(str(exc), year))
                 continue
-            LOG.info("Writing data to tsv file.....\n")
-            for record_no, record in enumerate(translated_data_gen):
+            LOG.debug("Writing data to tsv file.")
+            for record_no, record in enumerate(translated_data_gen_obj):
                 try:
                     tsv_writer.writerow(record)
                 except Exception as exc:
@@ -71,8 +81,8 @@ def namcs_regression_test():
                 LOG.info("Total records:[{}] "
                          "written for year:[{}]".format(record_no+1, year))
 
-            # Error file name
             source_file_id = get_normalized_namcs_file_name(year)
+            # Error file path
             error_file = os.path.join(
                 ERROR_FILES_DIR_PATH,
                 get_customized_file_name(source_file_id, extension="err")

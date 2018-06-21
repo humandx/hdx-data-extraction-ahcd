@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Decorator file containing all decorators.
+Module to define decorators.
 """
 # Python modules
 import os
@@ -54,7 +54,8 @@ def add_method_to_mapping_dict(method_identifiers):
         from hdx_ahcd.helpers.functions import get_iterable
         method_identifiers = get_iterable(method_identifiers)
 
-        # Adding all method name identifiers to global dict of MAPPINGS
+        # Adding all method name identifiers
+        # to global dict CONVERSION_METHOD_MAPPING
         for identifier in method_identifiers:
             CONVERSION_METHOD_MAPPING[identifier] = method_to_decorate
 
@@ -86,7 +87,7 @@ def catch_exception(re_raise=False):
 
     Parameters:
         re_raise (:class:`bool`): To catch exception, perform logging and
-            again raise same exception to catch in parent block.
+            again raise same exception which can be catch in parent block.
 
     Returns:
         :class:`function`: Decorated method with `try_except` context manager.
@@ -143,7 +144,7 @@ def catch_exception(re_raise=False):
                                 "field".format(method_name) \
                     if method_name else str(exc)
 
-                # re_raise=True
+                # Since re_raise=True, raise exception again
                 raise Exception(exception_msg)
         return _wrapper
 

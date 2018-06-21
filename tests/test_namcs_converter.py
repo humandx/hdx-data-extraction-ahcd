@@ -39,7 +39,7 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_generator_by_year`
         generator_obj = get_generator_by_year(year)
 
         # Assert if the object returned is a generator
@@ -56,47 +56,50 @@ class NAMCSConverterTest(TestCase):
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 2190,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 2, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 2,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V20.20', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 20805,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 3, 'sex': 'Female',
-                'month_of_visit': 'September',
+                'source_file_row': 3,
+                'sex': 'Female',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 15695,
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
              },
             {
                 'age': 13140,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 5, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 5,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             }
         ], rows)
 
@@ -108,7 +111,7 @@ class NAMCSConverterTest(TestCase):
         # Setup
         year = 2000
 
-        # Call to method
+        # Call to func :func:`get_generator_by_year`
         generator_obj = get_generator_by_year(year, os.path.join(
             os.path.dirname(__file__), "data", "2000_NAMCS"))
 
@@ -126,47 +129,50 @@ class NAMCSConverterTest(TestCase):
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 2190,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 2, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 2,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V20.20', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 20805,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 3, 'sex': 'Female',
-                'month_of_visit': 'September',
+                'source_file_row': 3,
+                'sex': 'Female',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 15695,
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 13140,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 5, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 5,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             }
         ], rows)
 
@@ -183,47 +189,50 @@ class NAMCSConverterTest(TestCase):
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 1,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 2190,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 2, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 2,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V20.20', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 20805,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 3, 'sex': 'Female',
-                'month_of_visit': 'September',
+                'source_file_row': 3,
+                'sex': 'Female',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V67.59', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 15695,
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 4,
                 'sex': 'Male',
-                'month_of_visit': 'September',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             },
             {
                 'age': 13140,
                 'patient_visit_weight': 86790.0,
-                'source_file_row': 5, 'sex': 'Male',
-                'month_of_visit': 'September',
+                'source_file_row': 5,
+                'sex': 'Male',
+                'month_of_visit': 9,
                 'physician_diagnoses': ['V70.00', '', ''],
                 'source_file_ID': '2000_NAMCS',
-                'year_of_visit': '2000'
+                'year_of_visit': 2000
             }
         ])
 
@@ -231,7 +240,7 @@ class NAMCSConverterTest(TestCase):
         namcs_converter.NAMCS_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`export_to_csv`
         converted_file_path = export_to_csv(year, generator_object)
 
         # Assert return value
@@ -254,7 +263,7 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_year_wise_generator`
         year_wise_mld = get_year_wise_generator(year)
 
         # Assert if the year wise dict has generator object
@@ -282,10 +291,10 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_year_wise_generator`
         year_wise_mld = get_year_wise_generator(
             year = 2000,
-            namcs_raw_dataset_file =
+            namcs_dataset_file=
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
         )
 
@@ -317,7 +326,7 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_year_wise_generator`
         year_wise_mld = get_year_wise_generator(years)
 
         # Assert if the year wise dict has generator object
@@ -362,7 +371,7 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_year_wise_generator`
         year_wise_mld = get_year_wise_generator(years, do_export=True)
 
         # Assert if the year wise dict has generator object
@@ -416,7 +425,7 @@ class NAMCSConverterTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`get_year_wise_generator`
         year_wise_mld = get_year_wise_generator()
 
         for year in YEARS_AVAILABLE:

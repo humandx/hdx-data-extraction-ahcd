@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Module for constants used by NAMCS-NAHMCS extractor
+Module to define constants used in package hdx_ahcd..
 """
-
 # Diagnosis code and their default string representation
 ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS = {
     "900000": "Blank",

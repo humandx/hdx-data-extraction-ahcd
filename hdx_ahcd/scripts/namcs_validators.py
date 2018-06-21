@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-File containing methods for validation.
+Module containing methods for validation.
 """
 # Python modules
 import os
@@ -15,11 +15,15 @@ from hdx_ahcd.helpers.functions import (
     get_normalized_namcs_file_name,
     get_year_from_dataset_file_name,
     get_iterable,
-    safe_read_file)
+    safe_read_file
+)
 from hdx_ahcd.namcs.config import (
     YEARS_AVAILABLE,
-    NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR)
+    NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR
+)
 from hdx_ahcd.utils.exceptions import TrackValidationError
+from utils.context import try_except
+
 
 # Global vars
 # -N/A
@@ -41,25 +45,30 @@ def validate_dataset_records(year, file_name):
             errors, if any.
     """
     validation_obj = TrackValidationError()
+
     if not file_name or isinstance(year, (tuple, list)):
         return validation_obj
+
+    # Check if file exists or not .
     _validation_object = _check_if_file_exists(file_name)
     if not _validation_object.is_valid:
         return _validation_object
-    with open(file_name, "r") as file_handle:
-        random_records = list(map(lambda record: record[1],
-                                  safe_read_file(file_handle)))
-        random_record_choice = randint(0, 4)
-        random_record = random_records[random_record_choice]
-    random_record_length = len(random_record)
-    if random_record_length != NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]:
-        validation_obj.errors.append(
-            "NAMCS dataset file <{}> has record length <{}> whereas <{}> is "
-            "expected.".format(
-                file_name, random_record_length,
-                NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]
+    with try_except():
+        with open(file_name, "r") as file_handle:
+            random_records = list(map(lambda record: record[1],
+                                      safe_read_file(file_handle)))
+            random_record_choice = randint(0, 4)
+            random_record = random_records[random_record_choice]
+            random_record_length = len(random_record)
+        if random_record_length != \
+                NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]:
+            validation_obj.errors.append(
+                "NAMCS dataset file <{}> has record length <{}> whereas <{}> is"
+                "expected.".format(
+                    file_name, random_record_length,
+                    NAMCS_PUBLIC_FILE_RECORD_LENGTH_BY_YEAR[year]
+                )
             )
-        )
 
     return validation_obj
 
@@ -79,18 +88,26 @@ def validate_arguments(year, file_name):
         :class:`TrackValidationError`: TrackValidationError object having
             errors, if any.
     """
-    validation_objs = []
+    validation_objects = []
+
+    if isinstance(year, (tuple, list)) and file_name is not None:
+        return TrackValidationError().errors.append(
+            "With multiple NAMCS years:{} as argument,"
+            "file_name argument is not supported".format(year)
+        )
 
     # Dataset year provided
     if year:
-        validation_objs.append(_validate_namcs_year(year))
+        validation_objects.append(_validate_namcs_year(year))
 
     # Dataset file name provided
     if file_name:
-        validation_objs.append(_validate_dataset_file_name(file_name))
-        validation_objs.append(_validate_year_from_dataset_file_name(file_name))
+        validation_objects.append(_validate_dataset_file_name(file_name))
+        validation_objects.append(
+            _validate_year_from_dataset_file_name(file_name)
+        )
 
-    validation_obj = reduce(TrackValidationError.add, validation_objs)
+    validation_obj = reduce(TrackValidationError.add, validation_objects)
     return validation_obj
 
 
@@ -121,10 +138,11 @@ def _check_if_file_exists(file_name):
 
 def _validate_dataset_file_name_format(file_name):
     """
-    Method to validate if the file name specified by user is per expectations.
+    Method to validate if the file name specified by user is per format
+    <YEAR>_NAMCS.
 
     Parameters:
-        file_name (:class:`str`): NAMCS raw dataset file name.
+        file_name (:class:`str`): NAMCS dataset file name.
 
     Returns:
         :class:`TrackValidationError`: TrackValidationError object having
@@ -180,11 +198,11 @@ def _validate_dataset_file_name(file_name):
             errors, if any.
     """
     # Check if file exists and Validate file name format
-    validation_objs = [_check_if_file_exists(file_name),
-                       _validate_dataset_file_name_format(file_name)]
+    validation_objects = [_check_if_file_exists(file_name),
+                          _validate_dataset_file_name_format(file_name)]
 
     # Reduce list of `TrackValidationError` object into single object
-    validation_obj = reduce(TrackValidationError.add, validation_objs)
+    validation_obj = reduce(TrackValidationError.add, validation_objects)
     return validation_obj
 
 
@@ -207,5 +225,4 @@ def _validate_namcs_year(year):
                 "Year {} is not valid year, please specify valid years"
                 ",valid years are :{}".format(_year, YEARS_AVAILABLE)
             )
-
     return validation_obj
