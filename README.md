@@ -5,12 +5,13 @@ https://www.cdc.gov/nchs/ahcd/about_ahcd.htm.
   - # NAMCS
     The National Ambulatory Medical Care Survey (NAMCS) is a national survey designed to meet the need for objective, reliable information about the provision and use of ambulatory medical care services in the United States. Findings are based on a sample of visits to nonfederally employed office-based physicians who are primarily engaged in direct patient care.
   - # NHAMCS
-    The National Hospital Ambulatory Medical Care Survey (NHAMCS) is designed to collect data on the utilization and provision of ambulatory care services in hospital emergency and outpatient departments, and in ambulatory surgery centers
+    The National Hospital Ambulatory Medical Care Survey (NHAMCS) is designed to collect data on the utilization and provision of ambulatory care services in hospital emergency and outpatient departments, and in ambulatory surgery centers.
 
 # Code Structure
->   **hdx_ahcd** serves as base directory
+>   **hdx_ahcd** serves as base directory.
 ```sh
 hdx_ahcd
+├── api.py
 ├── controllers
 │   ├── __init__.py
 │   ├── namcs_converter.py
@@ -19,6 +20,7 @@ hdx_ahcd
 ├── helpers
 │   ├── functions.py
 │   └── __init__.py
+├── __init__.py
 ├── mappers
 │   ├── functions.py
 │   ├── __init__.py
@@ -38,29 +40,30 @@ hdx_ahcd
     ├── __init__.py
     └── utils.py
 ```
+* api - API to process NAMCS dataset file(s).
 * controllers
-    - namcs_extractor.py - download and extract public NAMCS data
-    - namcs_converter.py - process and convert NAMCS data in human readable format
-    - namcs_processors - provide common entry point for execution
-* helpers - various methods for manipulating dataset and it's details
+    - namcs_extractor.py - Download and extract public NAMCS data.
+    - namcs_converter.py - Process and convert NAMCS data in human readable form.
+    - namcs_processors - Provide common entry point for execution.
+* helpers - Various methods for manipulating dataset and it's details.
 * mappers
-    - helpers - methods to translate raw data from dataset to human readable format
-    - years - year wise NAMCS details like fields, their position in dataset, length etc.
-* namcs - contains configurable parameters and constants
+    - helpers - Methods to translate raw data from dataset to human readable format.
+    - years - Year wise NAMCS details like fields, field location, length etc.
+* namcs - Contains configurable parameters and constants.
 * scripts
-    - namcs_validators - validation of dataset and parameters provided while invoking script controllers
-* utils - contains useful decorators, context managers etc.
-* namcs_test.py - script to perform regression for all namcs year(DEV purpose only).
-### Fields
+    - namcs_validators - Validation of dataset and parameters provided while invoking script namcs_processors.
+* utils - Contains useful decorators, context managers etc.
+* namcs_test - Script to perform regression for all namcs year(DEV purpose only).
+### Supported fields
 -----
-- date_of_visit - patient date of visit
-- date_of_birth - patient date of birth
-- year_of_visit - patient year of visit
-- year_of_birth - patient year of birth
-- month_of_visit - patient month of visit
-- month_of_birth - patient month of birth
-- patient_age - patient age in days
-- gender - patient gender
+- date_of_visit - Patient date of visit.
+- date_of_birth - Patient date of birth.
+- year_of_visit - Patient year of visit.
+- year_of_birth - Patient year of birth.
+- month_of_visit - Patient month of visit.
+- month_of_birth - Patient month of birth.
+- patient_age - Patient age in days.
+- gender - Patient gender.
 - physician_diagnoses - ICD-9-CM code (International Classification of Diseases, 9th Revision, Clinical Modification) for Diagnostic information
 - visit_weight - The "patient visit weight" is a vital component in the
 process of producing national estimates from sample data,
@@ -113,11 +116,16 @@ pip install hdx_ahcd
 ```sh
 >>> import hdx_ahcd
 >>> from hdx_ahcd.api import get_cleaned_data_by_year
+>>> import pprint
+>>> pp =pprint.PrettyPrinter(indent=4)
+```
+> Case 1: Downloading NAMCS data for single year (say, 1973). If the file is
+        already present in the downloaded_files then process the downloaded
+        file.
+```sh
 >>> gen =  get_cleaned_data_by_year(year=1973)
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov
 /pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe for year:1973
->>> import pprint
->>> pp =pprint.PrettyPrinter(indent=4)
 >>> pp.pprint(gen)
 defaultdict(<class 'dict'>,
         {   1973: {   'generator': <generator object get_generator_by_year at 0x7fe4b6480150>,
@@ -125,6 +133,11 @@ defaultdict(<class 'dict'>,
                       'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
                       'year': '73',
                       'zip_file_name': 'namcs73.exe'}}})
+```
+> Case 2: Downloading NAMCS data for multiple years (say, 1973 and 1975).
+        If the file is already present in the downloaded_files then process the
+        downloaded file.
+```sh
 >>> gen =  get_cleaned_data_by_year(year= (1973,1975))
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov
 /pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe for year:1975
@@ -141,6 +154,9 @@ defaultdict(<class 'dict'>,
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe',
                           'year': '75',
                           'zip_file_name': 'namcs75.exe'}}})
+```
+> Iterating over generator
+```sh
 >>> pp.pprint(next(gen.get(1973).get('generator')))
 {   'age': 22889,
     'month_of_visit': 'June',
@@ -159,6 +175,10 @@ defaultdict(<class 'dict'>,
     'source_file_ID': '1975_NAMCS',
     'source_file_row': 1,
     'year_of_visit': '1975'}
+```
+> Case 3: Forcefully download and then process the NAMCS data for multiple
+        years (say, 1973 and 1975).
+```sh
 >>> gen =  get_cleaned_data_by_year(year= (1973,1975), force_download=True)
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe for year:1973
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe for year:1975
@@ -174,8 +194,11 @@ defaultdict(<class 'dict'>,
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe',
                           'year': '75',
                           'zip_file_name': 'namcs75.exe'}}})
->>> gen =  get_cleaned_data_by_year(year= (1973,1975), force_download=True,
- do_export=True)
+```
+> Case 4: Forcefully download and then export the processed NAMCS data for
+        multiple years (say, 1973 and 1975) in separate csv files.
+```sh
+>>> gen =  get_cleaned_data_by_year(year= (1973,1975), force_download=True, do_export=True)
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe for year:1973
 INFO:hdx_ahcd:Finished writing to the file /home/velotio/.hdx_ahcd/data/1973_NAMCS_CONVERTED.csv
 INFO:hdx_ahcd:Downloading file:ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe for year:1975
@@ -196,6 +219,10 @@ defaultdict(<class 'dict'>,
                       /NCHS/namcs_public_use_files/namcs75.exe',
                       'year': '75',
                       'zip_file_name': 'namcs75.exe'}}})
+```
+> Case 5: Process the provided NAMCS data set file. In this case file name is
+        assumed to follow "YEAR_NAMCS" format.
+```sh
 >>> gen = get_cleaned_data_by_year(file_name="/var/tmp/2015_NAMCS")
 >>> pp.pprint(gen)
 defaultdict(<class 'dict'>,
@@ -225,17 +252,6 @@ pip uninstall hdx_ahcd
 ```
 ### Scope
 -----
- - Supported fields are
-    - date_of_visit
-    - date_of_birth
-    - year_of_visit
-    - year_of_birth
-    - month_of_visit
-    - month_of_birth
-    - patient_age
-    - gender
-    - physician_diagnoses
-    - visit_weight
- - Support for NHAMCS data set to be added in subsequent releases
- - Unsupported years due to missing data sets on CDC server
+ - Support for NHAMCS data set to be added in subsequent releases.
+ - Unsupported years due to missing data sets on CDC server.
     - 1974, 1982, 1983, 1984, 1986, 1987, 1988, 1991

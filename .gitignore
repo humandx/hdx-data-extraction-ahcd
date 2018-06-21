@@ -34,3 +34,4 @@ hdx_ahcd/controllers/__pycache__/namcs_converter.cpython-35.pyc
 hdx_ahcd/controllers/__pycache__/namcs_extractor.cpython-35.pyc
 hdx_ahcd/controllers/__pycache__/namcs_processors.cpython-35.pyc
 
+hdx_ahcd.egg-info/

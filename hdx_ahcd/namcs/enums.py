@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module for enums used by NAMCS-NAHMCS extractor
+Module that defines enums used in package hdx_ahcd.
 """
 # Python modules
 from enum import Enum
@@ -20,8 +20,8 @@ class NAMCSFieldEnum(Enum):
     Enums for defining field names for NAMCS dataset.
 
     Note:
-        Implicitly represent key for creating a dict row in
-        `NAMCS.controllers.translate_namcs_dataset_file`.
+        Implicitly represent key while creating a converted record in
+        `hdx_ahcd.controllers.namcs_converter.get_generator_by_year`.
     """
     SOURCE_FILE_ID = "source_file_ID"
     SOURCE_FILE_ROW = "source_file_row"
@@ -42,9 +42,18 @@ class NAMCSFieldEnum(Enum):
     PHYSICIANS_DIAGNOSES_5 = PHYSICIANS_DIAGNOSES  # "physician_diagnoses_5"
 
 
+class NAMCSErrorFieldEnum(Enum):
+    """
+    Enums for defining field names for NAMCS dataset error file.
+    """
+    RECORD_NUMBER = "record_no"
+    RECORD = "record"
+    EXCEPTION = "exception"
+
+
 class GenderEnum(Enum):
     """
-    Enums for gender.
+    Enums for defining values for gender.
     """
     FEMALE = "Female"
     MALE = "Male"

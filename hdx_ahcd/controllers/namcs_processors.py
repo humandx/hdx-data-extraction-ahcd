@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-Controller file to initiate NAMCS processing.
+Module containing methods to initiate NAMCS dataset file processing.
 """
 # Python modules
 from collections import defaultdict
@@ -11,17 +11,9 @@ from functools import reduce
 
 # Other modules
 from hdx_ahcd.controllers.namcs_converter import get_year_wise_generator
-from hdx_ahcd.controllers.namcs_extractor import (
-    extract_data_zipfile,
-    download_namcs_zipfile,
-    initiate_namcs_dataset_download,
-)
-from hdx_ahcd.helpers.functions import (
-    get_namcs_dataset_path_for_year,
-    get_year_from_dataset_file_name,
-    rename_namcs_dataset_for_year,
-    get_iterable
-)
+from hdx_ahcd.controllers.namcs_extractor import initiate_namcs_dataset_download
+
+from hdx_ahcd.helpers.functions import get_year_from_dataset_file_name
 from hdx_ahcd.scripts.namcs_validators import (
     validate_arguments,
     validate_dataset_records
@@ -34,89 +26,78 @@ from hdx_ahcd.utils.exceptions import TrackValidationError
 
 class NAMCSProcessor(object):
     """
-    Class to validate and process NAMCS raw dataset files.
+    Class to validate and process NAMCS dataset file(s).
     """
     def execute(self, year=None, file_name=None, do_validation=True,
                 do_export=False, force_download=False):
         """
-        Method to process NAMCS raw dataset files.
+        Method to process NAMCS raw dataset file(s).
 
         Parameters:
             year (:class:`int` or :class:`tuple` or :class:`list`): NAMCS year.
-            file_name (:class:`str`): NAMCS raw dataset file name.
-            do_validation (:class:`bool`): Flag to indicate if perform
-                validation on `year` and `file_name` default value True to
-                perform validation.
-            do_export (:class:`bool`): Flag to indicate if to dump the
-                converted raw NAMCS patient case data into CSV file as
-                defined by `CONVERTED_CSV_FILE_NAME_SUFFIX` for
-                given year default value False.
+            file_name (:class:`str`): NAMCS dataset file name.
+            do_validation (:class:`bool`): If to perform validation
+                on `year` and `file_name`. *Default** :const:`True`.
+            do_export (:class:`bool`): Output translated  data into csv file.
+            *Default** :const:`False`.
             force_download (:class:`bool`): Whether to force download
-                NAMCS raw dataset file even if it exists,Default value False.
-        
+                NAMCS raw dataset file even if data set file exists locally.
+                *Default** :const:`False`.
         Returns:
-            :class:`defaultdict`: Dictionary containing
-                generator of converted raw NAMCS patient case data
-                for given year, if any errors occurred, log errors and return
-                empty dict.
+            :class:`defaultdict`: Dictionary containing generator of converted
+                NAMCS patient case data for given year along with source file
+                info Further if `do_export` is True, it returns
+                the absolute path of csv file where the data is exported.
         """
-        year_wise_mld = defaultdict(dict)
+        year_wise_translated_data = defaultdict(dict)
 
-        if year or file_name:
-            if not isinstance(year, (tuple, list)):
-                year = int(year or get_year_from_dataset_file_name(file_name))
-                file_name = file_name or get_namcs_dataset_path_for_year(year)
-            # Do validation if multiple years are specified to
-            # check each year is present in `YEARS_AVAILABLE`
-        else:
-            # Skip validation if neither year nor filename is specified
+        # Skip validation if neither year nor filename is specified.
+        if year is None and file_name is None:
             do_validation = False
 
         if do_validation:
-            validation_success, validation_object = \
+            is_validation_success, validation_object = \
                 self.validate(year, file_name)
-            if not validation_success:
+
+            # Validation failed.
+            if not is_validation_success:
                 # Log all the validation errors
                 validation_object.show_errors()
-                return year_wise_mld
 
-        # Process file
-        # Case 1: when file_name is not given and year = 1973
-        # Case 2: when file_name is not given and year = (1973,1975,1977)
-        if year:
-            year = get_iterable(year)
-            for _year in year:
-                # Checking if NAMCS dataset file already exists in the
-                # `EXTRACTED_DATA_DIR_PATH`
-                if get_namcs_dataset_path_for_year(_year) is None or \
-                        force_download:
-                    # Download and process file for year
-                    full_file_name = download_namcs_zipfile(_year)
-                    # Extract downloaded zipped file
-                    extract_data_zipfile(_year, full_file_name)
-                    # Renaming NAMCS file
-                    rename_namcs_dataset_for_year(_year)
-                # Processing file for year
-                year_wise_mld.update(
-                    get_year_wise_generator(_year, do_export = do_export)
-                )
+                return year_wise_translated_data
 
-        elif not (year and file_name):
-            # Download and extract files for all years
-            initiate_namcs_dataset_download(force_download = force_download)
+        if file_name and year is None:
+            year = int(year or get_year_from_dataset_file_name(file_name))
+
+        # Case 1: Data set file not provided.
+        if file_name is None:
+            # Case 1: `year` is None
+            # In this case method `initiate_namcs_dataset_download` and
+            # `get_year_wise_generator` will process data for all NAMCS years
+            # defined by parameter `YEARS_AVAILABLE`
+            # Case 2: `year` = 1973
+            # Case 3: `year` = (1973,1975,1977)
+            # In case 2 and 3 method `initiate_namcs_dataset_download` will
+            # download dataset file if it doesn't exists locally or
+            # `force_download` set to True
+            # Download and extract files for `year`
+            initiate_namcs_dataset_download(year=year,
+                                            force_download = force_download)
             # Translate dataset for all files
-            year_wise_mld = get_year_wise_generator()
-
+            year_wise_translated_data = get_year_wise_generator(
+                year = year,do_export = do_export
+            )
+        # Case 2: Year and dataset file name provided.
         elif year and file_name:
-            # Processing file for year
-            year_wise_mld = \
+            # Processing `file_name` for `year`
+            year_wise_translated_data = \
                 get_year_wise_generator(
                     year,
-                    namcs_raw_dataset_file = file_name,
+                    namcs_dataset_file = file_name,
                     do_export = do_export
                 )
 
-        return year_wise_mld
+        return year_wise_translated_data
 
     def validate(self, year, file_name):
         """
@@ -133,17 +114,15 @@ class NAMCSProcessor(object):
                  :class:`TrackValidationError`: TrackValidationError
                     object having errors, if any.
         """
-        validation_objects = []
-
         # Tuple of methods to invoke when performing validation
-        methods_to_call = (
-            validate_arguments,
-            validate_dataset_records
-        )
-        for method in methods_to_call:
-            validation_objects.append(method(year, file_name))
+        methods_to_call = (validate_arguments, validate_dataset_records)
 
-        # Reduce TrackValidationError object into single object
+        # Call to :func:`validate_arguments` and
+        # :func:`validate_dataset_records`
+        validation_objects = \
+            [method(year, file_name) for method in methods_to_call]
+
+        # Reduce :class:`TrackValidationError` object into single object
         validation_obj = reduce(TrackValidationError.add, validation_objects)
 
         return validation_obj.is_valid, validation_obj

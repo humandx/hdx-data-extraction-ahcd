@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for hdx_ahcd controller module.
+Tests for namcs_processors module.
 """
 # Python modules
 import inspect
@@ -39,7 +39,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute(year, test_file_path)
 
         # Assert if the year wise dict has generator object
@@ -69,7 +69,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute(file_name=test_file_path)
 
         # Assert if the year wise dict has generator object
@@ -98,7 +98,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute(year)
 
         # Assert if the year wise dict has generator object
@@ -127,7 +127,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute(year=year)
 
         # Assert if the year wise dict has generator object
@@ -177,7 +177,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute(year=year)
 
         # Assert if the year wise dict has generator object
@@ -221,7 +221,7 @@ class ControllersTest(TestCase):
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
-        # Call to method
+        # Call to func :func:`execute`
         year_wise_mld = self.controller.execute()
 
         # Assert if source file details are returned
@@ -245,7 +245,7 @@ class ControllersTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`validate`
         is_valid, validation_obj = \
             self.controller.validate(year, test_file_path)
 

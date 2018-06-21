@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-File for all context manager.
+Module to define context manager(s).
 """
 # Python modules
 from contextlib import contextmanager
@@ -27,9 +27,8 @@ def try_except(*exceptions, method_name=None, re_raise=False):
             needs to be explicitly caught.
         method_name (:class:`str`): Method name for method call enclosed
             in try-except block.
-        re_raise (:class:`bool`): Catch exception, perform logging and
-            again raise same exception in order to catch in parent block,
-            default value False
+        re_raise (:class:`bool`): If true catch exception, perform logging and
+            again raise same exception in order to catch in parent block.
 
     Return:
         :class:`generator`: Generator object for method `try_except`.
@@ -51,13 +50,15 @@ def try_except(*exceptions, method_name=None, re_raise=False):
         ...     method_to_catch_exception()
         ...
     """
-    if not exceptions:
-        exceptions = Exception
+    exceptions = exceptions if exceptions else Exception
     try:
         yield
     except exceptions as exc:
-        # Details of exception , using traceback
+        # Provide details about exception using method `detailed_exception_info`
+        # use_next_frame set to true since exception is raised inside method not
+        # in context manger itself
         detailed_exception_info(method_name=method_name,
                                 use_next_frame = True, logger = log)
         if re_raise:
+            # Since re_raise=True, raise exception again
             raise Exception(str(exc))

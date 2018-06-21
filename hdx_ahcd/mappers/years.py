@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Year specific NAMCSMetaMappings for all the namcs year, all years are defined
-by `YEAR_AVAILABLE` config parameter.
+Module for Year specific NAMCSMetaMappings for all the namcs year, all years are 
+defined by `YEAR_AVAILABLE` config parameter.
 """
 # Python modules
 import inspect
@@ -22,27 +22,23 @@ from hdx_ahcd.utils.utils import NAMCSMetaMappings
 
 class Year(object):
     """
-    Base class for all classes of NAMCSMetaMappings per year.
+    Base class for all NAMCS year classes.Child class will have field mappings
+    for respective year in the form of attributes. Field mappings are nothing
+    but objects of  :class:`NAMCSMetaMappings` holding values for
+    field name, location, length.
+    Child class must directly inherit this class.
 
-    Child class will have field mappings for respective year in the form of
-    attributes. Field mappings are nothing but objects of
-    class `NAMCSMetaMappings` holding values for field name, location, length.
-
-    This class implements methods to get attributes for specific class. In
-    this case class of NAMCS mappings and to get slice object based on
-    field location and field length for same Mappings.
-
-    Child class will directly inherit this class, then classmethods of this
-    class can be used to fetch attributes.
+    This class implements two methods `get_attributes` and
+    `get_field_slice_mapping`.
     """
     @classmethod
     def get_attributes(cls):
         """
         Method to get all attributes defined in class, excluding inbuilt
-        arguments.
+        attributes.
 
         Returns:
-            :class:`list`: All explicitly defined attributes of class
+            :class:`list`: All explicitly defined attributes of class.
         """
         # Inspect for class methods and attributes.
         attributes = dict(inspect.getmembers(cls,
@@ -57,16 +53,16 @@ class Year(object):
     @classmethod
     def get_field_slice_mapping(cls):
         """
-        Method to get mappings for field of year and corresponding
-        slice operator
+        Method to get key value pair of `field_name` and 
+        slice object representing location of field in data set.
 
         Returns:
             :class:`dict`: Key value pair of field name and corresponding
                 slice operator indicating location of field in raw record.
         """
-        mappings_dict = {}
-        for mapping in cls.get_attributes():
-            if type(mapping) in (list, tuple):
+        field_name_slice_object_dict = {}
+        for attribute in cls.get_attributes():
+            if type(attribute) in (list, tuple):
                 """
                 Unpacking the tuple to create individual key in `mappings_dict`
                 Example:
@@ -76,28 +72,28 @@ class Year(object):
                       __physician_diagnoses_3,
                     )
                 """
-
+                # To avoid overwriting existing values of fields
                 # Removing fields those already present in `mappings_dict`
-                for clubbed_mapping in mapping:
-                    if clubbed_mapping.field_name in mappings_dict:
-                        del mappings_dict[clubbed_mapping.field_name]
+                for field in attribute:
+                    if field.field_name in field_name_slice_object_dict:
+                        del field_name_slice_object_dict[field.field_name]
 
-                mappings_dict[mapping[0].field_name] = [
+                field_name_slice_object_dict[attribute[0].field_name] = [
                     get_slice_object(
                         clubbed_mapping.field_location,
                         clubbed_mapping.field_length
                     )
-                    for clubbed_mapping in mapping
+                    for clubbed_mapping in attribute
                 ]
             else:
                 # Avoiding over writing the value of existing key
-                if mapping.field_name not in mappings_dict:
-                    mappings_dict[mapping.field_name] = \
+                if attribute.field_name not in field_name_slice_object_dict:
+                    field_name_slice_object_dict[attribute.field_name] = \
                         get_slice_object(
-                            mapping.field_location,
-                            mapping.field_length
+                            attribute.field_location,
+                            attribute.field_length
                         )
-        return mappings_dict
+        return field_name_slice_object_dict
 
 
 class Year1973(Year):
@@ -158,7 +154,7 @@ class Year1973(Year):
 
 class Year1975(Year1973):
     """
-    Year 1975 data with specified fields...
+    Year 1975 data with specified fields.
 
     Note:
         Year 1975 and 1973 have same `NAMCSMetaMappings`.
@@ -172,7 +168,7 @@ class Year1975(Year1973):
 
 class Year1976(Year1975):
     """
-    Year 1976 data with specified fields...
+    Year 1976 data with specified fields.
 
     Note:
         Year 1976 and 1975 have same `NAMCSMetaMappings`.
@@ -182,7 +178,7 @@ class Year1976(Year1975):
 
 class Year1977(Year):
     """
-    Year 1977 data with specified fields..
+    Year 1977 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -238,7 +234,7 @@ class Year1977(Year):
 
 class Year1978(Year1977):
     """
-    Year 1978 data with specified fields..
+    Year 1978 data with specified fields.
 
     Note:
         Year 1978 and Year 1977 have same `NAMCSMetaMappings`.
@@ -248,7 +244,7 @@ class Year1978(Year1977):
 
 class Year1979(Year):
     """
-    Year 1979 data with specified fields..
+    Year 1979 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -306,7 +302,7 @@ class Year1979(Year):
 
 class Year1980(Year):
     """
-    Year 1980 data with specified fields..
+    Year 1980 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -362,7 +358,7 @@ class Year1980(Year):
 
 class Year1981(Year1980):
     """
-    Year 1981 data with specified fields..
+    Year 1981 data with specified fields.
 
     Note:
         Year 1981 and Year 1980 have same `NAMCSMetaMappings`.
@@ -372,7 +368,7 @@ class Year1981(Year1980):
 
 class Year1985(Year):
     """
-    Year 1985 data with specified fields..
+    Year 1985 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -423,7 +419,7 @@ class Year1985(Year):
 
 class Year1989(Year):
     """
-    Year 1989 data with specified fields..
+    Year 1989 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -474,7 +470,7 @@ class Year1989(Year):
 
 class Year1990(Year1989):
     """
-    Year 1990 data with specified fields..
+    Year 1990 data with specified fields.
 
     Note:
         Year 1990 and Year 1989 have same `NAMCSMetaMappings`.
@@ -484,7 +480,7 @@ class Year1990(Year1989):
 
 class Year1991(Year):
     """
-    Year 1991 data with specified fields..
+    Year 1991 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -535,7 +531,7 @@ class Year1991(Year):
 
 class Year1992(Year1991):
     """
-    Year 1992 data with specified fields..
+    Year 1992 data with specified fields.
 
     Note:
         Year 1992 and Year 1991 have same `NAMCSMetaMappings`.
@@ -545,7 +541,7 @@ class Year1992(Year1991):
 
 class Year1993(Year1991):
     """
-    Year 1993 data with specified fields..
+    Year 1993 data with specified fields.
 
     Note:
         Year 1993 and Year 1991 have same `NAMCSMetaMappings`.
@@ -559,17 +555,17 @@ class Year1993(Year1991):
 
 class Year1994(Year1993):
     """
-    Year 1994 data with specified fields..
+    Year 1994 data with specified fields.
 
     Note:
-        Year 1994 and Year 1994 have same `NAMCSMetaMappings`.
+        Year 1994 and Year 1993 have same `NAMCSMetaMappings`.
     """
     pass
 
 
 class Year1995(Year1991):
     """
-    Year 1995 data with specified fields..
+    Year 1995 data with specified fields.
     """
     age = NAMCSMetaMappings(
         field_length = 3,
@@ -610,7 +606,7 @@ class Year1995(Year1991):
 
 class Year1996(Year1995):
     """
-    Year 1996 data with specified fields..
+    Year 1996 data with specified fields.
 
     Note:
         Year 1996 and Year 1995 have same `NAMCSMetaMappings`.
@@ -620,7 +616,7 @@ class Year1996(Year1995):
 
 class Year1997(Year):
     """
-    Year 1997 data with specified fields..
+    Year 1997 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -671,7 +667,7 @@ class Year1997(Year):
 
 class Year1998(Year1997):
     """
-    Year 1998 data with specified fields..
+    Year 1998 data with specified fields.
 
     Note:
         Year 1998 and Year 1997 have same `NAMCSMetaMappings`.
@@ -681,7 +677,7 @@ class Year1998(Year1997):
 
 class Year1999(Year):
     """
-    Year 1999 data with specified fields..
+    Year 1999 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -734,7 +730,7 @@ class Year1999(Year):
 
 class Year2000(Year1999):
     """
-    Year 2000 data with specified fields..
+    Year 2000 data with specified fields.
 
     Note:
         Year 2000 and Year 1999 have same `NAMCSMetaMappings`.
@@ -744,7 +740,7 @@ class Year2000(Year1999):
 
 class Year2001(Year):
     """
-    Year 2001 data with specified fields..
+    Year 2001 data with specified fields.
     """
     month_of_visit = NAMCSMetaMappings(
         field_length = 2,
@@ -797,7 +793,7 @@ class Year2001(Year):
 
 class Year2002(Year2001):
     """
-    Year 2002 data with specified fields..
+    Year 2002 data with specified fields.
 
     Note:
         Year 2002 and Year 2001 have same `NAMCSMetaMappings`.
@@ -807,7 +803,10 @@ class Year2002(Year2001):
 
 class Year2003(Year2001):
     """
-    Year 2003 data with specified fields..
+    Year 2003 data with specified fields.
+
+    Note:
+        Year 2003 and Year 2001 have same `NAMCSMetaMappings`.
     """
     visit_weight = NAMCSMetaMappings(
         field_length = 6,
@@ -841,6 +840,9 @@ class Year2003(Year2001):
 class Year2004(Year2003):
     """
     Year 2004 data with specified fields.
+
+    Note:
+        Year 2004 and Year 2003 have same `NAMCSMetaMappings`.
     """
     pass
 
@@ -901,6 +903,9 @@ class Year2005(Year):
 class Year2006(Year2005):
     """
     Year 2006 data with specified fields.
+
+    Note:
+        Year 2006 and Year 2005 have same `NAMCSMetaMappings`.
     """
     visit_weight = NAMCSMetaMappings(
         field_length = 6,
@@ -987,6 +992,9 @@ class Year2007(Year):
 class Year2008(Year2007):
     """
     Year 2008 data with specified fields.
+
+    Note:
+        Year 2008 and Year 2007 have same `NAMCSMetaMappings`.
     """
     pass
 
@@ -1224,7 +1232,7 @@ class Year2014(Year):
     Year 2014 data with specified fields.
 
     Note:
-        New diagnosis fields `DIAGNOSIS 4 ` and `DIAGNOSIS  5` in record
+        New diagnosis fields `DIAGNOSES 4 ` and `DIAGNOSES  5` in record
         for year 2014 and onwards
     """
     visit_weight = NAMCSMetaMappings(

@@ -1,6 +1,14 @@
+Changelog
+=========
+
+
 (unreleased)
 ------------
-- Minor changes in README.md and validation.py. [Rishabh Parate]
+- Restructuring_and_refactoring_package. [Rishabh Parate]
+- Merge pull request #1 from humandx/feat/download-and-extract-NAMCS.
+  [Aditya Kedia]
+
+- Added NAMCS extractor and converter for public dataset
 - Added visit weight for all years. [Rishabh Parate]
 - Added mappings for year 1995 and 1996. [Rishabh Parate]
 - Added mapping for year 1992 to 1998. [Rishabh Parate]
