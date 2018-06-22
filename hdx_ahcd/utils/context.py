@@ -46,7 +46,9 @@ def try_except(*exceptions, method_name=None, re_raise=False):
         ...     print(10/0)
         ... print("Out of Exception block")
         ...
-        >>> with try_except(method = method_to_catch_exception) as handle:
+        >>> def method_to_catch_exception():
+        ...     return
+        >>> with try_except(method = method_to_catch_exception):
         ...     method_to_catch_exception()
         ...
     """

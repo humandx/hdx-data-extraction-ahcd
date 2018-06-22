@@ -44,7 +44,7 @@ class ImportModuleTest(TestCase):
     def test_controllers_namcs_extractor(self):
         import hdx_ahcd.controllers.namcs_extractor
 
-    def test_controllers_namcs_convertor(self):
+    def test_controllers_namcs_converter(self):
         import hdx_ahcd.controllers.namcs_converter
 
     def test_utils_context(self):

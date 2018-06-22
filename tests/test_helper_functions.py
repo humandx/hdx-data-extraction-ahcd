@@ -109,15 +109,12 @@ class HelperFunctionsTest(TestCase):
 
         # Setup
         names = 'Test'
-        separator = None
         extension = 'CSV'
         expected_file_name = 'Test.CSV'
 
         # Call to func :func:`get_customized_file_name`
         actual_file_name = \
-            get_customized_file_name(
-                names, separator=separator, extension=extension
-            )
+            get_customized_file_name(names, extension=extension)
 
         # Assert for valid customized file name
         self.assertEqual(expected_file_name, actual_file_name)
@@ -478,7 +475,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to func :func:`process_multiple_slice_objects`
         actual_field_codes = process_multiple_slice_objects(
-            record= record,
+            record = record,
             field_name = field_name,
             iterable_slice_object = iterable_slice_object
         )
@@ -510,7 +507,7 @@ class HelperFunctionsTest(TestCase):
                 'source_file_ID': '1973_NAMCS',
                 'source_file_row': 1,
                 'sex': 'Female',
-                'physician_diagnoses': ['470.0', 'Y03.2', ''],
+                'physician_diagnoses': ['470.0', 'Y03.2'],
                 'age': 22889,
                 'month_of_visit': 6,
                 'year_of_visit': 1973
@@ -523,7 +520,7 @@ class HelperFunctionsTest(TestCase):
                 'source_file_ID': '1973_NAMCS',
                 'source_file_row': 1,
                 'sex': 'Female',
-                'physician_diagnoses': ['470.0', 'Y03.2', ''],
+                'physician_diagnoses': ['470.0', 'Y03.2'],
                 'month_of_birth': 10,
                 'month_of_visit': 6,
                 'year_of_birth': 2010,
@@ -540,7 +537,7 @@ class HelperFunctionsTest(TestCase):
         # Asserting if unnecessary fields are filtered and
         # required fields are populated
         self.assertDictEqual(
-            expected_field_codes_for_record,actual_field_codes_for_record
+            expected_field_codes_for_record, actual_field_codes_for_record
         )
 
     @mock.patch('helpers.functions.os.rename')

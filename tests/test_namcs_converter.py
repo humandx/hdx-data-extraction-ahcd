@@ -57,7 +57,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 1,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -67,7 +67,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 2,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20', '', ''],
+                'physician_diagnoses': ['V20.20'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -77,7 +77,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 3,
                 'sex': 'Female',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59', '', ''],
+                'physician_diagnoses': ['V67.59'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -87,17 +87,17 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 4,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
-             },
+            },
             {
                 'age': 13140,
                 'patient_visit_weight': 86790.0,
                 'source_file_row': 5,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             }
@@ -130,7 +130,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 1,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -140,7 +140,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 2,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20', '', ''],
+                'physician_diagnoses': ['V20.20'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -150,7 +150,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 3,
                 'sex': 'Female',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59', '', ''],
+                'physician_diagnoses': ['V67.59'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -160,7 +160,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 4,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -170,7 +170,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 5,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             }
@@ -190,7 +190,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 1,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -200,7 +200,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 2,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20', '', ''],
+                'physician_diagnoses': ['V20.20'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -210,7 +210,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 3,
                 'sex': 'Female',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59', '', ''],
+                'physician_diagnoses': ['V67.59'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -220,7 +220,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 4,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             },
@@ -230,7 +230,7 @@ class NAMCSConverterTest(TestCase):
                 'source_file_row': 5,
                 'sex': 'Male',
                 'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00', '', ''],
+                'physician_diagnoses': ['V70.00'],
                 'source_file_ID': '2000_NAMCS',
                 'year_of_visit': 2000
             }

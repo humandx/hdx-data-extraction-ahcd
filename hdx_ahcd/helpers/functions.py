@@ -69,7 +69,7 @@ def populate_missing_fields(headers, field_codes_for_single_record):
     and only populate `CONVERTED_CSV_FIELDS` discarding rest of fields.
 
     Parameters:
-        headers (:class:`list`): Fields required in translated csv file.
+        headers (:class:`tuple`): Fields required in translated csv file.
         field_codes_for_single_record (:class:`dict`): Dict containing
             translated data for single record in dataset.
 

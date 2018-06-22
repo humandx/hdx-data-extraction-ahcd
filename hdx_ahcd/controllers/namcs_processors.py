@@ -12,7 +12,6 @@ from functools import reduce
 # Other modules
 from hdx_ahcd.controllers.namcs_converter import get_year_wise_generator
 from hdx_ahcd.controllers.namcs_extractor import initiate_namcs_dataset_download
-
 from hdx_ahcd.helpers.functions import get_year_from_dataset_file_name
 from hdx_ahcd.scripts.namcs_validators import (
     validate_arguments,
@@ -85,7 +84,7 @@ class NAMCSProcessor(object):
                                             force_download = force_download)
             # Translate dataset for all files
             year_wise_translated_data = get_year_wise_generator(
-                year = year,do_export = do_export
+                year = year, do_export = do_export
             )
         # Case 2: Year and dataset file name provided.
         elif year and file_name:

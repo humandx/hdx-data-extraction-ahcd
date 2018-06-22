@@ -224,10 +224,7 @@ class NAMCSExtractorTest(TestCase):
         """
         # Setup
         year = 2000
-
-        # Patch `DOWNLOADED_FILES_DIR_PATH` to `test/data` directory
-        config.DOWNLOADED_FILES_DIR_PATH = \
-            os.path.join(os.path.dirname(__file__), 'data')
+        download_path = "/tmp/namcs_downloaded_files"
 
         zip_file_name = 'NAMCS_DATA_2000.zip'
 
@@ -235,10 +232,9 @@ class NAMCSExtractorTest(TestCase):
         mocked_path_exists.return_value = True
 
         # Call to func :func:`delete_namcs_zipfile`
-        delete_namcs_zipfile(year,
-                             download_path = config.DOWNLOADED_FILES_DIR_PATH)
+        delete_namcs_zipfile(year, download_path)
 
         # Asserting :func:`os.remove` call
         mocked_os_remove.assert_called_with(
-            os.path.join(config.DOWNLOADED_FILES_DIR_PATH, zip_file_name)
+            os.path.join(download_path, zip_file_name)
         )

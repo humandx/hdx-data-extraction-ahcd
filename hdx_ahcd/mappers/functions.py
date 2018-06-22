@@ -199,7 +199,7 @@ def get_age_normalized_to_days(age=None, **kwargs):
         :class:`float`:  Normalized age into days.
 
     Example:
-        >>> get_age_normalized_to_days(10)
+        >>> get_age_normalized_to_days('10')
         3650.0
         >>> required_fields_to_calculate_age = {
         ...             NAMCSFieldEnum.MONTH_OF_VISIT.value: 'June',

@@ -60,8 +60,8 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
         :class:`generator`: Generator object containing translated
             raw NAMCS patient case data for given year.
     """
-    dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file else \
-        get_namcs_dataset_path_for_year(year)
+    dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file is not None \
+        else get_namcs_dataset_path_for_year(year)
     # Constructing source file name on the basis of year specified
     source_file_id = get_normalized_namcs_file_name(year)
     # Error file name to dump the rejected data set
@@ -108,6 +108,21 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                     converted_record = \
                         populate_missing_fields(CONVERTED_CSV_FIELDS,
                                                 converted_record)
+
+                    # Case : Removing blank `physician diagnoses` codes from
+                    # `converted_record`
+                    # Fetching `field_name` whose `converted_code` is `list`
+                    # in `converted_record`
+                    for field_name in filter(
+                        lambda key: isinstance(converted_record[key], list),
+                        converted_record
+                    ):
+                        # Removing blank, empty element from `converted_code`
+                        # and reassigning new value to
+                        # `converted_record[field_name]`
+                        converted_record[field_name] = \
+                            list(filter(lambda field_value: len(field_value),
+                                        converted_record[field_name]))
                 except Exception as exc:
                     detailed_exception_info(logger=log)
                     errors.append(
@@ -210,7 +225,8 @@ def get_year_wise_generator(year=None, namcs_dataset_file=None,
     year = YEARS_AVAILABLE if year is None else get_iterable(year)
 
     # Set the generator and source file information into the dictionary
-    for _year in year:
+    # Parsing `int` `year` value
+    for _year in map(lambda year_value: int(year_value), year):
         year_wise_translated_data[_year]["generator"] = \
             get_generator_by_year(_year, namcs_dataset_file)
 

@@ -36,7 +36,6 @@ def get_cleaned_data_by_year(**kwargs):
         already present in the downloaded_files then process the downloaded
         file.
     >>> import pprint
-    >>> import hdx_ahcd
     >>> from hdx_ahcd.api import get_cleaned_data_by_year
     >>> pp =pprint.PrettyPrinter(indent=4)
     >>> gen =  get_cleaned_data_by_year(year=1973)

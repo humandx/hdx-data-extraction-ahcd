@@ -35,3 +35,23 @@ hdx_ahcd/controllers/__pycache__/namcs_extractor.cpython-35.pyc
 hdx_ahcd/controllers/__pycache__/namcs_processors.cpython-35.pyc
 
 hdx_ahcd.egg-info/
+hdx_ahcd/controllers/__pycache__/__init__.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_converter.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_extractor.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_processors.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/__init__.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/functions.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/years.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/__init__.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_converter.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_extractor.cpython-35.pyc
+hdx_ahcd/controllers/__pycache__/namcs_processors.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/__init__.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/functions.cpython-35.pyc
+hdx_ahcd/mappers/__pycache__/years.cpython-35.pyc
+
+
+
+hdx_ahcd/mappers/__pycache__/
+
+hdx_ahcd/controllers/__pycache__/
