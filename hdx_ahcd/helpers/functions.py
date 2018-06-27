@@ -459,7 +459,7 @@ def safe_read_file(file_handle):
     Method to read all records from file irrespective of errors occurred while
     reading certain record.
 
-    Args:
+    Parameters:
         file_handle (:class:`_io.TextIO`): File that needs to be read
             completely irrespective of exception in certain record.
 

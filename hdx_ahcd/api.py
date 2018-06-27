@@ -14,7 +14,7 @@ def get_cleaned_data_by_year(**kwargs):
     """
     API to process NAMCS dataset file(s).
 
-    Args:
+    Parameters:
         **kwargs (:class:`dict`) : Following are permissible parameters.
             year (:class:`int` or :class:`tuple` or :class:`list`): NAMCS year.
             file_name (:class:`str`): NAMCS dataset file name.
