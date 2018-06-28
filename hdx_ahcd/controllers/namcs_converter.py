@@ -59,6 +59,12 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     Returns:
         :class:`generator`: Generator object containing translated
             raw NAMCS patient case data for given year.
+
+    Raises:
+        :class:`Exception`: If some of attributes/fields are not
+            implemented in the class for `year`, exception is raised
+            For example if :class:`Year1973` doesn't implements  attribute
+            `gender` an exception will be raised.
     """
     dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file is not None \
         else get_namcs_dataset_path_for_year(year)
@@ -79,8 +85,12 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     if os.path.exists(dataset_file):
         with open(dataset_file, "r") as dataset_file_handler:
             errors = []
-            # Get the specific year class from year module
-            year_class_object = vars(years).get("Year{}".format(year))
+
+            #
+            with try_except(TypeError, re_raise=True):
+                # Get the specific year class from year module
+                year_class_object = vars(years).get("Year{}".format(year))
+
             # Get the mappings from year class
             field_mappings = year_class_object.get_field_slice_mapping()
 

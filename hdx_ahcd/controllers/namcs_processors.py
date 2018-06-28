@@ -110,7 +110,7 @@ class NAMCSProcessor(object):
             :class:`tuple`: With elements as
                 :class:`bool`: Flag to indicate if any errors occurred
                     during execution.
-                 :class:`TrackValidationError`: TrackValidationError
+                :class:`TrackValidationError`: TrackValidationError
                     object having errors, if any.
         """
         # Tuple of methods to invoke when performing validation

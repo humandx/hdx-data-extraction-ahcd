@@ -5,12 +5,11 @@ defined by `YEAR_AVAILABLE` config parameter.
 """
 # Python modules
 import inspect
+from abc import (ABC, abstractmethod)
 
 # Other modules
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
-from hdx_ahcd.helpers.functions import (
-    get_slice_object
-)
+from hdx_ahcd.helpers.functions import get_slice_object
 from hdx_ahcd.utils.utils import NAMCSMetaMappings
 
 # 3rd party modules
@@ -20,7 +19,7 @@ from hdx_ahcd.utils.utils import NAMCSMetaMappings
 # -N/A
 
 
-class Year(object):
+class Year(ABC):
     """
     Base class for all NAMCS year classes.Child class will have field mappings
     for respective year in the form of attributes. Field mappings are nothing
@@ -29,7 +28,9 @@ class Year(object):
     Child class must directly inherit this class.
 
     This class implements two methods `get_attributes` and
-    `get_field_slice_mapping`.
+    `get_field_slice_mapping` and defines abstract methods in conjunction 
+    with property,to impose constraint on child classes to implement 
+    certain attributes.    
     """
     @classmethod
     def get_attributes(cls):
@@ -53,7 +54,7 @@ class Year(object):
     @classmethod
     def get_field_slice_mapping(cls):
         """
-        Method to get key value pair of `field_name` and 
+        Method to get key value pair of `field_name` and
         slice object representing location of field in data set.
 
         Returns:
@@ -95,6 +96,62 @@ class Year(object):
                         )
         return field_name_slice_object_dict
 
+    @property
+    @abstractmethod
+    def month_of_visit(self):
+        """
+        Imposes constraint on child class of :class:`Year`, for implementing
+        attribute `month_of_visit`
+
+        Since :class:`Year` doesn't need to have attribute
+        `month_of_visit`,this method doesn't do anything by itself.
+
+        Raises `TypeError` if tried to access through object of :class:`Year`
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def gender(self):
+        """
+        Imposes constraint on child class of :class:`Year`, for implementing
+        attribute `gender`
+
+        Since :class:`Year` doesn't need to have attribute
+        `gender`,this method doesn't do anything by itself.
+
+        Raises `TypeError` if tried to access through object of :class:`Year`
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def physician_diagnoses(self):
+        """
+        Imposes constraint on child class of :class:`Year`, for implementing
+        attribute `physician_diagnoses`
+
+        Since :class:`Year` doesn't need to have attribute
+        `physician_diagnoses`,this method doesn't do anything by itself.
+
+        Raises `TypeError` if tried to access through object of :class:`Year`
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def visit_weight(self):
+        """
+        Imposes constraint on child class of :class:`Year`, for implementing
+        attribute `visit_weight`
+
+        Since :class:`Year` doesn't need to have attribute `visit_weight`,
+        this method doesn't do anything by itself.
+
+        Raises `TypeError` if tried to access through object of :class:`Year`
+        """
+        pass
+
 
 class Year1973(Year):
     """
@@ -120,7 +177,7 @@ class Year1973(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -200,7 +257,7 @@ class Year1977(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -266,7 +323,7 @@ class Year1979(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -324,7 +381,7 @@ class Year1980(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -385,7 +442,7 @@ class Year1985(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -436,7 +493,7 @@ class Year1989(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -497,7 +554,7 @@ class Year1991(Year):
         field_location = 7,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 9,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -572,7 +629,7 @@ class Year1995(Year1991):
         field_location = 7,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 10,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -633,7 +690,7 @@ class Year1997(Year):
         field_location = 8,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -694,7 +751,7 @@ class Year1999(Year):
         field_location = 8,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -757,7 +814,7 @@ class Year2001(Year):
         field_location = 8,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -866,7 +923,7 @@ class Year2005(Year):
         field_location = 8,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -955,7 +1012,7 @@ class Year2007(Year):
         field_location = 8,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -1086,7 +1143,7 @@ class Year2011(Year):
         field_location = 4,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 7,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -1150,7 +1207,7 @@ class Year2012(Year):
         field_location = 4,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -1198,7 +1255,7 @@ class Year2013(Year):
         field_location = 4,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -1250,7 +1307,7 @@ class Year2014(Year):
         field_location = 4,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
@@ -1310,7 +1367,7 @@ class Year2015(Year):
         field_location = 4,
         field_name = NAMCSFieldEnum.PATIENT_AGE.value
     )
-    sex = NAMCSMetaMappings(
+    gender = NAMCSMetaMappings(
         field_length = 1,
         field_location = 11,
         field_name = NAMCSFieldEnum.GENDER.value
