@@ -50,10 +50,10 @@ class ControllersTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
              },
             year_wise_mld.get(2000).get("source_file_info")
         )
@@ -80,10 +80,10 @@ class ControllersTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
              },
             year_wise_mld.get(2000).get("source_file_info")
         )
@@ -109,10 +109,10 @@ class ControllersTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
              },
             year_wise_mld.get(2000).get("source_file_info")
         )
@@ -141,19 +141,19 @@ class ControllersTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
              },
             year_wise_mld.get(2000).get("source_file_info")
         )
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS01.exe',
-                'year': '01',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS01.exe'
+                "zip_file_name": "NAMCS01.exe",
+                "year": "01",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS01.exe"
              },
             year_wise_mld.get(2001).get("source_file_info")
         )
@@ -191,19 +191,19 @@ class ControllersTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS02.exe',
-                'year': '02',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS02.exe'
+                "zip_file_name": "NAMCS02.exe",
+                "year": "02",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS02.exe"
              },
             year_wise_mld.get(2002).get("source_file_info")
         )
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS03.exe',
-                'year': '03',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS03.exe'
+                "zip_file_name": "NAMCS03.exe",
+                "year": "03",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS03.exe"
              },
             year_wise_mld.get(2003).get("source_file_info")
         )

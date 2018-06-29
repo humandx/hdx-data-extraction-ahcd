@@ -36,7 +36,7 @@ def add_method_to_mapping_dict(method_identifiers):
     ...     # Block of code
     ...     pass
     >>> CONVERSION_METHOD_MAPPING
-        {'gender': <function get_gender at 0x7f33644db268>}
+        {"gender": <function get_gender at 0x7f33644db268>}
     """
 
     def _add_method_to_mapping_dict(method_to_decorate):
@@ -279,8 +279,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 if isinstance(types[0], (list, tuple)):
                     types = types[0]
                 if len(types) > len(arg):
-                    raise Exception('More positional arguments are required '
-                                    'to check type')
+                    raise Exception("More positional arguments are required "
+                                    "to check type")
 
                 # Zip will stop as soon as shortest iterable finishes in this
                 # case iteration will stop as soon as types finishes,
@@ -290,8 +290,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
                     # Skip _arg if type object
                     if _type is not object and not isinstance(_arg, _type):
                         raise Exception(
-                            'Method: {} needs positional argument of '
-                            'type:{}, actual type is :{}'.format(
+                            "Method: {} needs positional argument of "
+                            "type:{}, actual type is :{}".format(
                                 method_to_decorate.__name__,
                                 _type,
                                 type(_arg)
@@ -303,25 +303,25 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 use_regex = get_iterable(use_regex)
 
                 if len(use_regex) > len(arg):
-                    raise Exception('More positional arguments are required '
-                                    'to validate against regular expression')
+                    raise Exception("More positional arguments are required "
+                                    "to validate against regular expression")
                 if any([isinstance(_regex, int) for _regex in use_regex]):
-                    raise Exception('`use_regex` can not have regex of '
-                                    'type`int`')
+                    raise Exception("`use_regex` can not have regex of "
+                                    "type`int`")
 
                 for _regex, _arg in zip(use_regex, arg):
                     # Skip blank regex
-                    if _regex != '':
+                    if _regex != "":
                         try:
                             _regex_pattern = re.compile(_regex)
                             if not re.search(_regex_pattern, str(_arg)):
-                                raise Exception('Value {} for field {} '
-                                                'does not match '
-                                                'with specified '
-                                                'regex pattern.'.
+                                raise Exception("Value {} for field {} "
+                                                "does not match "
+                                                "with specified "
+                                                "regex pattern.".
                                                 format(_arg, method_name))
                         except Exception as ex:
-                            raise Exception('Error:{}'.format(str(ex),))
+                            raise Exception("Error:{}".format(str(ex),))
 
             # Call to method
             method_return_value = method_to_decorate(*arg, **kwargs)
@@ -332,9 +332,9 @@ def enforce_type(*types, return_type=None, use_regex=None):
             # Method returns less value than expected
             if len(return_type) > len(method_return_value):
                 raise Exception(
-                    '`return_type` contains more types '
-                    'than values returned by method, expected '
-                    'return types :{}, values returned by method:{}'.format(
+                    "`return_type` contains more types "
+                    "than values returned by method, expected "
+                    "return types :{}, values returned by method:{}".format(
                         len(return_type), len(method_return_value)
                     )
                 )
@@ -349,8 +349,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 if _return_type is not object and not isinstance(
                         _method_return_value, _return_type):
                     raise Exception(
-                        'Method: {} needs to return value of type'
-                        'type:{}, actual type of return value is :{}'.format(
+                        "Method: {} needs to return value of type"
+                        "type:{}, actual type of return value is :{}".format(
                             method_to_decorate.__name__,
                             _return_type,
                             type(_method_return_value)

@@ -149,7 +149,7 @@ def initiate_namcs_dataset_download(year=None,
 
     # Download files for all the `year`
     # Parsing `int` `year` value
-    for _year in map(lambda year_value: int(year_value), year):
+    for _year in map(int, year):
         # Checking if NAMCS dataset file already exists in the
         # `EXTRACTED_DATA_DIR_PATH`
         if get_namcs_dataset_path_for_year(_year) is None or force_download:

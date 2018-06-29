@@ -38,15 +38,16 @@ class NAMCSProcessor(object):
             do_validation (:class:`bool`): If to perform validation
                 on `year` and `file_name`. *Default** :const:`True`.
             do_export (:class:`bool`): Output translated  data into csv file.
-            *Default** :const:`False`.
+                *Default** :const:`False`.
             force_download (:class:`bool`): Whether to force download
                 NAMCS raw dataset file even if data set file exists locally.
                 *Default** :const:`False`.
+
         Returns:
             :class:`defaultdict`: Dictionary containing generator of converted
-                NAMCS patient case data for given year along with source file
-                info Further if `do_export` is True, it returns
-                the absolute path of csv file where the data is exported.
+            NAMCS patient case data for given year along with source file
+            info Further if `do_export` is True, it returns
+            the absolute path of csv file where the data is exported.
         """
         year_wise_translated_data = defaultdict(dict)
 
@@ -69,17 +70,17 @@ class NAMCSProcessor(object):
             year = int(year or get_year_from_dataset_file_name(file_name))
 
         # Case 1: Data set file not provided.
+        # Case 1: `year` is None
+        # In this case method `initiate_namcs_dataset_download` and
+        # `get_year_wise_generator` will process data for all NAMCS years
+        # defined by parameter `YEARS_AVAILABLE`
+        # Case 2: `year` = 1973
+        # Case 3: `year` = (1973,1975,1977)
+        # In case 2 and 3 method `initiate_namcs_dataset_download` will
+        # download dataset file if it doesn't exists locally or
+        # `force_download` set to True
+        # Download and extract files for `year`
         if file_name is None:
-            # Case 1: `year` is None
-            # In this case method `initiate_namcs_dataset_download` and
-            # `get_year_wise_generator` will process data for all NAMCS years
-            # defined by parameter `YEARS_AVAILABLE`
-            # Case 2: `year` = 1973
-            # Case 3: `year` = (1973,1975,1977)
-            # In case 2 and 3 method `initiate_namcs_dataset_download` will
-            # download dataset file if it doesn't exists locally or
-            # `force_download` set to True
-            # Download and extract files for `year`
             initiate_namcs_dataset_download(year=year,
                                             force_download = force_download)
             # Translate dataset for all files
@@ -87,8 +88,8 @@ class NAMCSProcessor(object):
                 year = year, do_export = do_export
             )
         # Case 2: Year and dataset file name provided.
+        # Processing `file_name` for `year`
         elif year and file_name:
-            # Processing `file_name` for `year`
             year_wise_translated_data = \
                 get_year_wise_generator(
                     year,

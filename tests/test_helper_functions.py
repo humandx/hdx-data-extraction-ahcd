@@ -23,7 +23,7 @@ from hdx_ahcd.helpers.functions import (
     get_namcs_dataset_path_for_year,
     rename_namcs_dataset_for_year,
     populate_missing_fields,
-)
+    get_normalized_namcs_file_name, get_iterable)
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 # Third party modules
@@ -40,8 +40,8 @@ class HelperFunctionsTest(TestCase):
         """
         # Case 1: when corresponding method for `field_name` is present
         # Setup
-        field_name = 'age'
-        expected_method_for_field_name = 'get_age_normalized_to_days'
+        field_name = "age"
+        expected_method_for_field_name = "get_age_normalized_to_days"
 
         # Call to func
         actual_method_for_field_name = get_conversion_method(field_name)
@@ -53,8 +53,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Setup
-        field_name = 'month_of_birth'
-        expected_method_for_field_name = 'get_month_from_date'
+        field_name = "month_of_birth"
+        expected_method_for_field_name = "get_month_from_date"
 
         # Call to func :func:`get_conversion_method`
         actual_method_for_field_name = get_conversion_method(field_name)
@@ -66,8 +66,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Setup
-        field_name = 'month_of_visit'
-        expected_method_for_field_name = 'get_month_from_date'
+        field_name = "month_of_visit"
+        expected_method_for_field_name = "get_month_from_date"
 
         # Call to func :func:`get_conversion_method`
         actual_method_for_field_name = get_conversion_method(field_name)
@@ -79,8 +79,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Setup
-        field_name = 'physician_diagnoses'
-        expected_method_for_field_name = 'convert_physician_diagnoses_code'
+        field_name = "physician_diagnoses"
+        expected_method_for_field_name = "convert_physician_diagnoses_code"
 
         # Call to func :func:`get_conversion_method`
         actual_method_for_field_name = get_conversion_method(field_name)
@@ -93,7 +93,7 @@ class HelperFunctionsTest(TestCase):
 
         # Case 2: when corresponding method for `field_name` is  not present
         # Setup
-        field_name = 'Test_field_name'
+        field_name = "Test_field_name"
 
         # Asserting if exception is raised
         with self.assertRaises(Exception):
@@ -108,9 +108,9 @@ class HelperFunctionsTest(TestCase):
         # example: "NAME.CSV"
 
         # Setup
-        names = 'Test'
-        extension = 'CSV'
-        expected_file_name = 'Test.CSV'
+        names = "Test"
+        extension = "CSV"
+        expected_file_name = "Test.CSV"
 
         # Call to func :func:`get_customized_file_name`
         actual_file_name = \
@@ -122,10 +122,10 @@ class HelperFunctionsTest(TestCase):
         # Case 2: when only multiple string needs to be customized
         # example: "1993_NAMCS_RAW_DATASET_FILE_NAME.CSV"
         # Setup
-        names = (1993, 'NAMCS', 'RAW', 'DATASET', 'FILE', 'NAME')
-        separator = '_'
-        extension = 'csv'
-        expected_file_name = '1993_NAMCS_RAW_DATASET_FILE_NAME.csv'
+        names = (1993, "NAMCS", "RAW", "DATASET", "FILE", "NAME")
+        separator = "_"
+        extension = "csv"
+        expected_file_name = "1993_NAMCS_RAW_DATASET_FILE_NAME.csv"
 
         # Call to func :func:`get_customized_file_name`
         actual_file_name = \
@@ -144,14 +144,14 @@ class HelperFunctionsTest(TestCase):
         # Setup
         # NAMCS 1973 raw record
         record = \
-            '067310101131200000000031101000000000004700Y0320000010100' \
-            '10000010000005000001347910111'
+            "067310101131200000000031101000000000004700Y0320000010100" \
+            "10000010000005000001347910111"
 
         # Case 1: when corresponding method for `field_name` is present
         # Field name gender
         field_name = NAMCSFieldEnum.GENDER.value
         slice_object = slice(8, 9, None)
-        expected_field_code = 'Female'
+        expected_field_code = "Female"
 
         # Call to func :func:`get_field_code_from_record`
         actual_field_code = get_field_code_from_record(
@@ -224,7 +224,7 @@ class HelperFunctionsTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data")
 
         expected_file_path = \
-            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, '2000_NAMCS')
+            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, "2000_NAMCS")
 
         # Call to func :func:`get_namcs_dataset_path_for_year`
         actual_file_path = get_namcs_dataset_path_for_year(year)
@@ -239,10 +239,10 @@ class HelperFunctionsTest(TestCase):
         # TODO : Fetch corresponding ICD-9 code for `diagnosis_code`
         # from database
         # Setup
-        diagnosis_icd_9_code = 'Y997'
+        diagnosis_icd_9_code = "Y997"
 
         # TODO: change this value to actual value returned from database
-        expected_icd_9_code = 'Y997'
+        expected_icd_9_code = "Y997"
 
         # Call to func :func:`get_icd_9_code_from_database`
         actual_icd_9_code = \
@@ -259,8 +259,8 @@ class HelperFunctionsTest(TestCase):
         """
         # Setup
         # Case 1: `diagnosis_code` is constant
-        diagnosis_code = 'Y997'
-        expected_diagnosis_icd_9_code = ''
+        diagnosis_code = "Y997"
+        expected_diagnosis_icd_9_code = ""
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -272,8 +272,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Case 2: `diagnosis_code` is of 4 length and starts with 1
-        diagnosis_code = '1381'
-        expected_diagnosis_icd_9_code = '381.'
+        diagnosis_code = "1381"
+        expected_diagnosis_icd_9_code = "381."
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -285,8 +285,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Case 3: `diagnosis_code` is of 6 length and starts with 1
-        diagnosis_code = '138100'
-        expected_diagnosis_icd_9_code = '381.00'
+        diagnosis_code = "138100"
+        expected_diagnosis_icd_9_code = "381.00"
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -298,8 +298,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Case 4: `diagnosis_code` is of 4 length and starts with 2
-        diagnosis_code = '2010'
-        expected_diagnosis_icd_9_code = 'V10.'
+        diagnosis_code = "2010"
+        expected_diagnosis_icd_9_code = "V10."
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -311,8 +311,8 @@ class HelperFunctionsTest(TestCase):
         )
 
         # Case 5: `diagnosis_code` is of 6 length and starts with 2
-        diagnosis_code = '201081'
-        expected_diagnosis_icd_9_code = 'V10.81'
+        diagnosis_code = "201081"
+        expected_diagnosis_icd_9_code = "V10.81"
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -323,9 +323,9 @@ class HelperFunctionsTest(TestCase):
             expected_diagnosis_icd_9_code, actual_diagnosis_icd_9_code
         )
 
-        # Case 6: `diagnosis_code` starts with '-'
-        diagnosis_code = '-00009'
-        expected_diagnosis_icd_9_code = 'V00.009'
+        # Case 6: `diagnosis_code` starts with "-"
+        diagnosis_code = "-00009"
+        expected_diagnosis_icd_9_code = "V00.009"
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -336,9 +336,9 @@ class HelperFunctionsTest(TestCase):
             expected_diagnosis_icd_9_code, actual_diagnosis_icd_9_code
         )
 
-        # Case 7: `diagnosis_code` has fifth digit as '-'
-        diagnosis_code = '0010-'
-        expected_diagnosis_icd_9_code = '001.00'
+        # Case 7: `diagnosis_code` has fifth digit as "-"
+        diagnosis_code = "0010-"
+        expected_diagnosis_icd_9_code = "001.00"
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -349,9 +349,9 @@ class HelperFunctionsTest(TestCase):
             expected_diagnosis_icd_9_code, actual_diagnosis_icd_9_code
         )
 
-        # Case 8: `diagnosis_code` has fourth digit as '-'
-        diagnosis_code = '082-9'
-        expected_diagnosis_icd_9_code = '082.09'
+        # Case 8: `diagnosis_code` has fourth digit as "-"
+        diagnosis_code = "082-9"
+        expected_diagnosis_icd_9_code = "082.09"
 
         # Call to func :func:`get_icd_9_code_from_raw_code`
         actual_diagnosis_icd_9_code = \
@@ -369,10 +369,10 @@ class HelperFunctionsTest(TestCase):
         # Setup
         expected_source_file_info = \
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
             }
         year = 2000
 
@@ -421,13 +421,13 @@ class HelperFunctionsTest(TestCase):
         day = 1
         expected_date_representations = \
             {
-                'day_numeric': '01',
-                'date_time_object': datetime.datetime(1997, 6, 1, 0, 0),
-                'month_long': 'June',
-                'month_short': 'Jun',
-                'year_short': '97',
-                'month_numeric': '06',
-                'year_long': '1997'
+                "day_numeric": "01",
+                "date_time_object": datetime.datetime(1997, 6, 1, 0, 0),
+                "month_long": "June",
+                "month_short": "Jun",
+                "year_short": "97",
+                "month_numeric": "06",
+                "year_long": "1997"
             }
 
         # Call to func :func:`get_string_representations_of_date`
@@ -439,13 +439,13 @@ class HelperFunctionsTest(TestCase):
             expected_date_representations, actual_date_representations
         )
 
-    @mock.patch('hdx_ahcd.helpers.functions.os.path.exists')
+    @mock.patch("hdx_ahcd.helpers.functions.os.path.exists")
     def test_get_year_from_dataset_file(self, mocked_path_exists):
         """
         Test to check if valid year is returned from NAMCS dataset file name.
         """
         # Setup
-        file_name = '2000_NAMCS'
+        file_name = "2000_NAMCS"
         expected_year = 2000
 
         # Mocking `os.path.exists` return value
@@ -471,7 +471,7 @@ class HelperFunctionsTest(TestCase):
         iterable_slice_object = [
             slice(38, 42, None), slice(42, 46, None), slice(46, 50, None)
         ]
-        expected_field_codes = ['470.0', 'V03.2', '']
+        expected_field_codes = ["470.0", "V03.2", ""]
 
         # Call to func :func:`process_multiple_slice_objects`
         actual_field_codes = process_multiple_slice_objects(
@@ -494,37 +494,37 @@ class HelperFunctionsTest(TestCase):
         # Fields those are required in the final converted csv file
         expected_headers = \
             (
-                'source_file_ID',
-                'source_file_row',
-                'sex',
-                'physician_diagnoses',
-                'age',
-                'month_of_visit',
-                'year_of_visit',
+                "source_file_ID",
+                "source_file_row",
+                "sex",
+                "physician_diagnoses",
+                "age",
+                "month_of_visit",
+                "year_of_visit",
             )
         expected_field_codes_for_record = \
             {
-                'source_file_ID': '1973_NAMCS',
-                'source_file_row': 1,
-                'sex': 'Female',
-                'physician_diagnoses': ['470.0', 'Y03.2'],
-                'age': 22889,
-                'month_of_visit': 6,
-                'year_of_visit': 1973
+                "source_file_ID": "1973_NAMCS",
+                "source_file_row": 1,
+                "sex": "Female",
+                "physician_diagnoses": ["470.0", "Y03.2"],
+                "age": 22889,
+                "month_of_visit": 6,
+                "year_of_visit": 1973
             }
 
         # Converted field codes for single record which needs to be filtered
         # and modified
         field_codes_for_record = \
             {
-                'source_file_ID': '1973_NAMCS',
-                'source_file_row': 1,
-                'sex': 'Female',
-                'physician_diagnoses': ['470.0', 'Y03.2'],
-                'month_of_birth': 10,
-                'month_of_visit': 6,
-                'year_of_birth': 2010,
-                'year_of_visit': 1973,
+                "source_file_ID": "1973_NAMCS",
+                "source_file_row": 1,
+                "sex": "Female",
+                "physician_diagnoses": ["470.0", "Y03.2"],
+                "month_of_birth": 10,
+                "month_of_visit": 6,
+                "year_of_birth": 2010,
+                "year_of_visit": 1973,
             }
 
         # Call to func :func:`populate_missing_fields`
@@ -540,8 +540,8 @@ class HelperFunctionsTest(TestCase):
             expected_field_codes_for_record, actual_field_codes_for_record
         )
 
-    @mock.patch('helpers.functions.os.rename')
-    @mock.patch('helpers.functions.os.path.exists')
+    @mock.patch("helpers.functions.os.rename")
+    @mock.patch("helpers.functions.os.path.exists")
     def test_rename_namcs_file(self, mocked_path_exists, mocked_os_rename):
         """
         Test to check if NAMCS raw dataset file name is renamed correctly
@@ -556,17 +556,56 @@ class HelperFunctionsTest(TestCase):
         # Mocking `os.path.exists` return value
         mocked_path_exists.return_value = True
         expected_renamed_file_name = \
-            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, '2000_NAMCS')
+            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, "2000_NAMCS")
 
         # Call to func :func:`rename_namcs_dataset_for_year`
         actual_renamed_file_name = rename_namcs_dataset_for_year(year)
 
         # Asserting os.rename call
         mocked_os_rename.assert_called_with(
-            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, 'NAM00'),
+            os.path.join(functions.EXTRACTED_DATA_DIR_PATH, "NAM00"),
             expected_renamed_file_name
         )
 
         # Assert for valid file name for year 2000
         self.assertEqual(expected_renamed_file_name, actual_renamed_file_name)
 
+    def test_get_normalized_namcs_file_name(self):
+        """
+        Test for valid NAMCS file name.
+        """
+        # Setup
+        year = 2000
+        expected_file_name = "2000_NAMCS"
+
+        # Call to :func:`get_normalized_namcs_file_name`
+        actual_file_name = get_normalized_namcs_file_name(year)
+
+        # Asert for valid NAMCS file name
+        self.assertEqual(expected_file_name, actual_file_name)
+
+    def test_get_iterable(self):
+        """
+        Test to check if iterable is returned by method `get_iterable`
+        """
+        # Case 1: When `parameter` is not iterable
+        # Setup
+        parameter = 2000
+        expected_parameter = [2000]
+
+        # Call to :func:`get_iterable`
+        actual_parameter = get_iterable(parameter)
+
+        # Asert for iterable `parameter`
+        self.assertEqual(expected_parameter, actual_parameter)
+
+        # Case 2: When `parameter` is iterable.
+        # Setup
+        parameter = ["test", "parameter"]
+        expected_parameter = ["test", "parameter"]
+
+        # Call to :func:`get_iterable`
+        actual_parameter = get_iterable(parameter)
+
+        # Asert for iterable `parameter`
+        self.assertEqual(expected_parameter, actual_parameter)

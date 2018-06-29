@@ -52,54 +52,54 @@ class NAMCSConverterTest(TestCase):
         # Assert rows by field details
         self.assertListEqual([
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 1,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 1,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 2190,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 2,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 2190,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 2,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V20.20"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 20805,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 3,
-                'sex': 'Female',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 20805,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 3,
+                "sex": "Female",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V67.59"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 15695,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 4,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 15695,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 4,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 5,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 5,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             }
         ], rows)
 
@@ -125,54 +125,54 @@ class NAMCSConverterTest(TestCase):
         # Assert rows by field details
         self.assertListEqual([
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 1,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 1,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 2190,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 2,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 2190,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 2,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V20.20"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 20805,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 3,
-                'sex': 'Female',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 20805,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 3,
+                "sex": "Female",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V67.59"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 15695,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 4,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 15695,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 4,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 5,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 5,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             }
         ], rows)
 
@@ -185,54 +185,54 @@ class NAMCSConverterTest(TestCase):
         year = 2000
         generator_object = (row for row in [
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 1,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 1,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 2190,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 2,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V20.20'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 2190,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 2,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V20.20"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 20805,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 3,
-                'sex': 'Female',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V67.59'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 20805,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 3,
+                "sex": "Female",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V67.59"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 15695,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 4,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 15695,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 4,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             },
             {
-                'age': 13140,
-                'patient_visit_weight': 86790.0,
-                'source_file_row': 5,
-                'sex': 'Male',
-                'month_of_visit': 9,
-                'physician_diagnoses': ['V70.00'],
-                'source_file_ID': '2000_NAMCS',
-                'year_of_visit': 2000
+                "age": 13140,
+                "patient_visit_weight": 86790.0,
+                "source_file_row": 5,
+                "sex": "Male",
+                "month_of_visit": 9,
+                "physician_diagnoses": ["V70.00"],
+                "source_file_ID": "2000_NAMCS",
+                "year_of_visit": 2000
             }
         ])
 
@@ -274,10 +274,10 @@ class NAMCSConverterTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
             },
             year_wise_mld.get(2000).get("source_file_info")
         )
@@ -306,10 +306,10 @@ class NAMCSConverterTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
             },
             year_wise_mld.get(2000).get("source_file_info")
         )
@@ -340,19 +340,19 @@ class NAMCSConverterTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
             },
             year_wise_mld.get(2000).get("source_file_info")
         )
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS01.exe',
-                'year': '01',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS01.exe'
+                "zip_file_name": "NAMCS01.exe",
+                "year": "01",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS01.exe"
             },
             year_wise_mld.get(2001).get("source_file_info")
         )
@@ -385,19 +385,19 @@ class NAMCSConverterTest(TestCase):
         # Assert if source file details are returned
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS00.exe',
-                'year': '00',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS00.exe'
+                "zip_file_name": "NAMCS00.exe",
+                "year": "00",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS00.exe"
             },
             year_wise_mld.get(2000).get("source_file_info")
         )
         self.assertEqual(
             {
-                'zip_file_name': 'NAMCS01.exe',
-                'year': '01',
-                'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/'
-                       'NAMCS/NAMCS01.exe'
+                "zip_file_name": "NAMCS01.exe",
+                "year": "01",
+                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                       "NAMCS/NAMCS01.exe"
             },
             year_wise_mld.get(2001).get("source_file_info")
         )

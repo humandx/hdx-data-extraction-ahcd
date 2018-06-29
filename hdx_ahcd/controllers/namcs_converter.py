@@ -63,7 +63,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     Raises:
         :class:`Exception`: If some of attributes/fields are not
             implemented in the class for `year`, exception is raised
-            For example if :class:`Year1973` doesn't implements  attribute
+            For example if :class:`Year1973` doesn"t implements  attribute
             `gender` an exception will be raised.
     """
     dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file is not None \
@@ -85,8 +85,6 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     if os.path.exists(dataset_file):
         with open(dataset_file, "r") as dataset_file_handler:
             errors = []
-
-            #
             with try_except(TypeError, re_raise=True):
                 # Get the specific year class from year module
                 year_class_object = vars(years).get("Year{}".format(year))
@@ -115,9 +113,10 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
 
                     # Populate all the missing fields to ensure all the fields
                     # are returned in the generator
-                    converted_record = \
-                        populate_missing_fields(CONVERTED_CSV_FIELDS,
-                                                converted_record)
+                    converted_record = populate_missing_fields(
+                        CONVERTED_CSV_FIELDS,
+                        converted_record
+                    )
 
                     # Case : Removing blank `physician diagnoses` codes from
                     # `converted_record`
@@ -130,9 +129,9 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                         # Removing blank, empty element from `converted_code`
                         # and reassigning new value to
                         # `converted_record[field_name]`
-                        converted_record[field_name] = \
-                            list(filter(lambda field_value: len(field_value),
-                                        converted_record[field_name]))
+                        converted_record[field_name] = list(
+                            filter(len, converted_record[field_name])
+                        )
                 except Exception as exc:
                     detailed_exception_info(logger=log)
                     errors.append(
@@ -155,9 +154,11 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
                         NAMCSErrorFieldEnum.EXCEPTION.value,
                         NAMCSErrorFieldEnum.RECORD.value
                     )
-                    writer = csv.DictWriter(error_file_handler,
-                                            delimiter = ',',
-                                            fieldnames = error_file_headers)
+                    writer = csv.DictWriter(
+                        error_file_handler,
+                        delimiter = ",",
+                        fieldnames = error_file_headers
+                    )
                     writer.writeheader()
                     for _error in errors:
                         writer.writerow(_error)
@@ -190,9 +191,9 @@ def export_to_csv(year, generator_object):
 
     with try_except():
         # Write all the converted records into CSV file
-        with open(converted_csv_file, 'w') as csv_file:
+        with open(converted_csv_file, "w") as csv_file:
             writer = csv.DictWriter(csv_file,
-                                    delimiter = ',',
+                                    delimiter = ",",
                                     fieldnames = CONVERTED_CSV_FIELDS)
             writer.writeheader()
             for converted_record in generator_object:

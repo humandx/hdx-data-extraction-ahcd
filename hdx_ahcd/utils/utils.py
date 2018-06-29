@@ -59,7 +59,7 @@ class RangeDict(dict):
                 if left <= key <= right:
                     self[key] = _value
                     return _value
-        raise KeyError('Cannot find {} in RangeDict'.format(key))
+        raise KeyError("Cannot find {} in RangeDict".format(key))
 
     def get(self, key):
         """
@@ -76,7 +76,7 @@ class RangeDict(dict):
             return self[key]
         # Key not in dict and is of type `str`
         elif isinstance(key, str):
-            raise KeyError('Cannot find {} in RangeDict'.format(key))
+            raise KeyError("Cannot find {} in RangeDict".format(key))
         return self.__missing__(key)
 
 
@@ -107,7 +107,7 @@ class NAMCSMetaMappings(object):
             >>> obj.field_length
             2
             >>> obj.field_name
-            'Date_of_birth'
+            "Date_of_birth"
         """
         self.field_length = field_length
         self.field_location = field_location
@@ -148,10 +148,10 @@ def detailed_exception_info(method_name=None, use_next_frame=False,
     linecache.checkcache(filename)
     line = linecache.getline(filename, line_no, module_globals)
     if method_name is not None:
-        logger.error('Error in method: {}'.format(method_name))
+        logger.error("Error in method: {}".format(method_name))
 
-    error_msg = 'Exception occurred in {} at line {}\nOperation: "{}" ,' \
-                'exception_object: {}'\
+    error_msg = "Exception occurred in {} at line {}\nOperation: '{}' ," \
+                "exception_object: {}"\
                 .format(filename, line_no, line.strip(), exception_obj)
     if logger:
         logger.error(error_msg)

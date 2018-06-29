@@ -40,7 +40,7 @@ from hdx_ahcd.helpers.functions import (
     )
 )
 @enforce_type(str, return_type=(int, int),
-              use_regex='^(0[1-9]|1[012])([0-9]{2})$')
+              use_regex="^(0[1-9]|1[012])([0-9]{2})$")
 def get_year_and_month_from_date(raw_format_date):
     """
     Fetch year and month from provided date string.
@@ -67,9 +67,9 @@ def get_year_and_month_from_date(raw_format_date):
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
     )
 )
-@enforce_type(str, return_type=str, use_regex='^([V|Y|\-|\&|0-9][0-9]{3,5}|'
-                                              '[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})'
-                                              '$')
+@enforce_type(str, return_type=str, use_regex="^([V|Y|\-|\&|0-9][0-9]{3,5}|"
+                                              "[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})"
+                                              "$")
 def convert_physician_diagnoses_code(diagnoses_code):
     """
     Method to convert physician `diagnosis_code` into ICD-9 format.
@@ -95,8 +95,8 @@ def convert_physician_diagnoses_code(diagnoses_code):
             NAMCSFieldEnum.MONTH_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=int, use_regex='^((0[1-9]|1[012])'
-                                              '|([A-Z][a-z]{2,8}))$')
+@enforce_type(str, return_type=int, use_regex="^((0[1-9]|1[012])"
+                                              "|([A-Z][a-z]{2,8}))$")
 def get_month_from_date(raw_format_date):
     """
     Fetch month from date string.
@@ -128,7 +128,7 @@ def get_month_from_date(raw_format_date):
             NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=int, use_regex='^([1-2][0|9])?[0-9]{2}$')
+@enforce_type(str, return_type=int, use_regex="^([1-2][0|9])?[0-9]{2}$")
 def get_year_from_date(date_pattern=None, **kwargs):
     """
     Method to fetch year from date string.
@@ -145,7 +145,7 @@ def get_year_from_date(date_pattern=None, **kwargs):
         # Use `NAMCSFieldEnum.SOURCE_FILE_ID` to calculate year
         source_file_id = kwargs.get(NAMCSFieldEnum.SOURCE_FILE_ID.value)
         # Example: 2011_NAMCS so year: 2011
-        year = source_file_id.split('_')[0]
+        year = source_file_id.split("_")[0]
         return int(year)
 
     date = None
@@ -164,7 +164,7 @@ def get_year_from_date(date_pattern=None, **kwargs):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.GENDER.value)
-@enforce_type(str, return_type=str, use_regex='^[1|2]$')
+@enforce_type(str, return_type=str, use_regex="^[1|2]$")
 def get_gender(gender):
     """
     Method to fetch gender from field code  and convert it
@@ -185,13 +185,13 @@ def get_gender(gender):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.PATIENT_AGE.value)
-@enforce_type(str, return_type=float, use_regex='^[0|1]{0,1}[0-9]{1,2}$')
+@enforce_type(str, return_type=float, use_regex="^[0|1]{0,1}[0-9]{1,2}$")
 def get_age_normalized_to_days(age=None, **kwargs):
     """
     Method to normalize age into days.
 
     Parameters:
-        age (:class:`str`): Person's age.
+        age (:class:`str`): Person"s age.
         kwargs (:class:`dict`): Other fields used to calculate age when
             `age` is not provided.
 
@@ -199,13 +199,13 @@ def get_age_normalized_to_days(age=None, **kwargs):
         :class:`float`:  Normalized age into days.
 
     Example:
-        >>> get_age_normalized_to_days('10')
+        >>> get_age_normalized_to_days("10")
         3650.0
         >>> required_fields_to_calculate_age = {
-        ...             NAMCSFieldEnum.MONTH_OF_VISIT.value: 'June',
-        ...             NAMCSFieldEnum.YEAR_OF_VISIT.value: '1974',
-        ...             NAMCSFieldEnum.MONTH_OF_BIRTH.value: 'May',
-        ...             NAMCSFieldEnum.YEAR_OF_BIRTH.value: '1910',
+        ...             NAMCSFieldEnum.MONTH_OF_VISIT.value: "June",
+        ...             NAMCSFieldEnum.YEAR_OF_VISIT.value: "1974",
+        ...             NAMCSFieldEnum.MONTH_OF_BIRTH.value: "May",
+        ...             NAMCSFieldEnum.YEAR_OF_BIRTH.value: "1910",
         ...         }
         >>> get_age_normalized_to_days(**required_fields_to_calculate_age)
         23407.0
@@ -217,9 +217,9 @@ def get_age_normalized_to_days(age=None, **kwargs):
         year_of_birth = str(kwargs.get(NAMCSFieldEnum.YEAR_OF_BIRTH.value))
 
         # For numeric value of month less than 10 using prefix 0
-        month_of_visit = '0{}'.format(month_of_visit)if month_of_visit < 10 \
+        month_of_visit = "0{}".format(month_of_visit)if month_of_visit < 10 \
             else str(month_of_visit)
-        month_of_birth = '0{}'.format(month_of_birth)if month_of_birth < 10 \
+        month_of_birth = "0{}".format(month_of_birth)if month_of_birth < 10 \
             else str(month_of_birth)
 
         visit_date = datetime.strptime(month_of_visit + year_of_visit, "%m%Y")
@@ -240,8 +240,8 @@ def get_age_normalized_to_days(age=None, **kwargs):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.VISIT_WEIGHT.value)
-@enforce_type(str, return_type=float, use_regex='^(([0-9.]{5,6})|'
-                                                '([0-9.]{10,11}))$')
+@enforce_type(str, return_type=float, use_regex="^(([0-9.]{5,6})|"
+                                                "([0-9.]{10,11}))$")
 def get_patient_visit_weight(visit_weight):
     """
     Method to convert visit weight from record to human readable format.
@@ -273,7 +273,7 @@ def get_patient_visit_weight(visit_weight):
         `visit_weight` is a right-justified integer.
 
     Example:
-        >>> get_patient_visit_weight('0000013479')
+        >>> get_patient_visit_weight("0000013479")
             13479.0
     """
     try:

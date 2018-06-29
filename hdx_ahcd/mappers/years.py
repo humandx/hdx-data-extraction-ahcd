@@ -47,7 +47,7 @@ class Year(ABC):
                                                  inspect.isroutine(attribute))))
         return [
             attributes.get(attr) for attr in attributes if not (
-                    attr.endswith('_') or attr.startswith('_')
+                    attr.endswith("_") or attr.startswith("_")
             )
         ]
 

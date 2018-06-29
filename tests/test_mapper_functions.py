@@ -35,7 +35,7 @@ class MapperFunctionsTest(TestCase):
         # Case 1: When numeric code for year and month is provided in
         # correct format
         # Setup
-        date = '0197'
+        date = "0197"
         expected_year = 1997
         expected_month = 1
 
@@ -49,7 +49,7 @@ class MapperFunctionsTest(TestCase):
         # Case 2: When numeric code for year and month is provided in
         # incorrect format
         # Setup
-        date = '0000'
+        date = "0000"
 
         # Asserting for wrong date format
         with self.assertRaises(expected_exception=(ValueError, Exception)):
@@ -67,7 +67,7 @@ class MapperFunctionsTest(TestCase):
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
-        date = '1497'  # 14 is invalid month
+        date = "1497"  # 14 is invalid month
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -82,8 +82,8 @@ class MapperFunctionsTest(TestCase):
         # will be implemented
         # Setup
         # Case 1: `diagnosis_code` is constant
-        diagnosis_code = 'Y997'
-        expected_icd_9_code = ''
+        diagnosis_code = "Y997"
+        expected_icd_9_code = ""
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -92,8 +92,8 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_icd_9_code, actual_icd_9_code)
 
         # Case 2: `diagnosis_code` is of 4 length and starts with 1
-        diagnosis_code = '1381'
-        expected_icd_9_code = '381.'
+        diagnosis_code = "1381"
+        expected_icd_9_code = "381."
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -102,8 +102,8 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_icd_9_code, actual_icd_9_code)
 
         # Case 3: `diagnosis_code` is of 6 length and starts with 1
-        diagnosis_code = '138100'
-        expected_icd_9_code = '381.00'
+        diagnosis_code = "138100"
+        expected_icd_9_code = "381.00"
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -112,8 +112,8 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_icd_9_code, actual_icd_9_code)
 
         # Case 4: `diagnosis_code` is of 4 length and starts with 2
-        diagnosis_code = '2010'
-        expected_icd_9_code = 'V10.'
+        diagnosis_code = "2010"
+        expected_icd_9_code = "V10."
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -122,8 +122,8 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_icd_9_code, actual_icd_9_code)
 
         # Case 5: `diagnosis_code` is of 6 length and starts with 2
-        diagnosis_code = '201081'
-        expected_icd_9_code = 'V10.81'
+        diagnosis_code = "201081"
+        expected_icd_9_code = "V10.81"
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -131,9 +131,9 @@ class MapperFunctionsTest(TestCase):
         # Assert for valid ICD-9 code
         self.assertEqual(expected_icd_9_code, actual_icd_9_code)
 
-        # Case 6: `diagnosis_code` starts with '-'
-        diagnosis_code = '-00009'
-        expected_icd_9_code = 'V00.009'
+        # Case 6: `diagnosis_code` starts with "-"
+        diagnosis_code = "-00009"
+        expected_icd_9_code = "V00.009"
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
@@ -151,16 +151,16 @@ class MapperFunctionsTest(TestCase):
 
         # Case 8: validating decorator enforce_type for parameter use_regex
         # Setup
-        diagnosis_code = 'test_code'  # Invalid diagnosis code
+        diagnosis_code = "test_code"  # Invalid diagnosis code
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
             # Call to func :func:`convert_physician_diagnoses_code`
             actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
 
-        # Case 9: `diagnosis_code` has fifth digit as '-'
-        diagnosis_code = '0010-'
-        expected_icd_9_code = '001.00'
+        # Case 9: `diagnosis_code` has fifth digit as "-"
+        diagnosis_code = "0010-"
+        expected_icd_9_code = "001.00"
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = \
@@ -171,9 +171,9 @@ class MapperFunctionsTest(TestCase):
             expected_icd_9_code, actual_icd_9_code
         )
 
-        # Case 10: `diagnosis_code` has fourth digit as '-'
-        diagnosis_code = '082-9'
-        expected_icd_9_code = '082.09'
+        # Case 10: `diagnosis_code` has fourth digit as "-"
+        diagnosis_code = "082-9"
+        expected_icd_9_code = "082.09"
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = \
@@ -190,7 +190,7 @@ class MapperFunctionsTest(TestCase):
         """
         # Case 1: when numeric code for month is correct
         # Setup
-        date = '03'
+        date = "03"
         expected_month = 3
 
         # Call to func :func:`get_month_from_date`
@@ -201,7 +201,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 2: when numeric code for month is wrong
         # Setup
-        date = '00'
+        date = "00"
 
         # Asserting for wrong date format
         with self.assertRaises(expected_exception=(ValueError, Exception)):
@@ -219,7 +219,7 @@ class MapperFunctionsTest(TestCase):
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
-        date = '14'  # 14 is invalid month
+        date = "14"  # 14 is invalid month
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -232,7 +232,7 @@ class MapperFunctionsTest(TestCase):
         """
         # Case 1: when numeric code for year is correct
         # Setup
-        date = '97'
+        date = "97"
         expected_year = 1997
 
         # Call to func :func:`get_year_from_date`
@@ -243,7 +243,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 2: When year needs to be calculated from source_file_id
         required_fields_to_calculate_age = {
-            NAMCSFieldEnum.SOURCE_FILE_ID.value: '2011_NAMCS',
+            NAMCSFieldEnum.SOURCE_FILE_ID.value: "2011_NAMCS",
         }
         expected_year = 2011
 
@@ -255,7 +255,7 @@ class MapperFunctionsTest(TestCase):
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
-        date = '-10'  # -10 is invalid year
+        date = "-10"  # -10 is invalid year
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -276,7 +276,7 @@ class MapperFunctionsTest(TestCase):
         Test to validate correct gender name for integer representing gender.
         """
         # Setup
-        gender = '1'
+        gender = "1"
         expected_gender_value = GenderEnum.FEMALE.value
 
         # Call to func :func:`get_gender`
@@ -286,7 +286,7 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_gender_value, actual_gender_value)
 
         # Setup
-        gender = '2'
+        gender = "2"
         expected_gender_value = GenderEnum.MALE.value
 
         # Call to func :func:`get_gender`
@@ -306,7 +306,7 @@ class MapperFunctionsTest(TestCase):
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
-        gender = '5'  # Gender '5' is invalid gender
+        gender = "5"  # Gender "5" is invalid gender
 
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
@@ -319,7 +319,7 @@ class MapperFunctionsTest(TestCase):
         """
         # Case 1: When age is numeric value
         # Setup
-        age = '33'
+        age = "33"
         expected_age_in_days = 12045.0
 
         # Call to func :func:`get_age_normalized_to_days`
@@ -351,7 +351,7 @@ class MapperFunctionsTest(TestCase):
         """
         # Case 1: When visit weight is integer value of length 10.
         # Setup
-        visit_weight = '0000019129'
+        visit_weight = "0000019129"
         expected_visit_weight = 19129.0
 
         # Call to func :func:`get_patient_visit_weight`
@@ -362,7 +362,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 2: When visit weight is integer value of length 11.
         # Setup
-        visit_weight = '00000191129'
+        visit_weight = "00000191129"
         expected_visit_weight = 191129.0
 
         # Call to func :func:`get_patient_visit_weight`
@@ -373,7 +373,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 3: When visit weight is float value of length 5.
         # Setup
-        visit_weight = '15.62'
+        visit_weight = "15.62"
         expected_visit_weight = 15.62
 
         # Call to func :func:`get_patient_visit_weight`
@@ -384,7 +384,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 4: When visit weight is float value of length 6.
         # Setup
-        visit_weight = '152.62'
+        visit_weight = "152.62"
         expected_visit_weight = 152.62
 
         # Call to func :func:`get_patient_visit_weight`
@@ -395,7 +395,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 5: When visit weight is invalid
         # Setup
-        visit_weight = '000..19129'
+        visit_weight = "000..19129"
 
         # Assert for exception
         with self.assertRaises((ValueError, Exception)):

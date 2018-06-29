@@ -54,51 +54,51 @@ class TestYear1973(TestCase):
         """
         # Expected slice objects
         expected_slice_objects = {
-            'month_of_birth':
+            "month_of_birth":
                 {
-                    'start': 4,
-                    'stop': 6
+                    "start": 4,
+                    "stop": 6
                 },
-            'patient_visit_weight':
+            "patient_visit_weight":
                 {
-                    'start': 70,
-                    'stop': 80
+                    "start": 70,
+                    "stop": 80
                 },
-            'physician_diagnoses':
+            "physician_diagnoses":
                 [
                     {
-                        'start': 38,
-                        'stop': 42,
+                        "start": 38,
+                        "stop": 42,
                     },
                     {
-                        'start': 42,
-                        'stop': 46,
+                        "start": 42,
+                        "stop": 46,
 
                     },
                     {
-                        'start': 46,
-                        'stop': 50
+                        "start": 46,
+                        "stop": 50
                     }
                 ],
-            'year_of_visit':
+            "year_of_visit":
                 {
-                    'start': 2,
-                    'stop': 4,
+                    "start": 2,
+                    "stop": 4,
                 },
-            'month_of_visit':
+            "month_of_visit":
                 {
-                    'start': 0,
-                    'stop': 2
+                    "start": 0,
+                    "stop": 2
                 },
-            'year_of_birth':
+            "year_of_birth":
                 {
-                    'start': 6,
-                    'stop': 8
+                    "start": 6,
+                    "stop": 8
                 },
-            'sex':
+            "sex":
                 {
-                    'start': 8,
-                    'stop': 9
+                    "start": 8,
+                    "stop": 9
                 }
         }
         # Call to func :func:`get_field_slice_mapping` for Year1973

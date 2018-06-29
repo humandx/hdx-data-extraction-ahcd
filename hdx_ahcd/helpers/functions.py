@@ -29,12 +29,37 @@ from hdx_ahcd.utils.decorators import (
 # Global vars
 # -N/A
 
-# Lambda function to get normalized hdx_ahcd file name
-get_normalized_namcs_file_name = lambda year: "{}_NAMCS".format(year)
 
-# Lambda to convert `str`, `int`, `float` into iterable as `list`
-get_iterable = lambda parameter: [parameter] \
-    if not isinstance(parameter, (list, tuple)) else parameter
+def get_normalized_namcs_file_name(year):
+    """
+    Method to get normalized dataset file name in format <YEAR>_NAMCS
+    for `year`.
+
+    Parameters:
+        year (:class:`str` or :class:`int`): NAMCS year.
+
+    Returns:
+        :class:`str`: Normalized dataset file name in format <YEAR>_NAMCS
+        for `year`.
+    """
+    return "{}_NAMCS".format(year)
+
+
+def get_iterable(parameter):
+    """
+    Method to convert `parameter` to iterable type. For example
+    convert `str`, `int`, `float` into iterable as `list`
+
+    Parameters:
+        parameter (:class:`str` or :class:`int` or :class:`float`): Object that
+            needs to be iterable.
+
+    Returns:
+        :class:`list` or :class:`tuple`: Iterable `parameter`.
+
+    """
+    return [parameter] if not isinstance(parameter, (list, tuple)) \
+        else parameter
 
 
 @catch_exception()
@@ -79,8 +104,8 @@ def populate_missing_fields(headers, field_codes_for_single_record):
     Note:
         >>> from namcs.config import CONVERTED_CSV_FIELDS
         >>> CONVERTED_CSV_FIELDS
-        ('source_file_ID', 'source_file_row', 'month_of_visit', 'year_of_visit'
-        , 'sex', 'age', 'physician_diagnoses', 'patient_visit_weight')
+        ("source_file_ID", "source_file_row", "month_of_visit", "year_of_visit"
+        , "sex", "age", "physician_diagnoses", "patient_visit_weight")
     """
     code_for_records = deepcopy(field_codes_for_single_record)
     missing_field_value = None
@@ -94,7 +119,7 @@ def populate_missing_fields(headers, field_codes_for_single_record):
         missing_field_mapped_function = get_conversion_method(missing_field)
         if missing_field_mapped_function:
             with try_except(method_name=missing_field_mapped_function.__name__,
-                            re_raise = True):
+                            re_raise=True):
                 missing_field_value = \
                     missing_field_mapped_function(**code_for_records)
 
@@ -189,14 +214,14 @@ def rename_namcs_dataset_for_year(year):
                 os.path.join(
                     EXTRACTED_DATA_DIR_PATH,
                     get_customized_file_name(namcs_file,
-                                             year_value, separator = "")
+                                             year_value, separator="")
                 )
         ):
             # Existing file
             file_name = \
                 os.path.join(
                     EXTRACTED_DATA_DIR_PATH, get_customized_file_name(
-                        namcs_file, year_value, separator = ""
+                        namcs_file, year_value, separator=""
                     )
                 )
 
@@ -254,14 +279,14 @@ def get_icd_9_code_from_raw_code(diagnoses_code):
         :class:`str`: Mapped representation of corresponding ICD-9 code for
             `diagnosis_code`.
     Note:
-        - `diagnosis_code` is provided in two formats 'a numeric format' and
+        - `diagnosis_code` is provided in two formats "a numeric format" and
             `a character format`
-        - Reference from documentation: 'From 1999, the ICD-9-CM codes are
+        - Reference from documentation: "From 1999, the ICD-9-CM codes are
             provided in two formats, the true ICD-9-CM code in character format,
-            and a numeric recode found at the end of the record format'.
+            and a numeric recode found at the end of the record format".
         - Example:
-            numeric format: '20700'
-            character format: 'V700'
+            numeric format: "20700"
+            character format: "V700"
     """
     if diagnoses_code in ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS:
         diagnoses_icd_9_code = \
@@ -282,8 +307,8 @@ def get_icd_9_code_from_raw_code(diagnoses_code):
     # Character format
     # For inapplicable fourth or fifth digits, a dash is inserted.
     # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
-    elif '-' in diagnoses_code[3:]:
-        diagnoses_code = diagnoses_code.replace('-', '0')
+    elif "-" in diagnoses_code[3:]:
+        diagnoses_code = diagnoses_code.replace("-", "0")
 
     # The prefix “1” preceding the 3-digit diagnostic codes represents
     # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
@@ -406,7 +431,7 @@ def get_namcs_source_file_info(year):
     Method to get details about NAMCS data file for provided year.
 
     Parameters:
-        year(:class:`int`): NAMCS year.
+        year (:class:`int`): NAMCS year.
 
     Returns:
         :class:`dict`: Dict containing string representation of year,
@@ -417,12 +442,12 @@ def get_namcs_source_file_info(year):
         get_customized_file_name(BASE_FILE_NAME[year],
                                  year_value,
                                  NAMCS_PUBLIC_FILE_EXTENSIONS[year],
-                                 separator = ""
+                                 separator=""
                                  )
     url = \
         get_customized_file_name(NAMCS_PUBLIC_FILE_URL[year],
                                  public_file_name,
-                                 separator = ""
+                                 separator=""
                                  )
     return {
         "year": year_value,
@@ -468,7 +493,7 @@ def safe_read_file(file_handle):
     """
     try:
         for line_no, line in enumerate(file_handle):
-            line = line.strip('\n')
+            line = line.strip("\n")
             yield line_no, line
     except Exception:
         # In case of exception skip current record and process
