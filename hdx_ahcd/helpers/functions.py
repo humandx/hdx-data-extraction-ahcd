@@ -15,7 +15,6 @@ from hdx_ahcd.namcs.config import (
     NAMCS_PUBLIC_FILE_EXTENSIONS,
     NAMCS_PUBLIC_FILE_URL,
 )
-from hdx_ahcd.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
 from hdx_ahcd.utils.context import try_except
 from hdx_ahcd.utils.decorators import (
     catch_exception,
@@ -265,88 +264,6 @@ def get_conversion_method(field_name):
     raise Exception(
         "For '{}' corresponding mapped function not found".format(field_name)
     )
-
-
-@catch_exception()
-def get_icd_9_code_from_raw_code(diagnoses_code):
-    """
-    Method to get convert raw `diagnosis_code` into ICD-9 format.
-
-    Parameters:
-        diagnoses_code (:class:`str`): String representation of diagnosis_code.
-
-    Returns:
-        :class:`str`: Mapped representation of corresponding ICD-9 code for
-            `diagnosis_code`.
-    Note:
-        - `diagnosis_code` is provided in two formats "a numeric format" and
-            `a character format`
-        - Reference from documentation: "From 1999, the ICD-9-CM codes are
-            provided in two formats, the true ICD-9-CM code in character format,
-            and a numeric recode found at the end of the record format".
-        - Example:
-            numeric format: "20700"
-            character format: "V700"
-    """
-    if diagnoses_code in ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS:
-        diagnoses_icd_9_code = \
-            ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS.get(diagnoses_code)
-        if diagnoses_icd_9_code in \
-                ("Blank", "Blank diagnosis", "Diagnosis of 'none'",
-                 "Noncodable diagnosis", "Noncodable", "Illegible diagnosis"):
-            return ""
-        return diagnoses_icd_9_code
-
-    # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
-    # classification, an ampersand (&) was used
-    # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
-    if diagnoses_code.startswith("&") or diagnoses_code.startswith("-") or \
-            diagnoses_code.startswith("Y"):
-        diagnoses_code = "V{}".format(diagnoses_code[1:])
-
-    # Character format
-    # For inapplicable fourth or fifth digits, a dash is inserted.
-    # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
-    elif "-" in diagnoses_code[3:]:
-        diagnoses_code = diagnoses_code.replace("-", "0")
-
-    # The prefix “1” preceding the 3-digit diagnostic codes represents
-    # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
-    if diagnoses_code.startswith("1"):
-        diagnoses_code = diagnoses_code.lstrip("1")
-
-    # The prefix “2” preceding the 3 - digit diagnostic codes represents "V"
-    # code diagnoses VO1 - V82, e.g., ‘2010’=’V10’ and “201081” = “V10.81”
-    elif diagnoses_code.startswith("2"):
-        if diagnoses_code.startswith("20"):
-            diagnoses_code = "V{}".format(diagnoses_code[2:])
-        else:
-            diagnoses_code = "V{}".format(diagnoses_code[1:])
-
-    # There is an implied decimal between the third and fourth digits
-    diagnoses_icd_9_code = "{}.{}".format(
-        diagnoses_code[:3], diagnoses_code[3:]
-    )
-
-    return diagnoses_icd_9_code
-
-
-@catch_exception()
-def get_icd_9_code_from_database(diagnoses_icd_9_code):
-    """
-    Method to get corresponding ICD-9 code for `diagnosis_code`.
-
-    Parameters:
-        diagnoses_icd_9_code (:class:`str`): String representation of
-            diagnosis_code.
-
-    Returns:
-        :class:`str`: String representation of corresponding ICD-9 code for
-            `diagnosis_code`.
-    """
-    # TODO: Fetch corresponding ICD-9 code for `diagnosis_code` from database
-    icd_9_code = diagnoses_icd_9_code
-    return icd_9_code
 
 
 def get_field_code_from_record(record, field_name, slice_object):

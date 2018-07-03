@@ -63,7 +63,7 @@ def get_generator_by_year(year, namcs_raw_dataset_file=None):
     Raises:
         :class:`Exception`: If some of attributes/fields are not
             implemented in the class for `year`, exception is raised
-            For example if :class:`Year1973` doesn"t implements  attribute
+            For example if :class:`Year1973` doesn't implement attribute
             `gender` an exception will be raised.
     """
     dataset_file = namcs_raw_dataset_file if namcs_raw_dataset_file is not None \

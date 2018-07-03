@@ -14,6 +14,7 @@ from hdx_ahcd.namcs.config import (
     NAMCS_DATASET_MONTH_PATTERNS,
     NAMCS_DATASET_YEAR_PATTERNS,
 )
+from hdx_ahcd.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
 from hdx_ahcd.utils.decorators import enforce_type
 from hdx_ahcd.utils.decorators import (
     add_method_to_mapping_dict,
@@ -23,13 +24,16 @@ from hdx_ahcd.namcs.enums import (
     GenderEnum,
     NAMCSFieldEnum,
 )
-from hdx_ahcd.helpers.functions import (
-    get_icd_9_code_from_database,
-    get_icd_9_code_from_raw_code,
-)
 
 # Global vars
-# -N/A
+REGEX_FOR_YEAR_AND_MONTH = "^(0[1-9]|1[012])([0-9]{2})$"
+REGEX_FOR_PHYSICIAN_DIAGNOSES = "^([V|Y|\-|\&|0-9][0-9]{3,5}|" \
+                           "[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})$"
+REGEX_FOR_MONTH = "^((0[1-9]|1[012])|([A-Z][a-z]{2,8}))$"
+REGEX_FOR_YEAR = "^([1-2][0|9])?[0-9]{2}$"
+REGEX_FOR_GENDER = "^[1|2]$"
+REGEX_FOR_PATIENT_AGE = "^[0|1]{0,1}[0-9]{1,2}$"
+REGEX_FOR_PATIENT_VISIT_WEIGHT = "^(([0-9.]{5,6})|([0-9.]{10,11}))$"
 
 
 @catch_exception(re_raise=True)
@@ -39,8 +43,7 @@ from hdx_ahcd.helpers.functions import (
             NAMCSFieldEnum.DATE_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=(int, int),
-              use_regex="^(0[1-9]|1[012])([0-9]{2})$")
+@enforce_type(str, return_type=(int, int), use_regex=REGEX_FOR_YEAR_AND_MONTH)
 def get_year_and_month_from_date(raw_format_date):
     """
     Fetch year and month from provided date string.
@@ -67,25 +70,68 @@ def get_year_and_month_from_date(raw_format_date):
             NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
     )
 )
-@enforce_type(str, return_type=str, use_regex="^([V|Y|\-|\&|0-9][0-9]{3,5}|"
-                                              "[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})"
-                                              "$")
+@enforce_type(str, return_type=str, use_regex=REGEX_FOR_PHYSICIAN_DIAGNOSES)
 def convert_physician_diagnoses_code(diagnoses_code):
     """
-    Method to convert physician `diagnosis_code` into ICD-9 format.
+    Method to get convert raw `diagnoses_code` into ICD-9 format.
 
     Parameters:
-        diagnoses_code (:class:`str`): Raw physician diagnosis_code.
+        diagnoses_code (:class:`str`): String representation of diagnosis_code.
 
     Returns:
-        :class:`str`: Corresponding ICD-9 code for physician `diagnosis_code`.
+        :class:`str`: Mapped representation of corresponding ICD-9 code for
+            `diagnoses_code`.
+    Note:
+        - `diagnoses_code` is provided in two formats "a numeric format" and
+            `a character format`
+        - Reference from documentation: "From 1999, the ICD-9-CM codes are
+            provided in two formats, the true ICD-9-CM code in character format,
+            and a numeric recode found at the end of the record format".
+        - Example:
+            numeric format: "20700"
+            character format: "V700"
     """
-    # Get ICD9 code for given diagnosis code
-    diagnoses_icd_9_code = get_icd_9_code_from_raw_code(diagnoses_code)
+    if diagnoses_code in ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS:
+        diagnoses_icd_9_code = \
+            ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS.get(diagnoses_code)
+        if diagnoses_icd_9_code in \
+                ("Blank", "Blank diagnosis", "Diagnosis of 'none'",
+                 "Noncodable diagnosis", "Noncodable", "Illegible diagnosis"):
+            return ""
+        return diagnoses_icd_9_code
 
-    # Finding relative ICD-9 code for diagnosis code
-    icd_9_code = get_icd_9_code_from_database(diagnoses_icd_9_code)
-    return icd_9_code
+    # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
+    # classification, an ampersand (&) was used
+    # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
+    if diagnoses_code.startswith("&") or diagnoses_code.startswith("-") or \
+            diagnoses_code.startswith("Y"):
+        diagnoses_code = "V{}".format(diagnoses_code[1:])
+
+    # Character format
+    # For inapplicable fourth or fifth digits, a dash is inserted.
+    # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
+    elif "-" in diagnoses_code[3:]:
+        diagnoses_code = diagnoses_code.replace("-", "0")
+
+    # The prefix “1” preceding the 3-digit diagnostic codes represents
+    # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
+    if diagnoses_code.startswith("1"):
+        diagnoses_code = diagnoses_code.lstrip("1")
+
+    # The prefix “2” preceding the 3 - digit diagnostic codes represents "V"
+    # code diagnoses VO1 - V82, e.g., ‘2010’=’V10’ and “201081” = “V10.81”
+    elif diagnoses_code.startswith("2"):
+        if diagnoses_code.startswith("20"):
+            diagnoses_code = "V{}".format(diagnoses_code[2:])
+        else:
+            diagnoses_code = "V{}".format(diagnoses_code[1:])
+
+    # There is an implied decimal between the third and fourth digits
+    diagnoses_icd_9_code = "{}.{}".format(
+        diagnoses_code[:3], diagnoses_code[3:]
+    )
+
+    return diagnoses_icd_9_code
 
 
 @catch_exception(re_raise=True)
@@ -95,8 +141,7 @@ def convert_physician_diagnoses_code(diagnoses_code):
             NAMCSFieldEnum.MONTH_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=int, use_regex="^((0[1-9]|1[012])"
-                                              "|([A-Z][a-z]{2,8}))$")
+@enforce_type(str, return_type=int, use_regex=REGEX_FOR_MONTH)
 def get_month_from_date(raw_format_date):
     """
     Fetch month from date string.
@@ -128,7 +173,7 @@ def get_month_from_date(raw_format_date):
             NAMCSFieldEnum.YEAR_OF_BIRTH.value
     )
 )
-@enforce_type(str, return_type=int, use_regex="^([1-2][0|9])?[0-9]{2}$")
+@enforce_type(str, return_type=int, use_regex=REGEX_FOR_YEAR)
 def get_year_from_date(date_pattern=None, **kwargs):
     """
     Method to fetch year from date string.
@@ -164,7 +209,7 @@ def get_year_from_date(date_pattern=None, **kwargs):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.GENDER.value)
-@enforce_type(str, return_type=str, use_regex="^[1|2]$")
+@enforce_type(str, return_type=str, use_regex=REGEX_FOR_GENDER)
 def get_gender(gender):
     """
     Method to fetch gender from field code  and convert it
@@ -185,7 +230,7 @@ def get_gender(gender):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.PATIENT_AGE.value)
-@enforce_type(str, return_type=float, use_regex="^[0|1]{0,1}[0-9]{1,2}$")
+@enforce_type(str, return_type=float, use_regex=REGEX_FOR_PATIENT_AGE)
 def get_age_normalized_to_days(age=None, **kwargs):
     """
     Method to normalize age into days.
@@ -240,8 +285,7 @@ def get_age_normalized_to_days(age=None, **kwargs):
 
 @catch_exception(re_raise=True)
 @add_method_to_mapping_dict(NAMCSFieldEnum.VISIT_WEIGHT.value)
-@enforce_type(str, return_type=float, use_regex="^(([0-9.]{5,6})|"
-                                                "([0-9.]{10,11}))$")
+@enforce_type(str, return_type=float, use_regex=REGEX_FOR_PATIENT_VISIT_WEIGHT)
 def get_patient_visit_weight(visit_weight):
     """
     Method to convert visit weight from record to human readable format.

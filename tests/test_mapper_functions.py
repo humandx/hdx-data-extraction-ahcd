@@ -78,8 +78,6 @@ class MapperFunctionsTest(TestCase):
         """
         Test to validate correct ICD-9 code for raw physician `diagnosis_code`.
         """
-        # TODO: this test will change when method get_icd_9_code_from_database
-        # will be implemented
         # Setup
         # Case 1: `diagnosis_code` is constant
         diagnosis_code = "Y997"
@@ -276,7 +274,7 @@ class MapperFunctionsTest(TestCase):
         Test to validate correct gender name for integer representing gender.
         """
         # Setup
-        gender = "1"
+        gender = "1"  # Female
         expected_gender_value = GenderEnum.FEMALE.value
 
         # Call to func :func:`get_gender`
@@ -286,7 +284,7 @@ class MapperFunctionsTest(TestCase):
         self.assertEqual(expected_gender_value, actual_gender_value)
 
         # Setup
-        gender = "2"
+        gender = "2"  # Male
         expected_gender_value = GenderEnum.MALE.value
 
         # Call to func :func:`get_gender`

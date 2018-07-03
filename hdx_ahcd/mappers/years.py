@@ -27,10 +27,10 @@ class Year(ABC):
     field name, location, length.
     Child class must directly inherit this class.
 
-    This class implements two methods `get_attributes` and
-    `get_field_slice_mapping` and defines abstract methods in conjunction 
-    with property,to impose constraint on child classes to implement 
-    certain attributes.    
+    This class implements two concrete methods, :meth:`get_attributes` and
+    :meth:`get_field_slice_mapping`, and defines abstract methods in
+    conjunction with necessary properties to impose constraints on
+    child classes.
     """
     @classmethod
     def get_attributes(cls):

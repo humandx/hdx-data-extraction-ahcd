@@ -4,7 +4,7 @@ Module to expose API for processing NAMCS dataset file(s).
 """
 # Other modules
 from hdx_ahcd.controllers.namcs_processors import NAMCSProcessor as \
-    __Processor
+    __NAMCSProcessor
 
 
 # 3rd party modules
@@ -152,4 +152,4 @@ def get_cleaned_data_by_year(**kwargs):
         >>> gen = get_cleaned_data_by_year(file_name="/var/tmp/2015")
         ERROR:hdx_ahcd:NAMCS dataset file:/var/tmp/2015 doesn't exist
     """
-    return __Processor().execute(**kwargs)
+    return __NAMCSProcessor().execute(**kwargs)

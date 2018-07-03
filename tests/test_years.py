@@ -6,7 +6,7 @@ Test for module mappers.years
 from unittest import TestCase
 
 # Other modules
-from hdx_ahcd.mappers.years import Year1973
+from hdx_ahcd.mappers.years import (Year1973, Year)
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 # 3rd party modules
@@ -15,7 +15,7 @@ from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 class TestYear1973(TestCase):
     """
-    Test cases for class Year1973.
+    Test class for :class:`Year1973`
     """
     def test_get_attributes(self):
         """
@@ -125,3 +125,38 @@ class TestYear1973(TestCase):
 
         # Asserting start and stop index for :class:`NAMCSMetaMappings` fields
         self.assertDictEqual(expected_slice_objects, actual_slice_objects)
+
+
+class TestYear(TestCase):
+    """
+    Test class for :class:`Year`
+    """
+    def test_abstract_methods(self):
+        """
+        Test to validate an exception is raised when subclass of :class:`Year`
+        don't implement a abstract attributes.
+
+        Note:
+            Abstract attributes are: `gender`, `physician_diagnoses`,
+            `visit_weight`, `month_of_visit`.
+        """
+        # Setup
+        # Subclass of :class:`Year`
+        class TestClass(Year):
+            """
+            Class to implement abstract attributes of the :class:`Year`.
+
+            Note:
+                This class don't implement abstract attribute:
+                `physician_diagnoses`.
+            """
+            # Using test values for abstract attributes
+            gender = "test_gender"
+            visit_weight = "test_visit_weight"
+            month_of_visit = "test_month_of_visit"
+
+        # Assert for exception is raised when trying to instantiate object of
+        # :class:`TestClass`
+        with self.assertRaises(TypeError):
+            TestClass()
+
