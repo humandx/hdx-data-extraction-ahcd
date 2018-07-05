@@ -134,14 +134,14 @@ def get_cleaned_data_by_year(**kwargs):
                                                           'year': '15',
                                                           'zip_file_name': 'namcs2015.zip'}}})
         >>> pp.pprint(next(gen.get(2015).get("generator")))
-        {   'age': 23725,
-            'month_of_visit': 'October',
+        {   'age': 23725.0,
+            'month_of_visit': 10,
             'patient_visit_weight': 414200.0481,
             'physician_diagnoses': ['723.10', '719.41', '729.50', 'V50.80', 'V00.009'],
             'sex': 'Female',
             'source_file_ID': '2015_NAMCS',
             'source_file_row': 1,
-            'year_of_visit': '2015'}
+            'year_of_visit': 2015}
 
         Case 7: Attempting to process the file for which data is not available on
             CDC FTP server.

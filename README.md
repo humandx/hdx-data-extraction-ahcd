@@ -158,23 +158,24 @@ defaultdict(<class 'dict'>,
 > Iterating over generator
 ```sh
 >>> pp.pprint(next(gen.get(1973).get('generator')))
-{   'age': 22889,
-    'month_of_visit': 'June',
+{   'age': 22889.0,
+    'month_of_visit': 6,
     'patient_visit_weight': 13479.0,
     'physician_diagnoses': ['470.0', 'V03.2'],
     'sex': 'Female',
     'source_file_ID': '1973_NAMCS',
     'source_file_row': 1,
-    'year_of_visit': '1973'}
+    'year_of_visit': 1973}
 >>> pp.pprint(next(gen.get(1975).get('generator')))
-{   'age': 14610,
-    'month_of_visit': 'April',
+{   'age': 14610.0,
+    'month_of_visit': 4,
     'patient_visit_weight': 3722.0,
     'physician_diagnoses': ['492.0'],
     'sex': 'Male',
     'source_file_ID': '1975_NAMCS',
     'source_file_row': 1,
-    'year_of_visit': '1975'}
+    'year_of_visit': 1975}
+
 ```
 > Case 3: Forcefully download and then process the NAMCS data for multiple
         years (say, 1973 and 1975).
@@ -231,14 +232,14 @@ defaultdict(<class 'dict'>,
                                                   'year': '15',
                                                   'zip_file_name': 'namcs2015.zip'}}})
 >>> pp.pprint(next(gen.get(2015).get("generator")))
-{   'age': 23725,
-    'month_of_visit': 'October',
+{   'age': 23725.0,
+    'month_of_visit': 10,
     'patient_visit_weight': 414200.0481,
     'physician_diagnoses': ['723.10', '719.41', '729.50', 'V50.80', 'V00.009'],
     'sex': 'Female',
     'source_file_ID': '2015_NAMCS',
     'source_file_row': 1,
-    'year_of_visit': '2015'}
+    'year_of_visit': 2015}
 ```
 ### Uninstall
 -----

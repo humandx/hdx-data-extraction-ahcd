@@ -179,7 +179,7 @@ def _validate_year_from_dataset_file_name(file_name):
     year = get_year_from_dataset_file_name(file_name)
 
     # Validating year from NAMCS file
-    if not _validate_namcs_year(year).is_valid:
+    if year is None or not _validate_namcs_year(year).is_valid:
         validation_obj.errors.append(
             "Unable to extract year from file name <{}>. Please specify "
             "file name in format <YEAR>_NAMCS".format(file_name)
