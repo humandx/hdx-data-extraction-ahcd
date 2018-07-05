@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Module for installing package hdx_ahcd.
+Module for installing package `hdx_ahcd`.
 """
 # Python modules
-import os
 from setuptools import (find_packages, setup)
+import os
 
 # Third party modules
 # -N/A

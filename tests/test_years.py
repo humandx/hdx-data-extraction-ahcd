@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Test for module mappers.years
+Test for `mappers.years` module.
 """
 # Python modules
 from unittest import TestCase
@@ -22,18 +22,17 @@ class TestYear1973(TestCase):
         Test for verify method `get_attributes`.
         """
         # Expected attributes
-        expected_field_name = \
-            [
-                NAMCSFieldEnum.MONTH_OF_VISIT.value,
-                NAMCSFieldEnum.YEAR_OF_VISIT.value,
-                NAMCSFieldEnum.MONTH_OF_BIRTH.value,
-                NAMCSFieldEnum.YEAR_OF_BIRTH.value,
-                NAMCSFieldEnum.GENDER.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_1.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_2.value,
-                NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
-                NAMCSFieldEnum.VISIT_WEIGHT.value,
-            ]
+        expected_field_name = [
+            NAMCSFieldEnum.MONTH_OF_VISIT.value,
+            NAMCSFieldEnum.YEAR_OF_VISIT.value,
+            NAMCSFieldEnum.MONTH_OF_BIRTH.value,
+            NAMCSFieldEnum.YEAR_OF_BIRTH.value,
+            NAMCSFieldEnum.GENDER.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_1.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_2.value,
+            NAMCSFieldEnum.PHYSICIANS_DIAGNOSES_3.value,
+            NAMCSFieldEnum.VISIT_WEIGHT.value,
+        ]
 
         # Call to func :func:`get_attributes` for Year1973
         actual_attributes = Year1973.get_attributes()

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Tests for namcs_converter module.
+Tests for module `namcs_converter`.
 """
 # Python modules
+from itertools import tee
+from unittest import mock, TestCase
 import inspect
 import os
-from unittest import mock, TestCase
 
 # Third party modules
 # -N/A
@@ -26,7 +27,6 @@ class NAMCSConverterTest(TestCase):
     """
     TestCase class for NAMCS converter.
     """
-
     def test_get_generator_by_year(self):
         """
         Test if valid generator object is returned by `get_generator_by_year`
@@ -264,11 +264,13 @@ class NAMCSConverterTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to func :func:`get_year_wise_generator`
-        year_wise_mld = get_year_wise_generator(year)
+        year_wise_translated_data = get_year_wise_generator(year)
 
         # Assert if the year wise dict has generator object
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2000).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2000).get("generator")
+            )
         )
 
         # Assert if source file details are returned
@@ -279,7 +281,7 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
-            year_wise_mld.get(2000).get("source_file_info")
+            year_wise_translated_data.get(2000).get("source_file_info")
         )
 
     def test_get_year_wise_generator_with_year_and_file(self):
@@ -292,15 +294,18 @@ class NAMCSConverterTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to func :func:`get_year_wise_generator`
-        year_wise_mld = get_year_wise_generator(
+        year_wise_translated_data = get_year_wise_generator(
             year = 2000,
-            namcs_dataset_file=
-            os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
+            namcs_raw_dataset_file = os.path.join(
+                os.path.dirname(__file__), "data", "2000_NAMCS"
+            )
         )
 
         # Assert if the year wise dict has generator object
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2000).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2000).get("generator")
+            )
         )
 
         # Assert if source file details are returned
@@ -311,7 +316,7 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
-            year_wise_mld.get(2000).get("source_file_info")
+            year_wise_translated_data.get(2000).get("source_file_info")
         )
 
     def test_get_year_wise_generator_for_multiple_year(self):
@@ -327,14 +332,18 @@ class NAMCSConverterTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to func :func:`get_year_wise_generator`
-        year_wise_mld = get_year_wise_generator(years)
+        year_wise_translated_data = get_year_wise_generator(years)
 
         # Assert if the year wise dict has generator object
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2000).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2000).get("generator")
+            )
         )
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2001).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2001).get("generator")
+            )
         )
 
         # Assert if source file details are returned
@@ -345,7 +354,7 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
-            year_wise_mld.get(2000).get("source_file_info")
+            year_wise_translated_data.get(2000).get("source_file_info")
         )
         self.assertEqual(
             {
@@ -354,12 +363,13 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS01.exe"
             },
-            year_wise_mld.get(2001).get("source_file_info")
+            year_wise_translated_data.get(2001).get("source_file_info")
         )
 
     @mock.patch("hdx_ahcd.controllers.namcs_converter.export_to_csv")
-    def test_get_year_wise_generator_for_year_with_export(self,
-                                                          mocked_export_to_csv):
+    def test_get_year_wise_generator_for_year_with_export(
+        self, mocked_export_to_csv
+    ):
         """
         Test if valid generator objects are returned by
         `get_year_wise_generator` method when a list of year is specified.
@@ -372,14 +382,19 @@ class NAMCSConverterTest(TestCase):
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to func :func:`get_year_wise_generator`
-        year_wise_mld = get_year_wise_generator(years, do_export=True)
+        year_wise_translated_data = \
+            get_year_wise_generator(years, do_export=True)
 
         # Assert if the year wise dict has generator object
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2000).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2000).get("generator")
+            )
         )
         self.assertTrue(
-            inspect.isgenerator(year_wise_mld.get(2001).get("generator"))
+            inspect.isgenerator(
+                year_wise_translated_data.get(2001).get("generator")
+            )
         )
 
         # Assert if source file details are returned
@@ -390,7 +405,7 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
-            year_wise_mld.get(2000).get("source_file_info")
+            year_wise_translated_data.get(2000).get("source_file_info")
         )
         self.assertEqual(
             {
@@ -399,7 +414,7 @@ class NAMCSConverterTest(TestCase):
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS01.exe"
             },
-            year_wise_mld.get(2001).get("source_file_info")
+            year_wise_translated_data.get(2001).get("source_file_info")
         )
 
         # Verify the `export_to_csv` call
@@ -409,7 +424,7 @@ class NAMCSConverterTest(TestCase):
         )
         self.assertTrue(all(
             [
-                inspect.isgenerator(call[0][1])
+                isinstance(call[0][1], type(tee(())[0]))
                 for call in mocked_export_to_csv.call_args_list
             ]
         ))
@@ -420,21 +435,22 @@ class NAMCSConverterTest(TestCase):
         `get_year_wise_generator` method when a list of year is specified.
         """
         # Setup
-
         # Patch `EXTRACTED_DATA_DIR_PATH` to `test/data` directory
         functions.EXTRACTED_DATA_DIR_PATH = \
             os.path.join(os.path.dirname(__file__), "data")
 
         # Call to func :func:`get_year_wise_generator`
-        year_wise_mld = get_year_wise_generator()
+        year_wise_translated_data = get_year_wise_generator()
 
         for year in YEARS_AVAILABLE:
             # Assert if the year wise dict has generator object
             self.assertTrue(
-                inspect.isgenerator(year_wise_mld.get(2000).get("generator"))
+                inspect.isgenerator(
+                    year_wise_translated_data.get(2000).get("generator")
+                )
             )
             # Assert if source file details are returned
             self.assertEqual(
                 get_namcs_source_file_info(year),
-                year_wise_mld.get(year).get("source_file_info")
+                year_wise_translated_data.get(year).get("source_file_info")
             )

@@ -30,14 +30,18 @@ class NAMCSProcessor(object):
     def execute(self, year=None, file_name=None, do_validation=True,
                 do_export=False, force_download=False):
         """
-        Method to process NAMCS raw dataset file(s).
+        Method to process NAMCS raw dataset file(s) after successful validation
+        of parameters `year` and/or `file_name`.
 
         Parameters:
-            year (:class:`int` or :class:`tuple` or :class:`list`): NAMCS year.
-            file_name (:class:`str`): NAMCS dataset file name.
+            year (:class:`int` or :class:`tuple` or :class:`list`): Year(s) for
+                which dataset files will be translated.
+            file_name (:class:`str`): Absolute path of
+                raw dataset input file. If not specified, local file path
+                will be deduced on the basis of `year` specified by user.
             do_validation (:class:`bool`): If to perform validation
                 on `year` and `file_name`. *Default** :const:`True`.
-            do_export (:class:`bool`): Output translated  data into csv file.
+            do_export (:class:`bool`): Export translated data into csv file.
                 *Default** :const:`False`.
             force_download (:class:`bool`): Whether to force download
                 NAMCS raw dataset file even if data set file exists locally.
@@ -46,7 +50,7 @@ class NAMCSProcessor(object):
         Returns:
             :class:`defaultdict`: Dictionary containing generator of converted
             NAMCS patient case data for given year along with source file
-            info Further if `do_export` is True, it returns
+            info. Further if `do_export` is True, it returns
             the absolute path of csv file where the data is exported.
         """
         year_wise_translated_data = defaultdict(dict)
@@ -81,38 +85,37 @@ class NAMCSProcessor(object):
         # `force_download` set to True
         # Download and extract files for `year`
         if file_name is None:
-            initiate_namcs_dataset_download(year=year,
-                                            force_download = force_download)
-            # Translate dataset for all files
-            year_wise_translated_data = get_year_wise_generator(
-                year = year, do_export = do_export
+            initiate_namcs_dataset_download(
+                year=year, force_download=force_download
             )
+            # Translate dataset for all files
+            year_wise_translated_data = \
+                get_year_wise_generator(year=year, do_export=do_export)
         # Case 2: Year and dataset file name provided.
         # Processing `file_name` for `year`
         elif year and file_name:
-            year_wise_translated_data = \
-                get_year_wise_generator(
-                    year,
-                    namcs_dataset_file = file_name,
-                    do_export = do_export
-                )
+            year_wise_translated_data = get_year_wise_generator(
+                year, namcs_raw_dataset_file=file_name, do_export=do_export
+            )
 
         return year_wise_translated_data
 
     def validate(self, year, file_name):
         """
-        Method to validate NAMCS raw dataset files.
+        Method to validate NAMCS raw dataset file(s).
 
         Parameters:
-            year (:class:`int`): NAMCS year.
-            file_name (:class:`str`): NAMCS raw dataset file name.
+            year (:class:`int`): Year(s) for which dataset files will be
+                validated.
+            file_name (:class:`str`): Absolute path of
+                raw dataset input file.
 
         Returns:
             :class:`tuple`: With elements as
-                :class:`bool`: Flag to indicate if any errors occurred
+                :class:`bool`: Indicates if any errors occurred
                     during execution.
-                :class:`TrackValidationError`: TrackValidationError
-                    object having errors, if any.
+                :class:`TrackValidationError`: Object of
+                    :class`TrackValidationError` having errors, if any.
         """
         # Tuple of methods to invoke when performing validation
         methods_to_call = (validate_arguments, validate_dataset_records)

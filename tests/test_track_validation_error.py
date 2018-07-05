@@ -33,28 +33,42 @@ class TrackValidationErrorTest(TestCase):
 
         # Test when validation method returns a single error
         track_validation_error.update(
-            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
-        self.assertEqual(track_validation_error.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
+        self.assertEqual(
+            track_validation_error.errors,
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
         self.assertEqual(track_validation_error.is_valid, False)
 
         # Test when validation method returns multiple errors
         track_validation_error.update(
-            ["Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
-             "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
-        self.assertEqual(track_validation_error.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
+            [
+                "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"
+            ]
+        )
+        self.assertEqual(
+            track_validation_error.errors,
+            [
+                "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"
+            ]
+        )
         self.assertEqual(track_validation_error.is_valid, False)
 
         # Test when validation method returns a success after it was already
         # set as failed validation
         track_validation_error.update([])
-        self.assertEqual(track_validation_error.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
+        self.assertEqual(
+            track_validation_error.errors,
+            [
+                "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"
+            ]
+        )
         self.assertEqual(track_validation_error.is_valid, False)
 
     def test_track_validation_error_update_invalid_inputs(self):
@@ -86,22 +100,31 @@ class TrackValidationErrorTest(TestCase):
 
         # Test when one validation method represents success
         test_object_1.update(
-            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
         add_result = TrackValidationError.add(test_object_1, test_object_2)
-        self.assertEqual(add_result.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
+        self.assertEqual(
+            add_result.errors,
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
         self.assertFalse(add_result.is_valid)
 
         # Test when both validation method represents failure
         test_object_1.update(
-            ["Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE"]
+        )
         test_object_2.update(
-            ["Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"]
+        )
         add_result = TrackValidationError.add(test_object_1, test_object_2)
-        self.assertEqual(add_result.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
-            "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
+        self.assertEqual(
+            add_result.errors,
+            [
+                "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 16 : HERE IS YOUR ERROR MESSAGE",
+                "Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"
+            ]
+        )
         self.assertFalse(add_result.is_valid)
 
     def test_track_validation_error_add_invalid_inputs(self):
@@ -118,15 +141,19 @@ class TrackValidationErrorTest(TestCase):
 
         # Test when one validation method represents success
         test_object_1.update(
-            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
         add_result = TrackValidationError.add(test_object_1, test_object_2)
-        self.assertEqual(add_result.errors, [
-            "Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"])
+        self.assertEqual(
+            add_result.errors,
+            ["Error occurred at line 15 : HERE IS YOUR ERROR MESSAGE"]
+        )
         self.assertFalse(add_result.is_valid)
 
         # Test when validation method sends None error
         test_object_1.errors = None
         test_object_2.update(
-            ["Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"])
+            ["Error occurred at line 17 : HERE IS YOUR ERROR MESSAGE"]
+        )
         with self.assertRaises(TypeError):
             TrackValidationError.add(test_object_1, test_object_2)

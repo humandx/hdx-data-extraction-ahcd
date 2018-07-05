@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for mappers.functions module.
+Tests for module `mappers.functions`.
 """
 # Python modules
 from unittest import TestCase
@@ -10,8 +10,8 @@ from unittest import TestCase
 
 # Other modules
 from hdx_ahcd.mappers.functions import (
-    get_age_normalized_to_days,
     convert_physician_diagnoses_code,
+    get_age_normalized_to_days,
     get_gender,
     get_month_from_date,
     get_patient_visit_weight,
@@ -51,28 +51,28 @@ class MapperFunctionsTest(TestCase):
         # Setup
         date = "0000"
 
+        # Call to func :func:`get_year_and_month_from_date`
         # Asserting for wrong date format
         with self.assertRaises(expected_exception=(ValueError, Exception)):
-            # Call to func :func:`get_year_and_month_from_date`
-            actual_year, actual_month = get_year_and_month_from_date(date)
+            get_year_and_month_from_date(date)
 
         # Validating decorator enforce_type
         # Setup
         date = 1297
 
+        # Call to func :func:`get_year_and_month_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_year_and_month_from_date`
-            actual_year, actual_month = get_year_and_month_from_date(date)
+            get_year_and_month_from_date(date)
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
         date = "1497"  # 14 is invalid month
 
+        # Call to func :func:`get_year_and_month_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_year_and_month_from_date`
-            actual_year, actual_month = get_year_and_month_from_date(date)
+            get_year_and_month_from_date(date)
 
     def test_convert_physician_diagnosis_code(self):
         """
@@ -142,19 +142,19 @@ class MapperFunctionsTest(TestCase):
         # Case 7: validating decorator enforce_type
         diagnosis_code = 1111
 
+        # Call to func :func:`convert_physician_diagnoses_code`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`convert_physician_diagnoses_code`
-            actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
+            convert_physician_diagnoses_code(diagnosis_code)
 
         # Case 8: validating decorator enforce_type for parameter use_regex
         # Setup
         diagnosis_code = "test_code"  # Invalid diagnosis code
 
+        # Call to func :func:`convert_physician_diagnoses_code`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`convert_physician_diagnoses_code`
-            actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)
+            convert_physician_diagnoses_code(diagnosis_code)
 
         # Case 9: `diagnosis_code` has fifth digit as "-"
         diagnosis_code = "0010-"
@@ -201,28 +201,28 @@ class MapperFunctionsTest(TestCase):
         # Setup
         date = "00"
 
+        # Call to func :func:`get_month_from_date`
         # Asserting for wrong date format
         with self.assertRaises(expected_exception=(ValueError, Exception)):
-            # Call to func :func:`get_month_from_date`
-            actual_month = get_month_from_date(date)
+            get_month_from_date(date)
 
         # Validating decorator enforce_type
         # Setup
         date = 12
 
+        # Call to func :func:`get_month_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_month_from_date`
-            actual_month = get_month_from_date(date)
+            get_month_from_date(date)
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
         date = "14"  # 14 is invalid month
 
+        # Call to func :func:`get_month_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_month_from_date`
-            actual_month = get_month_from_date(date)
+            get_month_from_date(date)
 
     def test_get_year_from_date(self):
         """
@@ -255,19 +255,19 @@ class MapperFunctionsTest(TestCase):
         # Setup
         date = "-10"  # -10 is invalid year
 
+        # Call to func :func:`get_year_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_year_from_date`
-            actual_month = get_year_from_date(date)
+            get_year_from_date(date)
 
         # Validating decorator enforce_type
         # Setup
         date = 12
 
+        # Call to func :func:`get_year_from_date`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_year_from_date`
-            actual_month = get_year_from_date(date)
+            get_year_from_date(date)
 
     def test_get_gender(self):
         """
@@ -297,19 +297,19 @@ class MapperFunctionsTest(TestCase):
         # Setup
         gender = 12
 
+        # Call to func :func:`get_gender`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_gender`
-            actual_gender_value = get_gender(gender)
+            get_gender(gender)
 
         # Validating use_regex parameter of decorator enforce_type
         # Setup
         gender = "5"  # Gender "5" is invalid gender
 
+        # Call to func :func:`get_gender`
         # Assert for exception raised from decorator
         with self.assertRaises(Exception):
-            # Call to func :func:`get_gender`
-            actual_gender_value = get_gender(gender)
+            get_gender(gender)
 
     def test_get_age_normalized_to_days(self):
         """
@@ -395,10 +395,10 @@ class MapperFunctionsTest(TestCase):
         # Setup
         visit_weight = "000..19129"
 
+        # Call to func :func:`get_patient_visit_weight`
         # Assert for exception
         with self.assertRaises((ValueError, Exception)):
-            # Call to func :func:`get_patient_visit_weight`
-            actual_visit_weight = get_patient_visit_weight(visit_weight)
+            get_patient_visit_weight(visit_weight)
 
 
 

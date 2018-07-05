@@ -39,11 +39,12 @@ hdx_ahcd
     ├── exceptions.py
     ├── __init__.py
     └── utils.py
+namcs_test.py
 ```
 * api - API to process NAMCS dataset file(s).
 * controllers
-    - namcs_extractor.py - Download and extract public NAMCS data.
-    - namcs_converter.py - Process and convert NAMCS data in human readable form.
+    - namcs_extractor - Download and extract public NAMCS data.
+    - namcs_converter - Process and convert NAMCS data in human readable form.
     - namcs_processors - Provide common entry point for execution.
 * helpers - Various methods for manipulating dataset and it's details.
 * mappers
@@ -101,8 +102,7 @@ for example:
 ```sh
 pip install /var/tmp/hdx-data-extraction-ahcd/
 ```
-and
-
+or
 ```sh
 python3 /var/tmp/hdx-data-extraction-ahcd/setup.py install
 ```
@@ -161,7 +161,7 @@ defaultdict(<class 'dict'>,
 {   'age': 22889,
     'month_of_visit': 'June',
     'patient_visit_weight': 13479.0,
-    'physician_diagnoses': ['470.0', 'V03.2', ''],
+    'physician_diagnoses': ['470.0', 'V03.2'],
     'sex': 'Female',
     'source_file_ID': '1973_NAMCS',
     'source_file_row': 1,
@@ -170,7 +170,7 @@ defaultdict(<class 'dict'>,
 {   'age': 14610,
     'month_of_visit': 'April',
     'patient_visit_weight': 3722.0,
-    'physician_diagnoses': ['492.0', '', ''],
+    'physician_diagnoses': ['492.0'],
     'sex': 'Male',
     'source_file_ID': '1975_NAMCS',
     'source_file_row': 1,

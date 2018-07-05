@@ -20,7 +20,7 @@ class NAMCSFieldEnum(Enum):
     Enums for defining field names for NAMCS dataset.
 
     Note:
-        Implicitly represent key while creating a converted record in
+        Implicitly represent key while creating a translated record in
         `hdx_ahcd.controllers.namcs_converter.get_generator_by_year`.
     """
     SOURCE_FILE_ID = "source_file_ID"
@@ -44,7 +44,7 @@ class NAMCSFieldEnum(Enum):
 
 class NAMCSErrorFieldEnum(Enum):
     """
-    Enums for defining field names for NAMCS dataset error file.
+    Enums for defining header names for NAMCS dataset error file.
     """
     RECORD_NUMBER = "record_no"
     RECORD = "record"

@@ -3,9 +3,9 @@
 Module to containing utility classes for  NAMCS data model.
 """
 # Python modules
+from collections import Iterable
 import linecache
 import sys
-from collections import Iterable
 
 # 3rd party modules
 # -N/A
@@ -38,13 +38,12 @@ class RangeDict(dict):
           File "<input>", line 14, in __missing__
         KeyError: 'Cannot find 5 in RangeDict'
     """
-
     def __missing__(self, key):
         """
-        Method to override inbuilt method __missing__, check if `key` is part of
-        `Iterable` range if if is insert `key` in the dict with value of
-        `Iterable` range and return same value. If `key` is not present
-        raise KeyError.
+        Method to override inbuilt :func:`__missing__`,
+        check if `key` is part of `Iterable` range if if is insert `key`
+        in the dict with value of `Iterable` range and return same value.
+        .
 
         Parameters:
             key (:class:`int`): Key to be searched in the dict.
@@ -52,6 +51,8 @@ class RangeDict(dict):
         Returns:
              :class:`int` or :class:`str` or :class:`tuple` or :class:`list`:
                 Corresponding value for the `key`.
+        Raises:
+            :class:`KeyError`: If `key` is not present.
         """
         for _key, _value in self.items():
             if isinstance(_key, Iterable) and not isinstance(_key, str):
@@ -63,7 +64,7 @@ class RangeDict(dict):
 
     def get(self, key):
         """
-        Method to override method get()
+        Method to override :func:`get`
 
         Parameters:
             key (:class:`int`): Key to be searched in the dict.
@@ -71,25 +72,26 @@ class RangeDict(dict):
         Returns:
              :class:`int` or :class:`str` or :class:`tuple` or :class:`list` :
                 Corresponding value for the `key` if key present.
+        Raises:
+            :class:`KeyError`: If `key` is not present.
         """
         if key in self:
             return self[key]
         # Key not in dict and is of type `str`
         elif isinstance(key, str):
-            raise KeyError("Cannot find {} in RangeDict".format(key))
+            raise KeyError("Cannot find key: {} in RangeDict".format(key))
         return self.__missing__(key)
 
 
 class NAMCSMetaMappings(object):
     """
     Define the field details for each record of NAMCS dataset. Field
-    details include field length, field name, filed location.
+    details include field length, field name, field location.
 
     Example:
         - Fields can be Date_of_visit, Date_of_birth, Year_of_visit,
             Year_of_birth
     """
-
     def __init__(self, field_length, field_location, field_name):
         """
         Method to construct new object of class.
@@ -98,7 +100,7 @@ class NAMCSMetaMappings(object):
             field_length (:class:`int`): Length of field in dataset.
             field_location (:class:`int`): Start index of location of field
                 in dataset.
-            field_name (:class:`str`): Filed name.
+            field_name (:class:`str`): Field name.
 
         Example:
             >>> obj = NAMCSMetaMappings(2, 1, "Date_of_birth")
@@ -125,6 +127,7 @@ def detailed_exception_info(method_name=None, use_next_frame=False,
         use_next_frame (:class:`bool`): To decide whether to use next frame
             `tb_next` of `traceback_obj`, Set to true in case of decorated
             method or method call enclosed in  context manager
+            **Default**:const:`False`.
         logger (:class:`logging.Logger`): Log errors to specific log handler.
         method_name (:class:`str`): Method name of method call for which
             exception might occur.

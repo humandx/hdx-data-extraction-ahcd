@@ -46,40 +46,45 @@ def namcs_regression_test():
         are used to perform regression.
     """
     with open(TSV_FILE_PATH, "w") as file_handle:
-        tsv_writer = csv.DictWriter(file_handle,
-                                    fieldnames = CONVERTED_CSV_FIELDS,
-                                    delimiter = '\t')
+        tsv_writer = csv.DictWriter(
+            file_handle, fieldnames=CONVERTED_CSV_FIELDS, delimiter="\t"
+        )
         tsv_writer.writeheader()
 
-        LOG.info("Processing namcs data "
-                 "for all years:{}\n".format(YEARS_AVAILABLE))
+        LOG.info(
+            "Processing namcs data for all years: {}\n".format(YEARS_AVAILABLE)
+        )
 
         namcs_data_all_years = get_cleaned_data_by_year()
         for year in YEARS_AVAILABLE:
-            LOG.debug("Processing year:{}".format(year))
+            LOG.debug("Processing year: {}".format(year))
             namcs_data_year = namcs_data_all_years.get(year)
             try:
-                LOG.debug("Using generator for year:{}".format(year))
-                translated_data_gen_obj = namcs_data_year.get('generator')
+                LOG.debug("Using generator for year: {}".format(year))
+                translated_data_gen_obj = namcs_data_year.get("generator")
             except Exception as exc:
-                LOG.error("Error:'{}', while "
-                          "processing generator "
-                          "for year:{}, moving "
-                          "to next year".format(str(exc), year))
+                LOG.error(
+                    "Error: '{}', while processing generator for year:{}, "
+                    "moving to next year".format(str(exc), year)
+                )
                 continue
             LOG.debug("Writing data to tsv file.")
             for record_no, record in enumerate(translated_data_gen_obj):
                 try:
                     tsv_writer.writerow(record)
                 except Exception as exc:
-                    LOG.error("Error:'{}' in writing "
-                              "record\n[{}]"
-                              "\nRecord no:[{}] "
-                              "\nFor year:[{}]".format(str(exc), record,
-                                                       record_no+1, year))
+                    LOG.error(
+                        "Error: '{}' in writing record: [{}]\nRecord no:[{}] "
+                        "\nFor year:[{}]".format(
+                            str(exc), record, record_no+1, year
+                        )
+                    )
             else:
-                LOG.info("Total records:[{}] "
-                         "written for year:[{}]".format(record_no+1, year))
+                LOG.info(
+                    "Total records:[{}] written for year: [{}]".format(
+                        record_no+1, year
+                    )
+                )
 
             source_file_id = get_normalized_namcs_file_name(year)
             # Error file path
@@ -88,10 +93,12 @@ def namcs_regression_test():
                 get_customized_file_name(source_file_id, extension="err")
             )
             if os.path.exists(error_file):
-                LOG.error("Error: error file "
-                          "for year:{} is generated.".format(error_file))
-    LOG.info("Data for all namcs years:[{}]".format(TSV_FILE_PATH))
+                LOG.error(
+                    "Error: error file for year: {} is "
+                    "generated.".format(error_file)
+                )
+    LOG.info("Data for all namcs years: [{}]".format(TSV_FILE_PATH))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     namcs_regression_test()

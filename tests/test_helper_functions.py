@@ -1,29 +1,29 @@
 # -*- coding: utf-8 -*-
 """
-Module for tests for helper.functions module.
+Module containing tests for module `helper.functions`.
 """
 # Python modules
+from unittest import mock, TestCase
 import datetime
 import os
-from unittest import mock, TestCase
 
 # Other modules
 from hdx_ahcd.helpers import functions
 from hdx_ahcd.helpers.functions import (
-    get_namcs_source_file_info,
-    get_year_from_dataset_file_name,
-    get_string_representations_of_date,
-    get_slice_object,
-    process_multiple_slice_objects,
-    get_icd_9_code_from_raw_code,
-    get_icd_9_code_from_database,
     get_customized_file_name,
     get_conversion_method,
     get_field_code_from_record,
+    get_iterable,
     get_namcs_dataset_path_for_year,
+    get_namcs_source_file_info,
+    get_normalized_namcs_file_name, 
+    get_string_representations_of_date,
+    get_slice_object,
+    get_year_from_dataset_file_name,
     rename_namcs_dataset_for_year,
     populate_missing_fields,
-    get_normalized_namcs_file_name, get_iterable)
+    process_multiple_slice_objects,
+)
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
 
 # Third party modules
@@ -43,7 +43,7 @@ class HelperFunctionsTest(TestCase):
         field_name = "age"
         expected_method_for_field_name = "get_age_normalized_to_days"
 
-        # Call to func
+        # Call to :func:`get_conversion_method`
         actual_method_for_field_name = get_conversion_method(field_name)
 
         # Assert to validate correct method name
@@ -95,10 +95,10 @@ class HelperFunctionsTest(TestCase):
         # Setup
         field_name = "Test_field_name"
 
+        # Call to func :func:`get_conversion_method`
         # Asserting if exception is raised
         with self.assertRaises(Exception):
-            # Call to func :func:`get_conversion_method`
-            actual_method_for_field_name = get_conversion_method(field_name)
+            get_conversion_method(field_name)
 
     def test_get_customized_file_name(self):
         """
@@ -106,7 +106,6 @@ class HelperFunctionsTest(TestCase):
         """
         # Case 1: when only one string needs to be customized
         # example: "NAME.CSV"
-
         # Setup
         names = "Test"
         extension = "CSV"
@@ -128,10 +127,9 @@ class HelperFunctionsTest(TestCase):
         expected_file_name = "1993_NAMCS_RAW_DATASET_FILE_NAME.csv"
 
         # Call to func :func:`get_customized_file_name`
-        actual_file_name = \
-            get_customized_file_name(
+        actual_file_name = get_customized_file_name(
                 names, separator=separator, extension=extension
-            )
+        )
 
         # Assert for valid customized file name
         self.assertEqual(expected_file_name, actual_file_name)
@@ -143,9 +141,8 @@ class HelperFunctionsTest(TestCase):
         """
         # Setup
         # NAMCS 1973 raw record
-        record = \
-            "067310101131200000000031101000000000004700Y0320000010100" \
-            "10000010000005000001347910111"
+        record = "067310101131200000000031101000000000004700Y0320000010100" \
+                 "10000010000005000001347910111"
 
         # Case 1: when corresponding method for `field_name` is present
         # Field name gender
@@ -155,7 +152,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to func :func:`get_field_code_from_record`
         actual_field_code = get_field_code_from_record(
-            record= record, field_name = field_name, slice_object = slice_object
+            record=record, field_name=field_name, slice_object=slice_object
         )
 
         # Assert to validate correct field code
@@ -168,7 +165,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to func :func:`get_field_code_from_record`
         actual_field_code = get_field_code_from_record(
-            record= record, field_name = field_name, slice_object = slice_object
+            record=record, field_name=field_name, slice_object=slice_object
         )
 
         # Assert to validate correct field code
@@ -181,7 +178,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to func :func:`get_field_code_from_record`
         actual_field_code = get_field_code_from_record(
-            record= record, field_name = field_name, slice_object = slice_object
+            record=record, field_name=field_name, slice_object=slice_object
         )
 
         # Assert to validate correct field code
@@ -194,7 +191,7 @@ class HelperFunctionsTest(TestCase):
 
         # Call to func :func:`get_field_code_from_record`
         actual_field_code = get_field_code_from_record(
-            record= record, field_name = field_name, slice_object = slice_object
+            record=record, field_name=field_name, slice_object=slice_object
         )
 
         # Assert to validate correct field code
@@ -205,12 +202,12 @@ class HelperFunctionsTest(TestCase):
         field_name = NAMCSFieldEnum.GENDER.value
         slice_object = slice(11, 15, None)
 
+        # Call to func :func:`get_field_code_from_record`
         # Asserting Exception is raised
         with self.assertRaises(Exception):
-            # Call to func :func:`get_field_code_from_record`
-            actual_field_code = \
-                get_field_code_from_record(record=record, field_name=field_name,
-                                           slice_object = slice_object)
+            get_field_code_from_record(
+                record=record, field_name=field_name, slice_object=slice_object
+            )
 
     def test_get_file_path_by_year(self):
         """
@@ -237,13 +234,12 @@ class HelperFunctionsTest(TestCase):
         Test for valid source file details.
         """
         # Setup
-        expected_source_file_info = \
-            {
-                "zip_file_name": "NAMCS00.exe",
-                "year": "00",
-                "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
-                       "NAMCS/NAMCS00.exe"
-            }
+        expected_source_file_info = {
+            "zip_file_name": "NAMCS00.exe",
+            "year": "00",
+            "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
+                   "NAMCS/NAMCS00.exe"
+        }
         year = 2000
 
         # Call to func :func:`get_namcs_source_file_info`
@@ -289,16 +285,15 @@ class HelperFunctionsTest(TestCase):
         year = 1997
         month = 6
         day = 1
-        expected_date_representations = \
-            {
-                "day_numeric": "01",
-                "date_time_object": datetime.datetime(1997, 6, 1, 0, 0),
-                "month_long": "June",
-                "month_short": "Jun",
-                "year_short": "97",
-                "month_numeric": "06",
-                "year_long": "1997"
-            }
+        expected_date_representations = {
+            "day_numeric": "01",
+            "date_time_object": datetime.datetime(1997, 6, 1, 0, 0),
+            "month_long": "June",
+            "month_short": "Jun",
+            "year_short": "97",
+            "month_numeric": "06",
+            "year_long": "1997"
+        }
 
         # Call to func :func:`get_string_representations_of_date`
         actual_date_representations = \
@@ -333,9 +328,8 @@ class HelperFunctionsTest(TestCase):
         """
         # Setup
         # NAMCS 1973 raw record
-        record = \
-            "067310101131200000000031101000000000004700Y0320000010100" \
-            "10000010000005000001347910111"
+        record = "067310101131200000000031101000000000004700Y0320000010100" \
+                 "0000010000005000001347910111"
         # Field name physician_diagnosis
         field_name = NAMCSFieldEnum.PHYSICIANS_DIAGNOSES.value
         iterable_slice_object = [
@@ -362,47 +356,43 @@ class HelperFunctionsTest(TestCase):
         """
         # Setup
         # Fields those are required in the final converted csv file
-        expected_headers = \
-            (
-                "source_file_ID",
-                "source_file_row",
-                "sex",
-                "physician_diagnoses",
-                "age",
-                "month_of_visit",
-                "year_of_visit",
-            )
-        expected_field_codes_for_record = \
-            {
-                "source_file_ID": "1973_NAMCS",
-                "source_file_row": 1,
-                "sex": "Female",
-                "physician_diagnoses": ["470.0", "Y03.2"],
-                "age": 22889,
-                "month_of_visit": 6,
-                "year_of_visit": 1973
-            }
+        expected_headers = (
+            "source_file_ID",
+            "source_file_row",
+            "sex",
+            "physician_diagnoses",
+            "age",
+            "month_of_visit",
+            "year_of_visit",
+        )
+        expected_field_codes_for_record = {
+            "source_file_ID": "1973_NAMCS",
+            "source_file_row": 1,
+            "sex": "Female",
+            "physician_diagnoses": ["470.0", "Y03.2"],
+            "age": 22889,
+            "month_of_visit": 6,
+            "year_of_visit": 1973
+        }
 
         # Converted field codes for single record which needs to be filtered
         # and modified
-        field_codes_for_record = \
-            {
-                "source_file_ID": "1973_NAMCS",
-                "source_file_row": 1,
-                "sex": "Female",
-                "physician_diagnoses": ["470.0", "Y03.2"],
-                "month_of_birth": 10,
-                "month_of_visit": 6,
-                "year_of_birth": 2010,
-                "year_of_visit": 1973,
-            }
+        field_codes_for_record = {
+            "source_file_ID": "1973_NAMCS",
+            "source_file_row": 1,
+            "sex": "Female",
+            "physician_diagnoses": ["470.0", "Y03.2"],
+            "month_of_birth": 10,
+            "month_of_visit": 6,
+            "year_of_birth": 2010,
+            "year_of_visit": 1973,
+        }
 
         # Call to func :func:`populate_missing_fields`
-        actual_field_codes_for_record = \
-            populate_missing_fields(
+        actual_field_codes_for_record = populate_missing_fields(
                 headers = expected_headers,
                 field_codes_for_single_record = field_codes_for_record
-            )
+        )
 
         # Asserting if unnecessary fields are filtered and
         # required fields are populated
@@ -410,8 +400,8 @@ class HelperFunctionsTest(TestCase):
             expected_field_codes_for_record, actual_field_codes_for_record
         )
 
-    @mock.patch("helpers.functions.os.rename")
-    @mock.patch("helpers.functions.os.path.exists")
+    @mock.patch("hdx_ahcd.helpers.functions.os.rename")
+    @mock.patch("hdx_ahcd.helpers.functions.os.path.exists")
     def test_rename_namcs_file(self, mocked_path_exists, mocked_os_rename):
         """
         Test to check if NAMCS raw dataset file name is renamed correctly

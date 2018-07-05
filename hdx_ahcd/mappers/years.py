@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Module for Year specific NAMCSMetaMappings for all the namcs year, all years are 
+Module containing year specific `NAMCSMetaMappings` for all years
 defined by `YEAR_AVAILABLE` config parameter.
 """
 # Python modules
-import inspect
 from abc import (ABC, abstractmethod)
+import inspect
 
 # Other modules
 from hdx_ahcd.namcs.enums import NAMCSFieldEnum
@@ -27,8 +27,8 @@ class Year(ABC):
     field name, location, length.
     Child class must directly inherit this class.
 
-    This class implements two concrete methods, :meth:`get_attributes` and
-    :meth:`get_field_slice_mapping`, and defines abstract methods in
+    This class implements two concrete methods, :func:`get_attributes` and
+    :func:`get_field_slice_mapping`, and defines abstract methods in
     conjunction with necessary properties to impose constraints on
     child classes.
     """
@@ -42,9 +42,11 @@ class Year(ABC):
             :class:`list`: All explicitly defined attributes of class.
         """
         # Inspect for class methods and attributes.
-        attributes = dict(inspect.getmembers(cls,
-                                             lambda attribute: not (
-                                                 inspect.isroutine(attribute))))
+        attributes = dict(
+            inspect.getmembers(
+                cls, lambda attribute: not (inspect.isroutine(attribute))
+            )
+        )
         return [
             attributes.get(attr) for attr in attributes if not (
                     attr.endswith("_") or attr.startswith("_")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module to define constants used in package hdx_ahcd..
+Module to define constants used in package hdx_ahcd.
 """
 # Diagnosis code and their default string representation
 ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS = {

@@ -79,14 +79,14 @@ def get_cleaned_data_by_year(**kwargs):
                                   'year': '75',
                                   'zip_file_name': 'namcs75.exe'}}})
         >>> pp.pprint(next(gen.get(1973).get('generator')))
-        {   'age': 22889,
-            'month_of_visit': 'June',
+        {   'age': 22889.0,
+            'month_of_visit': 6,
             'patient_visit_weight': 13479.0,
-            'physician_diagnoses': ['470.0', 'V03.2', ''],
+            'physician_diagnoses': ['470.0', 'V03.2'],
             'sex': 'Female',
             'source_file_ID': '1973_NAMCS',
             'source_file_row': 1,
-            'year_of_visit': '1973'}
+            'year_of_visit': 1973}
         >>> pp.pprint(next(gen.get(1975).get('generator')))
         Case 3: Forcefully download and then process the NAMCS data for multiple
             years (say, 1973 and 1975).

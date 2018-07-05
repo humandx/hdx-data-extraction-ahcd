@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Module containing useful methods for package hdx_ahcd.
+Module containing useful methods for package `hdx_ahcd`.
 """
 # Python modules
-import os
 from copy import deepcopy
 from datetime import datetime
+import os
 
 # Other modules
 from hdx_ahcd.namcs.config import (
@@ -46,33 +46,33 @@ def get_normalized_namcs_file_name(year):
 
 def get_iterable(parameter):
     """
-    Method to convert `parameter` to iterable type. For example
-    convert `str`, `int`, `float` into iterable as `list`
+    Method to convert `parameter` to iterable type.
+    Convert `parameter` of type `str`, `int`, `float` into iterable as `list`
 
     Parameters:
         parameter (:class:`str` or :class:`int` or :class:`float`): Object that
             needs to be iterable.
 
     Returns:
-        :class:`list` or :class:`tuple`: Iterable `parameter`.
+        :class:`list`: Iterable `parameter`.
 
     """
     return [parameter] if not isinstance(parameter, (list, tuple)) \
         else parameter
 
 
-@catch_exception()
+@catch_exception(re_raise=True)
 def get_string_representations_of_date(year=1, month=1, day=1):
     """
     Method to get year, month, day from date in desired format.
 
     Parameters:
-          year (:class:`int`): Integer indicating year default value 1.
-          month (:class:`int`): Integer indicating month default value 1.
-          day (:class: `int`): Integer indicating day default value 1.
+          year (:class:`int`): Numeric value of Year.
+          month (:class:`int`): Numeric value of month.
+          day (:class: `int`): Numeric value of day.
 
     Returns:
-        :class:`dict`: Dict containing various string representation of date.
+        :class:`dict`: Key value pair of String representation of date.
     """
     # Datetime object
     date = datetime(year=year, month=month, day=day)
@@ -89,19 +89,21 @@ def get_string_representations_of_date(year=1, month=1, day=1):
 
 def populate_missing_fields(headers, field_codes_for_single_record):
     """
-    Method to clean out all the fields present in `converted_record`
-    and only populate `CONVERTED_CSV_FIELDS` discarding rest of fields.
+    Method to clean out all the fields present in
+    `field_codes_for_single_record` and only populate
+    `CONVERTED_CSV_FIELDS` discarding rest of fields.
 
     Parameters:
-        headers (:class:`tuple`): Fields required in translated csv file.
+        headers (:class:`tuple`): Fields required in translated record.
         field_codes_for_single_record (:class:`dict`): Dict containing
             translated data for single record in dataset.
 
     Returns:
-        :class:`dict`: Modified dict containing ONLY `CONVERTED_CSV_FIELDS`.
+        :class:`dict`: Modified dict containing values for fields defined in
+        `CONVERTED_CSV_FIELDS`.
 
     Note:
-        >>> from namcs.config import CONVERTED_CSV_FIELDS
+        >>> from hdx_ahcd.namcs.config import CONVERTED_CSV_FIELDS
         >>> CONVERTED_CSV_FIELDS
         ("source_file_ID", "source_file_row", "month_of_visit", "year_of_visit"
         , "sex", "age", "physician_diagnoses", "patient_visit_weight")
@@ -117,8 +119,10 @@ def populate_missing_fields(headers, field_codes_for_single_record):
         # Finding conversion method for missing field
         missing_field_mapped_function = get_conversion_method(missing_field)
         if missing_field_mapped_function:
-            with try_except(method_name=missing_field_mapped_function.__name__,
-                            re_raise=True):
+            with try_except(
+                method_name=missing_field_mapped_function.__name__,
+                re_raise=True
+            ):
                 missing_field_value = \
                     missing_field_mapped_function(**code_for_records)
 
@@ -151,12 +155,10 @@ def get_customized_file_name(*names, separator="_", extension=None):
     """
     names = names[0] if isinstance(names[0], (list, tuple)) else names
 
-    # Converting all `names` to string
-    names = list(
-        map(lambda name: name if isinstance(name, str) else str(name), names)
-    )
-    custom_file_name = \
-        separator.join([name for name in names]) if len(names) > 1 else names[0]
+    # Converting all `names` to `string`
+    names = list(map(str, names))
+
+    custom_file_name = separator.join(names) if len(names) > 1 else names[0]
 
     return "{}.{}".format(custom_file_name, extension) if extension else \
         custom_file_name
@@ -166,15 +168,14 @@ def get_customized_file_name(*names, separator="_", extension=None):
 @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
 def get_namcs_dataset_path_for_year(year):
     """
-    Method to return full file path for specified year.
+    Method to return full file path for specified `year`.
 
     Parameters:
-        year (:class:`int`): NAMCS year.
+        year (:class:`int`): Year for which NAMCS dataset
+            file path needs to be calculated.
 
     Returns:
-        :class:`str`: If data set for provided year exists file path for same
-            else None.
-
+        :class:`str`: Full file path of NAMCS dataset file if it exists.
     """
     if year is not None:
         year_value = \
@@ -192,14 +193,14 @@ def get_namcs_dataset_path_for_year(year):
 @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
 def rename_namcs_dataset_for_year(year):
     """
-    Method to rename NAMCS file for specified year.
+    Method to rename NAMCS dataset file for specified `year`.
 
     Parameters:
-        year (:class:`int`): NAMCS year.
+        year (:class:`int`): Year for which NAMCS dataset
+            file needs to be renamed.
 
     Returns:
-        :class:`str`: Renamed file name for specified year.
-
+        :class:`str`: Renamed dataset file name for `year`.
     """
     new_file_name = None
 
@@ -212,17 +213,18 @@ def rename_namcs_dataset_for_year(year):
         if os.path.exists(
                 os.path.join(
                     EXTRACTED_DATA_DIR_PATH,
-                    get_customized_file_name(namcs_file,
-                                             year_value, separator="")
-                )
-        ):
-            # Existing file
-            file_name = \
-                os.path.join(
-                    EXTRACTED_DATA_DIR_PATH, get_customized_file_name(
+                    get_customized_file_name(
                         namcs_file, year_value, separator=""
                     )
                 )
+        ):
+            # Existing file
+            file_name = os.path.join(
+                    EXTRACTED_DATA_DIR_PATH,
+                    get_customized_file_name(
+                        namcs_file, year_value, separator=""
+                    )
+            )
 
             # New File name in format <YEAR>_NAMCS
             new_file_name = os.path.join(
@@ -250,7 +252,7 @@ def get_conversion_method(field_name):
             in `CONVERSION_METHOD_MAPPING`.
     Note:
          >>> import hdx_ahcd.mappers.functions
-         >>> from utils.decorators import CONVERSION_METHOD_MAPPING
+         >>> from hdx_ahcd.utils.decorators import CONVERSION_METHOD_MAPPING
     """
     with try_except():
         if not CONVERSION_METHOD_MAPPING:
@@ -268,8 +270,7 @@ def get_conversion_method(field_name):
 
 def get_field_code_from_record(record, field_name, slice_object):
     """
-    Method to get corresponding field code for `field_name` from dataset
-    `record`.
+    Method to get corresponding field code for `field_name` from `record`.
 
     Parameters:
         record (:class:`str`): Actual record from raw dataset file.
@@ -277,11 +278,11 @@ def get_field_code_from_record(record, field_name, slice_object):
         slice_object (:class:`slice`): Slice object for `field_name`
 
     Returns:
-       :class:`str`: Corresponding field code for each `field_name`
-            if `mapping_func` is present else raw code of `field_name`
-            from dataset.
+       :class:`str`: Field code for `field_name` if conversion method for
+       `field_name` is present else code of `field_name` from dataset.
+
     Example:
-        - Raw code: "1" ,field code : "Female" for `field_name = Gender`
+        - For `field_name = Gender`, Raw code: "1" ,field code : "Female"
     """
     # Fetching specific field code from record
     raw_code = record[slice_object]
@@ -305,16 +306,15 @@ def get_slice_object(field_location, field_length):
 
     Returns:
         :class `slice`: Slice object based on based on the `field_location`
-            and `field_length`.
+        and `field_length`.
 
     Note:
-        Records are 1 indexed.
+        Records are 1 indexed and not 0 indexed.
     """
     start_index = field_location - 1
 
     # Case 1: When `field_length` > 1
     # Case 2: When `field_length` is 1
-
     end_index = start_index + field_length if field_length > 1 \
         else field_location
 
@@ -324,7 +324,7 @@ def get_slice_object(field_location, field_length):
 @catch_exception()
 def process_multiple_slice_objects(record, field_name, iterable_slice_object):
     """
-    Method to get all field codes from raw record for `iterable_slice_object`.
+    Method to get all field codes from raw record for `field_name`.
 
     Parameters:
         record (:class:`str`): Actual record from raw data set file.
@@ -333,39 +333,38 @@ def process_multiple_slice_objects(record, field_name, iterable_slice_object):
             field.
 
     Returns:
-        :class:`list`: Corresponding field code(s) for each `NAMCSMetaMappings`.
+        :class:`list`: Field codes for `field_name`.
     """
     return [
-        get_field_code_from_record(
-            record, field_name, slice_object
-        ) for slice_object in iterable_slice_object
+        get_field_code_from_record(record, field_name, slice_object)
+        for slice_object in iterable_slice_object
     ]
 
 
 @catch_exception()
 def get_namcs_source_file_info(year):
     """
-    Method to get details about NAMCS data file for provided year.
+    Method to get details about NAMCS data file for provided `year`.
 
     Parameters:
-        year (:class:`int`): NAMCS year.
+        year (:class:`int`): Year for which details about NAMCS dataset file
+            are required.
 
     Returns:
-        :class:`dict`: Dict containing string representation of year,
-            zip file name of NAMCS dataset, url for public NAMCS dataset file.
+        :class:`dict`: Details about NAMCS dataset files,
+        in the form of key value pair year,zip file name of NAMCS dataset,
+        public CDC url of NAMCS dataset file.
     """
     year_value = get_string_representations_of_date(year=year).get("year_short")
-    public_file_name = \
-        get_customized_file_name(BASE_FILE_NAME[year],
-                                 year_value,
-                                 NAMCS_PUBLIC_FILE_EXTENSIONS[year],
-                                 separator=""
-                                 )
-    url = \
-        get_customized_file_name(NAMCS_PUBLIC_FILE_URL[year],
-                                 public_file_name,
-                                 separator=""
-                                 )
+    public_file_name = get_customized_file_name(
+        BASE_FILE_NAME[year],
+        year_value,
+        NAMCS_PUBLIC_FILE_EXTENSIONS[year],
+        separator=""
+    )
+    url = get_customized_file_name(
+        NAMCS_PUBLIC_FILE_URL[year], public_file_name, separator=""
+    )
     return {
         "year": year_value,
         "zip_file_name": public_file_name,
@@ -382,18 +381,14 @@ def get_year_from_dataset_file_name(file_name):
             <YEAR>_NAMCS.
 
     Returns:
-        :class:`int` or :class:`NoneType`: Extracted year from input dataset
-            file name if file exists else None.
+        :class:`int` or :class:`NoneType`: Year of NAMCS dataset file if
+        `file_name` exists.
 
     Note:
-        Valid NAMCS file format : <YEAR>_NAMCS.
+        Valid NAMCS dataset file name format: <YEAR>_NAMCS.
     """
-    if os.path.exists(file_name):
-        base_file_name = os.path.basename(file_name)
-
-        # NAMCS file format: <YEAR>_NAMCS
-        return int(base_file_name.split("_")[0])
-    return None
+    return int(os.path.basename(file_name).split("_")[0]) \
+        if os.path.exists(file_name) else None
 
 
 def safe_read_file(file_handle):

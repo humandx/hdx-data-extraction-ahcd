@@ -26,14 +26,14 @@ from hdx_ahcd.namcs.enums import (
 )
 
 # Global vars
-REGEX_FOR_YEAR_AND_MONTH = "^(0[1-9]|1[012])([0-9]{2})$"
-REGEX_FOR_PHYSICIAN_DIAGNOSES = "^([V|Y|\-|\&|0-9][0-9]{3,5}|" \
-                           "[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})$"
-REGEX_FOR_MONTH = "^((0[1-9]|1[012])|([A-Z][a-z]{2,8}))$"
-REGEX_FOR_YEAR = "^([1-2][0|9])?[0-9]{2}$"
 REGEX_FOR_GENDER = "^[1|2]$"
+REGEX_FOR_MONTH = "^((0[1-9]|1[012])|([A-Z][a-z]{2,8}))$"
 REGEX_FOR_PATIENT_AGE = "^[0|1]{0,1}[0-9]{1,2}$"
 REGEX_FOR_PATIENT_VISIT_WEIGHT = "^(([0-9.]{5,6})|([0-9.]{10,11}))$"
+REGEX_FOR_PHYSICIAN_DIAGNOSES = \
+    "^([V|Y|\-|\&|0-9][0-9]{3,5}|[V|0-9]{1}[0-9]{2}[\-|0-9]{1,2})$"
+REGEX_FOR_YEAR = "^([1-2][0|9])?[0-9]{2}$"
+REGEX_FOR_YEAR_AND_MONTH = "^(0[1-9]|1[012])([0-9]{2})$"
 
 
 @catch_exception(re_raise=True)
@@ -49,10 +49,12 @@ def get_year_and_month_from_date(raw_format_date):
     Fetch year and month from provided date string.
 
     Parameters:
-        raw_format_date (:class:`str`): Date string in format mmyy.
+        raw_format_date (:class:`str`): Date string in format MMYY.
 
     Returns:
-        :class:`tuple`: Year and month in human readable format.
+        :class:`tuple`: With elements as:
+            :class:`int`: Numeric value of year.
+            :class:`int`: Numeric value of month.
     """
     date = datetime.strptime(raw_format_date, "%m%y")
 
@@ -181,17 +183,16 @@ def get_year_from_date(date_pattern=None, **kwargs):
     Parameters:
         date_pattern (:class:`str`): String representation of year.
         kwargs (:class:`dict`): Other fields used to calculate year when
-            `raw_format_year` is not provided.
+            `date_pattern` is not provided in method call.
 
     Returns:
         :class:`int`: Year in human readable format.
     """
     if kwargs and not date_pattern:
         # Use `NAMCSFieldEnum.SOURCE_FILE_ID` to calculate year
-        source_file_id = kwargs.get(NAMCSFieldEnum.SOURCE_FILE_ID.value)
         # Example: 2011_NAMCS so year: 2011
-        year = source_file_id.split("_")[0]
-        return int(year)
+        source_file_id = kwargs.get(NAMCSFieldEnum.SOURCE_FILE_ID.value)
+        return int(source_file_id.split("_")[0])
 
     date = None
     for pattern in NAMCS_DATASET_YEAR_PATTERNS:
@@ -212,14 +213,14 @@ def get_year_from_date(date_pattern=None, **kwargs):
 @enforce_type(str, return_type=str, use_regex=REGEX_FOR_GENDER)
 def get_gender(gender):
     """
-    Method to fetch gender from field code  and convert it
+    Method to fetch gender from field code and convert it
     into human readable format.
 
     Parameters:
         gender (:class:`str`): Raw code for gender.
 
     Returns:
-        :class:`str`: Respective gender.
+        :class:`str`: String representation of `gender`.
     """
     gender_long_name = {
         "1": GenderEnum.FEMALE.value,
@@ -233,15 +234,15 @@ def get_gender(gender):
 @enforce_type(str, return_type=float, use_regex=REGEX_FOR_PATIENT_AGE)
 def get_age_normalized_to_days(age=None, **kwargs):
     """
-    Method to normalize age into days.
+    Method to normalize patient age into days.
 
     Parameters:
-        age (:class:`str`): Person"s age.
+        age (:class:`str`): Patient's age.
         kwargs (:class:`dict`): Other fields used to calculate age when
-            `age` is not provided.
+            `age` is not provided to method call.
 
     Returns:
-        :class:`float`:  Normalized age into days.
+        :class:`float`:  Patient's age normalized in days.
 
     Example:
         >>> get_age_normalized_to_days("10")
@@ -276,7 +277,6 @@ def get_age_normalized_to_days(age=None, **kwargs):
             birth_date = datetime(year=year, month=month, day=day)
         age = visit_date-birth_date
         return float(age.days)
-    # Normalizing age
     elif age:
         # Note: Using age as stand alone data to convert it to days
         age = float(age) * 365
@@ -323,5 +323,7 @@ def get_patient_visit_weight(visit_weight):
     try:
         return float(visit_weight)
     except ValueError:
-        raise ValueError("Could not convert visit weight {} to float "
-                         "value".format(visit_weight))
+        raise ValueError(
+            "Could not convert visit weight {}"
+            "to float value".format(visit_weight)
+        )

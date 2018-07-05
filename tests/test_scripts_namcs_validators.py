@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Tests for namcs_validators module.
+Tests for module `namcs_validators`.
 """
 # Python modules
-import os
 from unittest import TestCase
+import os
 
 # Third party modules
 # -N/A

@@ -29,6 +29,7 @@ def try_except(*exceptions, method_name=None, re_raise=False):
             in try-except block.
         re_raise (:class:`bool`): If true catch exception, perform logging and
             again raise same exception in order to catch in parent block.
+            **Default**:const:`False`
 
     Return:
         :class:`generator`: Generator object for method `try_except`.
@@ -59,8 +60,9 @@ def try_except(*exceptions, method_name=None, re_raise=False):
         # Provide details about exception using method `detailed_exception_info`
         # use_next_frame set to true since exception is raised inside method not
         # in context manger itself
-        detailed_exception_info(method_name=method_name,
-                                use_next_frame = True, logger = log)
+        detailed_exception_info(
+            method_name=method_name, use_next_frame=True, logger=log
+        )
         if re_raise:
             # Since re_raise=True, raise exception again
             raise Exception(str(exc))

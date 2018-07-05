@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for module utils.utils
+Tests for module `utils.utils`.
 """
 # Python modules
 from unittest import TestCase
@@ -176,7 +176,7 @@ class NAMCSMetaMappingsTest(TestCase):
             "test_field_name": "test"
         }
 
-        # Creating `NAMCSMetaMappings` object
+        # Creating object of :class:`NAMCSMetaMappings`
         namcs_meta_mappings_object = NAMCSMetaMappings(
             field_length = expected_attributes.get("test_field_length"),
             field_location = expected_attributes.get("test_field_location"),
@@ -209,14 +209,14 @@ class NAMCSMetaMappingsTest(TestCase):
             "test_field_name": "test"
         }
 
-        # Creating `NAMCSMetaMappings` object
+        # Creating object of :class:`NAMCSMetaMappings`
         namcs_meta_mappings_object = NAMCSMetaMappings(
             field_length = expected_attributes.get("test_field_length"),
             field_location = expected_attributes.get("test_field_location"),
             field_name = expected_attributes.get("test_field_name"),
         )
 
-        # Assert `NAMCSMetaMappings` attributes
+        # Assert attributes of object :class:`NAMCSMetaMappings`
         self.assertEqual(
             expected_attributes.get("test_field_name"),
             namcs_meta_mappings_object.field_name
