@@ -105,8 +105,11 @@ def convert_physician_diagnoses_code(diagnoses_code):
     # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
     # classification, an ampersand (&) was used
     # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
-    if diagnoses_code.startswith("&") or diagnoses_code.startswith("-") or \
-            diagnoses_code.startswith("Y"):
+    # For year 1973 till 1978 `diagnoses_code` is 4 length character
+    if len(diagnoses_code) < 5 and (
+            diagnoses_code.startswith("&") or diagnoses_code.startswith("-")
+            or diagnoses_code.startswith("Y")
+    ):
         diagnoses_code = "V{}".format(diagnoses_code[1:])
 
     # Character format
@@ -114,6 +117,10 @@ def convert_physician_diagnoses_code(diagnoses_code):
     # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
     elif "-" in diagnoses_code[3:]:
         diagnoses_code = diagnoses_code.replace("-", "0")
+    # Reference from documentation:
+    # -9 = Blank
+    elif "-00009" in diagnoses_code:
+        return ""
 
     # The prefix “1” preceding the 3-digit diagnostic codes represents
     # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
