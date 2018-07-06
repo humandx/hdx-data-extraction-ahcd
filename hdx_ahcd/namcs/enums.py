@@ -57,3 +57,23 @@ class GenderEnum(Enum):
     """
     FEMALE = "Female"
     MALE = "Male"
+
+
+class PhysicianDiagnosesEnum(Enum):
+    """
+    As per mentioned in Note section ,the documentation for NAMCS dataset files
+    define certain codes with predefined meaning.
+    This Enum that defines values for these specific physician diagnoses codes.
+
+    Note:
+        Specific physician diagnoses codes:
+        - "V9910": "Left before being seen"
+        - "209910": "Left before being seen"
+        - "V9920": "Transferred to another facility"
+        - "209920": "Transferred to another facility"
+        - "209930": "HMO will not authorize treatment"
+
+    """
+    LEFT_BEFORE_BEING_SEEN = "AHCD.LBBS"  # Code: "V9910", "209910"
+    TRANSFER_TO_ANOTHER_FACILITY = "AHCD.TTAF"  # Code: "V9920", "209920"
+    HMO_WILL_NOT_AUTHORIZE_TREATMENT = "AHCD.HNAT"  # Code: "209930"

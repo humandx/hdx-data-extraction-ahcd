@@ -182,6 +182,47 @@ class MapperFunctionsTest(TestCase):
             expected_icd_9_code, actual_icd_9_code
         )
 
+        # Case 11: `diagnosis_code` has value as "Left before being seen"
+        diagnosis_code = "V9910"
+        expected_icd_9_code = "AHCD.LBBS"
+
+        # Call to func :func:`convert_physician_diagnoses_code`
+        actual_icd_9_code = \
+            convert_physician_diagnoses_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_icd_9_code, actual_icd_9_code
+        )
+
+        # Case 12: `diagnosis_code` has value as
+        # "Transferred to another facility"
+        diagnosis_code = "V9920"
+        expected_icd_9_code = "AHCD.TTAF"
+
+        # Call to func :func:`convert_physician_diagnoses_code`
+        actual_icd_9_code = \
+            convert_physician_diagnoses_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_icd_9_code, actual_icd_9_code
+        )
+
+        # Case 13: `diagnosis_code` has value as
+        # "HMO will not authorize treatment"
+        diagnosis_code = "209930"
+        expected_icd_9_code = "AHCD.HNAT"
+
+        # Call to func :func:`convert_physician_diagnoses_code`
+        actual_icd_9_code = \
+            convert_physician_diagnoses_code(diagnosis_code)
+
+        # Assert for valid ICD-9 code
+        self.assertEqual(
+            expected_icd_9_code, actual_icd_9_code
+        )
+
     def test_get_month_from_date(self):
         """
         Test to check valid month from date.
