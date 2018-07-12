@@ -131,7 +131,7 @@ class MapperFunctionsTest(TestCase):
 
         # Case 6: `diagnosis_code` starts with "-"
         diagnosis_code = "-00009"
-        expected_icd_9_code = "V00.009"
+        expected_icd_9_code = ""
 
         # Call to func :func:`convert_physician_diagnoses_code`
         actual_icd_9_code = convert_physician_diagnoses_code(diagnosis_code)

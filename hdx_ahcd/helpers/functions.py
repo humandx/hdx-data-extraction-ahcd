@@ -355,10 +355,10 @@ def get_namcs_source_file_info(year):
         in the form of key value pair year,zip file name of NAMCS dataset,
         public CDC url of NAMCS dataset file.
     """
-    year_value = get_string_representations_of_date(year=year).get("year_short")
+    years_representations = get_string_representations_of_date(year=year)
     public_file_name = get_customized_file_name(
         BASE_FILE_NAME[year],
-        year_value,
+        years_representations.get("year_short"),
         NAMCS_PUBLIC_FILE_EXTENSIONS[year],
         separator=""
     )
@@ -366,7 +366,7 @@ def get_namcs_source_file_info(year):
         NAMCS_PUBLIC_FILE_URL[year], public_file_name, separator=""
     )
     return {
-        "year": year_value,
+        "year": int(years_representations.get("year_long")),
         "zip_file_name": public_file_name,
         "url": url
     }

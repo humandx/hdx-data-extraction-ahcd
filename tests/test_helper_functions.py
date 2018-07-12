@@ -236,7 +236,7 @@ class HelperFunctionsTest(TestCase):
         # Setup
         expected_source_file_info = {
             "zip_file_name": "NAMCS00.exe",
-            "year": "00",
+            "year": 2000,
             "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                    "NAMCS/NAMCS00.exe"
         }

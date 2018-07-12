@@ -55,7 +55,7 @@ def get_cleaned_data_by_year(**kwargs):
                               'source_file_info': {
                               'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS
                               /namcs_public_use_files/namcs73.exe',
-                              'year': '73',
+                              'year': 1973,
                               'zip_file_name': 'namcs73.exe'}}})
 
         Case 2: Downloading NAMCS data for multiple years (say, 1973 and 1975).
@@ -69,14 +69,14 @@ def get_cleaned_data_by_year(**kwargs):
                                   'source_file_info': {
                                   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics
                                   /NCHS/namcs_public_use_files/namcs73.exe',
-                                  'year': '73',
+                                  'year': 1973,
                                   'zip_file_name': 'namcs73.exe'}},
                         1975: {   'generator': <generator object
                         get_generator_by_year at 0x7fe4b45e7e60>,
                                   'source_file_info': {
                                   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics
                                   /NCHS/namcs_public_use_files/namcs75.exe',
-                                  'year': '75',
+                                  'year': 1975,
                                   'zip_file_name': 'namcs75.exe'}}})
         >>> pp.pprint(next(gen.get(1973).get('generator')))
         {   'age': 22889.0,
@@ -98,14 +98,14 @@ def get_cleaned_data_by_year(**kwargs):
                                   'source_file_info': {
                                   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics
                                   /NCHS/namcs_public_use_files/namcs73.exe',
-                                  'year': '73',
+                                  'year': 1973,
                                   'zip_file_name': 'namcs73.exe'}},
                         1975: {   'generator': <generator object
                         get_generator_by_year at 0x7fe4b45e7e60>,
                                   'source_file_info': {
                                   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics
                                   /NCHS/namcs_public_use_files/namcs75.exe',
-                                  'year': '75',
+                                  'year': 1975,
                                   'zip_file_name': 'namcs75.exe'}}})
 
         Case 4: Forcefully download and then export the processed NAMCS data for
@@ -124,14 +124,14 @@ def get_cleaned_data_by_year(**kwargs):
         defaultdict(<class 'dict'>,
                     {   1973: {   'generator': <generator object get_generator_by_year at 0x7f7ba17ac8e0>,
                                   'source_file_info': {   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
-                                                          'year': '73',
+                                                          'year': 1973,
                                                           'zip_file_name': 'namcs73.exe'}}})
         >>> gen = get_cleaned_data_by_year(file_name="/var/tmp/2015_NAMCS")
         >>> pp.pprint(gen)
         defaultdict(<class 'dict'>,
                     {   2015: {   'generator': <generator object get_generator_by_year at 0x7f7ba17acf68>,
                                   'source_file_info': {   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NAMCS/namcs2015.zip',
-                                                          'year': '15',
+                                                          'year': 2015,
                                                           'zip_file_name': 'namcs2015.zip'}}})
         >>> pp.pprint(next(gen.get(2015).get("generator")))
         {   'age': 23725.0,

@@ -131,7 +131,7 @@ defaultdict(<class 'dict'>,
         {   1973: {   'generator': <generator object get_generator_by_year at 0x7fe4b6480150>,
                       'source_file_info': {
                       'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
-                      'year': '73',
+                      'year': 1973,
                       'zip_file_name': 'namcs73.exe'}}})
 ```
 > Case 2: Downloading NAMCS data for multiple years (say, 1973 and 1975).
@@ -146,13 +146,13 @@ defaultdict(<class 'dict'>,
             {   1973: {   'generator': <generator object get_generator_by_year at 0x7fe4b5fa9e08>,
                           'source_file_info': {
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
-                          'year': '73',
+                          'year': 1973,
                           'zip_file_name': 'namcs73.exe'}},
                 1975: {   'generator': <generator object
                 get_generator_by_year at 0x7fe4b45e7e60>,
                           'source_file_info': {
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe',
-                          'year': '75',
+                          'year': 1975,
                           'zip_file_name': 'namcs75.exe'}}})
 ```
 > Iterating over generator
@@ -188,12 +188,12 @@ defaultdict(<class 'dict'>,
             {   1973: {   'generator': <generator object get_generator_by_year at 0x7fe4b5fa9e08>,
                           'source_file_info': {
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
-                          'year': '73',
+                          'year': 1973,
                           'zip_file_name': 'namcs73.exe'}},
                 1975: {   'generator': <generator object get_generator_by_year at 0x7fe4b45e7e60>,
                           'source_file_info': {
                           'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs75.exe',
-                          'year': '75',
+                          'year': 1975,
                           'zip_file_name': 'namcs75.exe'}}})
 ```
 > Case 4: Forcefully download and then export the processed NAMCS data for
@@ -211,14 +211,14 @@ defaultdict(<class 'dict'>,
                       'generator': <generator object get_generator_by_year at 0x7fe4b6480150>,
                       'source_file_info': {
                       'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/namcs_public_use_files/namcs73.exe',
-                      'year': '73',
+                      'year': 1973,
                       'zip_file_name': 'namcs73.exe'}},
             1975: {   'file_name': '/home/velotio/.hdx_ahcd/data/1975_NAMCS_CONVERTED.csv',
                       'generator': <generator object get_generator_by_year at 0x7fe4b45e7e60>,
                       'source_file_info': {   '
                       url': 'ftp://ftp.cdc.gov/pub/Health_Statistics
                       /NCHS/namcs_public_use_files/namcs75.exe',
-                      'year': '75',
+                      'year': 1975,
                       'zip_file_name': 'namcs75.exe'}}})
 ```
 > Case 5: Process the provided NAMCS data set file. In this case file name is
@@ -229,7 +229,7 @@ defaultdict(<class 'dict'>,
 defaultdict(<class 'dict'>,
             {   2015: {   'generator': <generator object get_generator_by_year at 0x7f7ba17acf68>,
                           'source_file_info': {   'url': 'ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NAMCS/namcs2015.zip',
-                                                  'year': '15',
+                                                  'year': 2015,
                                                   'zip_file_name': 'namcs2015.zip'}}})
 >>> pp.pprint(next(gen.get(2015).get("generator")))
 {   'age': 23725.0,

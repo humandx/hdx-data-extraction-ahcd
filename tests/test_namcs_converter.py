@@ -277,7 +277,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
@@ -312,7 +312,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
@@ -350,7 +350,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
@@ -359,7 +359,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS01.exe",
-                "year": "01",
+                "year": 2001,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS01.exe"
             },
@@ -401,7 +401,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
             },
@@ -410,7 +410,7 @@ class NAMCSConverterTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS01.exe",
-                "year": "01",
+                "year": 2001,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS01.exe"
             },

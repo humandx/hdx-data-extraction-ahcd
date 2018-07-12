@@ -54,7 +54,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
              },
@@ -87,7 +87,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
              },
@@ -118,7 +118,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
              },
@@ -154,7 +154,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS00.exe",
-                "year": "00",
+                "year": 2000,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS00.exe"
              },
@@ -163,7 +163,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS01.exe",
-                "year": "01",
+                "year": 2001,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS01.exe"
              },
@@ -208,7 +208,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS02.exe",
-                "year": "02",
+                "year": 2002,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS02.exe"
              },
@@ -217,7 +217,7 @@ class ControllersTest(TestCase):
         self.assertEqual(
             {
                 "zip_file_name": "NAMCS03.exe",
-                "year": "03",
+                "year": 2003,
                 "url": "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/"
                        "NAMCS/NAMCS03.exe"
              },
