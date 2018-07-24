@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-File for installing hdx_ahcd package.
+Module for installing package `hdx_ahcd`.
 """
 # Python modules
-import os
 from setuptools import (find_packages, setup)
+import os
 
 # Third party modules
 # -N/A
@@ -19,9 +19,15 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as \
 
 config = {
     'name': 'hdx_ahcd',
-    'version': '1.0.0',
+    'version': '1.0.1',
+
+    # 1.0.0 - Initial setup.
+    # 1.0.1 - Added visit weight for all years.
+
+    # Author details
     'author': 'HumanDx',
     'author_email': 'engineering@humandx.org',
+
     'description': 'NAMCS data extractor and converter',
     'long_description': long_description,
     'long_description_content_type': 'text/markdown',
@@ -30,7 +36,6 @@ config = {
     'packages': find_packages(),
     'classifiers': (
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     )
 }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-This module consists of utility classes and methods.
+Module to define Custom class(es) for handling exception(s).
 """
 # Python modules
 # - N/A

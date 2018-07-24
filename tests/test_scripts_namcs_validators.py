@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Tests for hdx_ahcd validation module.
+Tests for module `namcs_validators`.
 """
 # Python modules
-import os
 from unittest import TestCase
+import os
 
 # Third party modules
 # -N/A
 
 # Other modules
-from hdx_ahcd.scripts.validation import (
+from hdx_ahcd.scripts.namcs_validators import (
     _check_if_file_exists,
     _validate_dataset_file_name_format,
     _validate_year_from_dataset_file_name,
@@ -34,7 +34,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`validate_dataset_records`
         validation_obj = validate_dataset_records(year, test_file_path)
 
         # Assert validation object
@@ -49,7 +49,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`validate_arguments`
         validation_obj = validate_arguments(year, test_file_path)
 
         # Assert validation object
@@ -63,7 +63,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`_check_if_file_exists`
         validation_obj = _check_if_file_exists(test_file_path)
 
         # Assert validation object
@@ -77,7 +77,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`_validate_dataset_file_name_format`
         validation_obj = _validate_dataset_file_name_format(test_file_path)
 
         # Assert validation object
@@ -91,7 +91,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`_validate_year_from_dataset_file_name`
         validation_obj = _validate_year_from_dataset_file_name(test_file_path)
 
         # Assert validation object
@@ -107,7 +107,7 @@ class ValidationTest(TestCase):
         test_file_path = \
             os.path.join(os.path.dirname(__file__), "data", "2000_NAMCS")
 
-        # Call to method
+        # Call to func :func:`_validate_dataset_file_name`
         validation_obj = _validate_dataset_file_name(test_file_path)
 
         # Assert validation object
@@ -121,7 +121,7 @@ class ValidationTest(TestCase):
         # Setup
         year = 2000
 
-        # Call to method
+        # Call to func :func:`_validate_namcs_year`
         validation_obj = _validate_namcs_year(year)
 
         # Assert validation object
@@ -131,7 +131,7 @@ class ValidationTest(TestCase):
         # Setup
         year = 1991
 
-        # Call to method
+        # Call to func :func:`_validate_namcs_year`
         validation_obj = _validate_namcs_year(year)
 
         # Assert validation object

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Decorator file containing all decorators.
+Module to define decorator(s).
 """
 # Python modules
+from functools import wraps
 import os
 import re
-from functools import wraps
 
 # Other modules
 from hdx_ahcd.utils.context import try_except
@@ -36,9 +36,8 @@ def add_method_to_mapping_dict(method_identifiers):
     ...     # Block of code
     ...     pass
     >>> CONVERSION_METHOD_MAPPING
-        {'gender': <function get_gender at 0x7f33644db268>}
+        {"gender": <function get_gender at 0x7f33644db268>}
     """
-
     def _add_method_to_mapping_dict(method_to_decorate):
         """
         Inside wrapper to construct key value pair for `method_to_decorate`.
@@ -54,7 +53,8 @@ def add_method_to_mapping_dict(method_identifiers):
         from hdx_ahcd.helpers.functions import get_iterable
         method_identifiers = get_iterable(method_identifiers)
 
-        # Adding all method name identifiers to global dict of MAPPINGS
+        # Adding all method name identifiers
+        # to global dict CONVERSION_METHOD_MAPPING
         for identifier in method_identifiers:
             CONVERSION_METHOD_MAPPING[identifier] = method_to_decorate
 
@@ -73,9 +73,7 @@ def add_method_to_mapping_dict(method_identifiers):
                 :class:`object`: Return value of `method_to_decorate`.
             """
             return method_to_decorate(*arg, **kwargs)
-
         return wrapper
-
     return _add_method_to_mapping_dict
 
 
@@ -86,12 +84,11 @@ def catch_exception(re_raise=False):
 
     Parameters:
         re_raise (:class:`bool`): To catch exception, perform logging and
-            again raise same exception to catch in parent block.
+            again raise same exception which can be catch in parent block.
 
     Returns:
         :class:`function`: Decorated method with `try_except` context manager.
     """
-
     def _catch_exception(method_to_decorate):
         """
         Decorator to decorate method name with try except block using
@@ -104,7 +101,6 @@ def catch_exception(re_raise=False):
             :class:`function`: Decorated method with `try_except` context
                 manager.
         """
-
         @wraps(method_to_decorate)
         def _wrapper(*arg, **kwargs):
             """
@@ -120,8 +116,10 @@ def catch_exception(re_raise=False):
                 :class:`object`: Return value of `method_to_decorate`.
             """
             try:
-                with try_except(method_name=method_to_decorate.__name__,
-                                re_raise = re_raise):
+                with try_except(
+                    method_name = method_to_decorate.__name__,
+                    re_raise = re_raise
+                ):
                     return method_to_decorate(*arg, **kwargs)
             except Exception as exc:
 
@@ -143,16 +141,15 @@ def catch_exception(re_raise=False):
                                 "field".format(method_name) \
                     if method_name else str(exc)
 
-                # re_raise=True
+                # Since re_raise=True, raise exception again
                 raise Exception(exception_msg)
         return _wrapper
-
     return _catch_exception
 
 
 def create_path_if_does_not_exists(paths):
     """
-    Decorator to create os path, if does not exists.
+    Decorator to create os path(s), if does not exists.
 
     Parameters:
         paths (:class:`tuple` or :class:`str`): Tuple of `path` to be
@@ -160,7 +157,7 @@ def create_path_if_does_not_exists(paths):
 
     Returns:
         :class:`function`: Decorated method which will create path as
-            specified by `paths`, if does not exists.
+            specified by `paths`, if `paths` does not exists.
 
     Example:
         >>> @create_path_if_does_not_exists("/var/tmp/temp_directory")
@@ -203,9 +200,7 @@ def create_path_if_does_not_exists(paths):
                 :class:`object`: Return value of `method_to_decorate`.
             """
             return method_to_decorate(*arg, **kwargs)
-
         return wrapper
-
     return _create_path_if_does_not_exists
 
 
@@ -218,11 +213,11 @@ def enforce_type(*types, return_type=None, use_regex=None):
     Parameters:
         types (:class:`tuple`): Collection of `type` that needs to enforced
             against positional parameters to the method. The decorated
-            method will be then called with positional parameters with
+            method will be then called with positional parameters of
             specified type.
         return_type (:class:`type`): Expected `type` for value returned by
             method call.
-        use_regex (:class:`tuple` or :class:`str`): Regular expression patterns
+        use_regex (:class:`tuple` or :class:`str`): Regular expression pattern
             that needs to be matched against positional arguments.
 
     Returns:
@@ -232,7 +227,6 @@ def enforce_type(*types, return_type=None, use_regex=None):
         All checks are enforced against ONLY positional parameters,
         keyword parameters are not supported.
     """
-
     def _strict_type(method_to_decorate):
         """
         Inside decorator that decorates `method_to_decorate`
@@ -244,16 +238,15 @@ def enforce_type(*types, return_type=None, use_regex=None):
         Returns:
             :class:`function`: Decorated method.
         """
-
         @wraps(method_to_decorate)
         def _wrapper(*arg, **kwargs):
             """
             Inside wrapper.
 
             Parameters:
-                arg (:class:`tuple`):positional arguments to
+                arg (:class:`tuple`): Positional arguments to
                     `method_to_decorate`.
-                kwargs (:class:`dict`): keywords arguments to
+                kwargs (:class:`dict`): Keywords arguments to
                     `method_to_decorate`.
 
             Returns:
@@ -278,8 +271,9 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 if isinstance(types[0], (list, tuple)):
                     types = types[0]
                 if len(types) > len(arg):
-                    raise Exception('More positional arguments are required '
-                                    'to check type')
+                    raise Exception(
+                        "More positional arguments are required to check type"
+                    )
 
                 # Zip will stop as soon as shortest iterable finishes in this
                 # case iteration will stop as soon as types finishes,
@@ -289,8 +283,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
                     # Skip _arg if type object
                     if _type is not object and not isinstance(_arg, _type):
                         raise Exception(
-                            'Method: {} needs positional argument of '
-                            'type:{}, actual type is :{}'.format(
+                            "Method: {} needs positional argument of "
+                            "type: {}, actual type is :{}".format(
                                 method_to_decorate.__name__,
                                 _type,
                                 type(_arg)
@@ -302,25 +296,29 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 use_regex = get_iterable(use_regex)
 
                 if len(use_regex) > len(arg):
-                    raise Exception('More positional arguments are required '
-                                    'to validate against regular expression')
+                    raise Exception(
+                        "More positional arguments are required"
+                        "to validate against regular expression"
+                    )
                 if any([isinstance(_regex, int) for _regex in use_regex]):
-                    raise Exception('`use_regex` can not have regex of '
-                                    'type`int`')
+                    raise Exception(
+                        "`use_regex` can not have regex of type`int`"
+                    )
 
                 for _regex, _arg in zip(use_regex, arg):
                     # Skip blank regex
-                    if _regex != '':
+                    if _regex != "":
                         try:
                             _regex_pattern = re.compile(_regex)
                             if not re.search(_regex_pattern, str(_arg)):
-                                raise Exception('Value {} for field {} '
-                                                'does not match '
-                                                'with specified '
-                                                'regex pattern.'.
-                                                format(_arg, method_name))
+                                raise Exception(
+                                    "Value {} for field {} does not match "
+                                    "with specified regex pattern.".format(
+                                        _arg, method_name
+                                    )
+                                )
                         except Exception as ex:
-                            raise Exception('Error:{}'.format(str(ex),))
+                            raise Exception("Error: {}".format(str(ex)))
 
             # Call to method
             method_return_value = method_to_decorate(*arg, **kwargs)
@@ -331,9 +329,9 @@ def enforce_type(*types, return_type=None, use_regex=None):
             # Method returns less value than expected
             if len(return_type) > len(method_return_value):
                 raise Exception(
-                    '`return_type` contains more types '
-                    'than values returned by method, expected '
-                    'return types :{}, values returned by method:{}'.format(
+                    "`return_type` contains more types "
+                    "than values returned by method, expected "
+                    "return types :{}, values returned by method:{}".format(
                         len(return_type), len(method_return_value)
                     )
                 )
@@ -348,8 +346,8 @@ def enforce_type(*types, return_type=None, use_regex=None):
                 if _return_type is not object and not isinstance(
                         _method_return_value, _return_type):
                     raise Exception(
-                        'Method: {} needs to return value of type'
-                        'type:{}, actual type of return value is :{}'.format(
+                        "Method: {} needs to return value of type"
+                        "type:{}, actual type of return value is :{}".format(
                             method_to_decorate.__name__,
                             _return_type,
                             type(_method_return_value)

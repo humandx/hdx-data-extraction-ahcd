@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Helper file for all useful functions
+Module containing useful methods for package `hdx_ahcd`.
 """
 # Python modules
-import os
 from copy import deepcopy
 from datetime import datetime
+import os
 
 # Other modules
 from hdx_ahcd.namcs.config import (
@@ -14,9 +14,7 @@ from hdx_ahcd.namcs.config import (
     NAMCS_FILE_NAME,
     NAMCS_PUBLIC_FILE_EXTENSIONS,
     NAMCS_PUBLIC_FILE_URL,
-    log
 )
-from hdx_ahcd.namcs.constants import ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS
 from hdx_ahcd.utils.context import try_except
 from hdx_ahcd.utils.decorators import (
     catch_exception,
@@ -30,24 +28,51 @@ from hdx_ahcd.utils.decorators import (
 # Global vars
 # -N/A
 
-# Lambda function to get normalized hdx_ahcd file name
-get_normalized_namcs_file_name = lambda year: "{}_NAMCS".format(year)
-get_iterable = lambda parameter: [parameter] \
-    if not isinstance(parameter, (list, tuple)) else parameter
+
+def get_normalized_namcs_file_name(year):
+    """
+    Method to get normalized dataset file name in format <YEAR>_NAMCS
+    for `year`.
+
+    Parameters:
+        year (:class:`str` or :class:`int`): NAMCS year.
+
+    Returns:
+        :class:`str`: Normalized dataset file name in format <YEAR>_NAMCS
+        for `year`.
+    """
+    return "{}_NAMCS".format(year)
 
 
-@catch_exception()
+def get_iterable(parameter):
+    """
+    Method to convert `parameter` to iterable type.
+    Convert `parameter` of type `str`, `int`, `float` into iterable as `list`
+
+    Parameters:
+        parameter (:class:`str` or :class:`int` or :class:`float`): Object that
+            needs to be iterable.
+
+    Returns:
+        :class:`list`: Iterable `parameter`.
+
+    """
+    return [parameter] if not isinstance(parameter, (list, tuple)) \
+        else parameter
+
+
+@catch_exception(re_raise=True)
 def get_string_representations_of_date(year=1, month=1, day=1):
     """
     Method to get year, month, day from date in desired format.
 
     Parameters:
-          year (:class:`int`): Integer indicating year default value 1.
-          month (:class:`int`): Integer indicating month default value 1.
-          day (:class: `int`): Integer indicating day default value 1.
+          year (:class:`int`): Numeric value of Year.
+          month (:class:`int`): Numeric value of month.
+          day (:class: `int`): Numeric value of day.
 
     Returns:
-        :class:`dict` : Dict containing various string representation of date.
+        :class:`dict`: Key value pair of String representation of date.
     """
     # Datetime object
     date = datetime(year=year, month=month, day=day)
@@ -64,44 +89,55 @@ def get_string_representations_of_date(year=1, month=1, day=1):
 
 def populate_missing_fields(headers, field_codes_for_single_record):
     """
-    Method to clean out all the fields present in `write_line_dict`
-    and only populate `CONVERTED_CSV_FIELDS` discarding rest of fields.
+    Method to clean out all the fields present in
+    `field_codes_for_single_record` and only populate
+    `CONVERTED_CSV_FIELDS` discarding rest of fields.
 
     Parameters:
-        headers (:class:`list`): List containing required fields in
-            mapped output csv file.
-        field_codes_for_single_record (:class:`dict`): Dict containing mapped
-            data for single row in input raw file.
+        headers (:class:`tuple`): Fields required in translated record.
+        field_codes_for_single_record (:class:`dict`): Dict containing
+            translated data for single record in dataset.
 
     Returns:
-        :class:`dict`: Modified dict containing ONLY `CONVERTED_CSV_FIELDS`.
+        :class:`dict`: Modified dict containing values for fields defined in
+        `CONVERTED_CSV_FIELDS`.
+
+    Note:
+        >>> from hdx_ahcd.namcs.config import CONVERTED_CSV_FIELDS
+        >>> CONVERTED_CSV_FIELDS
+        ("source_file_ID", "source_file_row", "month_of_visit", "year_of_visit"
+        , "sex", "age", "physician_diagnoses", "patient_visit_weight")
     """
-    data_dict = deepcopy(field_codes_for_single_record)
+    code_for_records = deepcopy(field_codes_for_single_record)
     missing_field_value = None
 
     # Filtering missing fields from headers
     for missing_field in filter(
-            lambda key: True if key not in data_dict else False, headers):
+            lambda key: True if key not in code_for_records else False, headers
+    ):
 
         # Finding conversion method for missing field
         missing_field_mapped_function = get_conversion_method(missing_field)
         if missing_field_mapped_function:
-            with try_except(method_name=missing_field_mapped_function,
-                            re_raise=True):
-                missing_field_value = missing_field_mapped_function(**data_dict)
+            with try_except(
+                method_name=missing_field_mapped_function.__name__,
+                re_raise=True
+            ):
+                missing_field_value = \
+                    missing_field_mapped_function(**code_for_records)
 
-        data_dict[missing_field] = missing_field_value
+        code_for_records[missing_field] = missing_field_value
 
-    # Extra fields that are not required in output field.
+    # Extra fields that are not required in output format.
     extra_fields = list(filter(
-        lambda key: True if key not in headers else False, data_dict))
+        lambda key: True if key not in headers else False, code_for_records))
 
     # Keeping ONLY `CONVERTED_CSV_FIELDS` in dict and deleting the rest
     with try_except():
         for extra_field in extra_fields:
-            del data_dict[extra_field]
+            del code_for_records[extra_field]
 
-    return data_dict
+    return code_for_records
 
 
 def get_customized_file_name(*names, separator="_", extension=None):
@@ -119,12 +155,10 @@ def get_customized_file_name(*names, separator="_", extension=None):
     """
     names = names[0] if isinstance(names[0], (list, tuple)) else names
 
-    # Converting all names to string
-    names = list(
-        map(lambda name: name if isinstance(name, str) else str(name), names)
-    )
-    custom_file_name = \
-        separator.join([name for name in names]) if len(names) > 1 else names[0]
+    # Converting all `names` to `string`
+    names = list(map(str, names))
+
+    custom_file_name = separator.join(names) if len(names) > 1 else names[0]
 
     return "{}.{}".format(custom_file_name, extension) if extension else \
         custom_file_name
@@ -134,43 +168,43 @@ def get_customized_file_name(*names, separator="_", extension=None):
 @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
 def get_namcs_dataset_path_for_year(year):
     """
-    Method to return full file path for specified year.
+    Method to return full file path for specified `year`.
 
     Parameters:
-        year (:class:`int`): Year in integers.
+        year (:class:`int`): Year for which NAMCS dataset
+            file path needs to be calculated.
 
     Returns:
-        :class:`str`: A str containing file path of data set for provided year
-            if file path exists else none.
+        :class:`str`: Full file path of NAMCS dataset file if it exists.
     """
-    year_value = get_string_representations_of_date(year=year).get("year_long")
-    file_path = os.path.join(
-        EXTRACTED_DATA_DIR_PATH,
-        get_normalized_namcs_file_name(year_value)
-    )
+    if year is not None:
+        year_value = \
+            get_string_representations_of_date(year=year).get("year_long")
+        file_path = os.path.join(
+            EXTRACTED_DATA_DIR_PATH,
+            get_normalized_namcs_file_name(year_value)
+        )
 
-    if os.path.exists(file_path):
-        return file_path
-
-    log.error("For year {}, raw data set file not found".format(year_value))
+        if os.path.exists(file_path):
+            return file_path
     return None
 
 
 @create_path_if_does_not_exists(EXTRACTED_DATA_DIR_PATH)
 def rename_namcs_dataset_for_year(year):
     """
-    Method to rename NAMCS file for specified year.
+    Method to rename NAMCS dataset file for specified `year`.
 
     Parameters:
-        year (:class:`int`): Year in integers.
+        year (:class:`int`): Year for which NAMCS dataset
+            file needs to be renamed.
 
     Returns:
-        :class:`str`: Renamed file name for specified year.
-
+        :class:`str`: Renamed dataset file name for `year`.
     """
     new_file_name = None
 
-    # Date details for namcs year
+    # Get NAMCS year in desired format
     date_details = get_string_representations_of_date(year=year)
     year_value = date_details.get("year_short")
     year_value_long = date_details.get("year_long")
@@ -179,19 +213,20 @@ def rename_namcs_dataset_for_year(year):
         if os.path.exists(
                 os.path.join(
                     EXTRACTED_DATA_DIR_PATH,
-                    get_customized_file_name(namcs_file,
-                                             year_value, separator = "")
-                )
-        ):
-            # Existing file name
-            file_name = \
-                os.path.join(
-                    EXTRACTED_DATA_DIR_PATH, get_customized_file_name(
-                        namcs_file, year_value, separator = ""
+                    get_customized_file_name(
+                        namcs_file, year_value, separator=""
                     )
                 )
+        ):
+            # Existing file
+            file_name = os.path.join(
+                    EXTRACTED_DATA_DIR_PATH,
+                    get_customized_file_name(
+                        namcs_file, year_value, separator=""
+                    )
+            )
 
-            # File name in format <YEAR>_NAMCS
+            # New File name in format <YEAR>_NAMCS
             new_file_name = os.path.join(
                 EXTRACTED_DATA_DIR_PATH,
                 get_normalized_namcs_file_name(year_value_long)
@@ -206,23 +241,24 @@ def rename_namcs_dataset_for_year(year):
 @catch_exception(re_raise=True)
 def get_conversion_method(field_name):
     """
-    Method to get corresponding method for `field_name`.
+    Method to get corresponding method object for `field_name`.
 
     Parameters:
-        field_name (:class:`str`): Indicating field name to be searched in
-            global dict of `CONVERSION_METHOD_MAPPING` field and method
-            MAPPINGS.
+        field_name (:class:`str`): Field name for which corresponding conversion
+            method is required.
 
     Returns:
-        :class:`function`: Mapped method of provided field if Mapped method
-            of provided field exists else None.
-
+        :class:`function`: Corresponding method object if `field_name` exists
+            in `CONVERSION_METHOD_MAPPING`.
+    Note:
+         >>> import hdx_ahcd.mappers.functions
+         >>> from hdx_ahcd.utils.decorators import CONVERSION_METHOD_MAPPING
     """
     with try_except():
         if not CONVERSION_METHOD_MAPPING:
             # Required to construct mapping dictionary of
             # field name vs respective functions
-            __import__("hdx_ahcd.mapper.functions")
+            __import__("hdx_ahcd.mappers.functions")
 
         if field_name in CONVERSION_METHOD_MAPPING:
             return CONVERSION_METHOD_MAPPING.get(field_name)
@@ -232,157 +268,63 @@ def get_conversion_method(field_name):
     )
 
 
-@catch_exception()
-def get_icd_9_code_from_raw_code(diagnosis_code):
+def get_field_code_from_record(record, field_name, slice_object):
     """
-    Method to get convert raw `diagnosis_code` into ICD-9 format.
+    Method to get corresponding field code for `field_name` from `record`.
 
     Parameters:
-        diagnosis_code (:class:`str`): String representation of diagnosis_code.
-
-    Returns:
-        :class:`str`: mapped representation of corresponding ICD-9 code for
-            `diagnosis_code`.
-    Note:
-        - `diagnosis_code` is currently 'a numeric format'.
-        - Reference from documentation: 'From 1999, the ICD-9-CM codes are
-            provided in two formats, the true ICD-9-CM code in character format,
-            and a numeric recode found at the end of the record format'.
-        - Example:
-            numeric format: '20700'
-            character format: 'V700'
-    """
-    if diagnosis_code in ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS:
-        diagnosis_icd_9_code = \
-            ICD_9_DEFAULT_CODES_FOR_DIAGNOSIS.get(diagnosis_code)
-        if diagnosis_icd_9_code in \
-                ("Blank", "Blank diagnosis", "Diagnosis of 'none'",
-                 "Noncodable diagnosis", "Noncodable", "Illegible diagnosis"):
-            return ""
-        return diagnosis_icd_9_code
-
-    # 1975-76 - Instead of a "Y" to prefix codes in the supplementary
-    # classification, an ampersand (&) was used
-    # 1977 - 78 - Same as above, except that the prefix character is a dash(-)
-    if diagnosis_code.startswith("&") or diagnosis_code.startswith("-") or \
-            diagnosis_code.startswith("Y"):
-        diagnosis_code = "V{}".format(diagnosis_code[1:])
-
-    # Character format
-    # For inapplicable fourth or fifth digits, a dash is inserted.
-    # 0010[-] - V829[-] = 001.0[0]-V82.9[0]
-    elif '-' in diagnosis_code[3:]:
-        diagnosis_code = diagnosis_code.replace('-', '0')
-
-    # The prefix “1” preceding the 3-digit diagnostic codes represents
-    # diagnoses 001-999, e.g. ‘1381’=’381’=otitis media. And “138100”=”381.00”
-    if diagnosis_code.startswith("1"):
-        diagnosis_code = diagnosis_code.lstrip("1")
-
-    # The prefix “2” preceding the 3 - digit diagnostic codes represents "V"
-    # code diagnoses VO1 - V82, e.g., ‘2010’=’V10’ and “201081” = “V10.81”
-    elif diagnosis_code.startswith("2"):
-        if diagnosis_code.startswith("20"):
-            diagnosis_code = "V{}".format(diagnosis_code[2:])
-        else:
-            diagnosis_code = "V{}".format(diagnosis_code[1:])
-
-    # There is an implied decimal between the third and fourth digits
-    diagnosis_icd_9_code = "{}.{}".format(
-        diagnosis_code[:3], diagnosis_code[3:]
-    )
-
-    return diagnosis_icd_9_code
-
-
-@catch_exception()
-def get_icd_9_code_from_database(diagnosis_icd_9_code):
-    """
-    Method to get corresponding ICD-9 code for `diagnosis_code`.
-
-    Parameters:
-        diagnosis_icd_9_code (:class:`str`): String representation of
-            diagnosis_code.
-
-    Returns:
-        :class:`str`: String representation of corresponding ICD-9 code for
-            `diagnosis_code`.
-    """
-    # TODO : Fetch corresponding ICD-9 code for `diagnosis_code` from database
-    icd_9_code = diagnosis_icd_9_code
-    return icd_9_code
-
-
-def get_field_code_from_record(line, field_name, slice_object):
-    """
-    Method to get corresponding field code for `field_name` from raw dataset
-    characters.
-
-    Parameters:
-        line (:class:`str`): Actual record from raw dataset file.
+        record (:class:`str`): Actual record from raw dataset file.
         field_name (:class:`str`): Actual field name.
         slice_object (:class:`slice`): Slice object for `field_name`
 
     Returns:
-       :class:`str`: Corresponding field code for each `field_name`
-            if `mapping_func` is present else raw code of `field_name`
-            from dataset.
+       :class:`str`: Field code for `field_name` if conversion method for
+       `field_name` is present else code of `field_name` from dataset.
+
     Example:
-        - Raw code : "1" ,field code : "Female" for `field_name = Gender`
+        - For `field_name = Gender`, Raw code: "1" ,field code : "Female"
     """
     # Fetching specific field code from record
-    raw_code = line[slice_object]
+    raw_code = record[slice_object]
 
     # Find conversion method for field name
     mapping_func = get_conversion_method(field_name)
 
-    with try_except(method_name=mapping_func, re_raise=True):
+    with try_except(method_name=mapping_func.__name__, re_raise=True):
         return mapping_func(raw_code) if mapping_func is not None else raw_code
 
 
 @catch_exception()
-def get_slice_object(indexes):
+def get_slice_object(field_location, field_length):
     """
-    Method to return slice object based on the `indexes` passed.
+    Method to get slice object based on the `field_location`
+    and `field_length`.
 
     Parameters:
-        indexes (:class:`list`): List of start and stop index to build slice
-            object.
+        field_location (:class:`int`): Start index of field in the record.
+        field_length (:class:`int`): Length of field.
 
     Returns:
-        :class `slice`: Slice object based on `indexes`.
+        :class `slice`: Slice object based on based on the `field_location`
+        and `field_length`.
+
+    Note:
+        Records are 1 indexed and not 0 indexed.
     """
-    # Case 1: When indexes is provided as ["2", "3"]
-    if len(indexes) > 1:
-        return slice(int(indexes[0]) - 1, int(indexes[1]))
-    # Case 2: When indexes is provided as ["3"]
-    else:
-        return slice(int(indexes[0]) - 1, int(indexes[0]))
+    start_index = field_location - 1
 
+    # Case 1: When `field_length` > 1
+    # Case 2: When `field_length` is 1
+    end_index = start_index + field_length if field_length > 1 \
+        else field_location
 
-@catch_exception()
-def get_field_length(indexes):
-    """
-    Method to calculate field length from slice indexes for field location.
-
-    Parameters:
-        indexes (:class:`list`): List of start and stop index to build slice
-            object.
-
-    Returns:
-        :class `int`: Calculated Field length.
-    """
-    # `indexes` with integer index value
-    indexes = list(map(lambda index: int(index), indexes))
-    # Case 1: ['23' , '32'] , field_length = 10
-    # Case 2: ['23'] , field_length = 1
-    return (indexes[1]-indexes[0])+1 if not len(indexes) == 1 else 1
+    return slice(start_index, end_index)
 
 
 @catch_exception()
 def process_multiple_slice_objects(record, field_name, iterable_slice_object):
     """
-    Method to get all field codes from raw record for `iterable_slice_object`.
+    Method to get all field codes from raw record for `field_name`.
 
     Parameters:
         record (:class:`str`): Actual record from raw data set file.
@@ -391,41 +333,40 @@ def process_multiple_slice_objects(record, field_name, iterable_slice_object):
             field.
 
     Returns:
-        :class:`list`: Corresponding field code for each `MAPPINGS`.
+        :class:`list`: Field codes for `field_name`.
     """
     return [
-        get_field_code_from_record(
-            record, field_name, slice_object
-        ) for slice_object in iterable_slice_object
+        get_field_code_from_record(record, field_name, slice_object)
+        for slice_object in iterable_slice_object
     ]
 
 
 @catch_exception()
 def get_namcs_source_file_info(year):
     """
-    Method to get public NAMCS data file name and url for provided year.
+    Method to get details about NAMCS data file for provided `year`.
 
     Parameters:
-        year(:class:`int`): The year for which data is requested.
+        year (:class:`int`): Year for which details about NAMCS dataset file
+            are required.
 
     Returns:
-        :class:`dict`: Dict containing string representation of year,
-            public hdx_ahcd file name, url for public hdx_ahcd file name.
+        :class:`dict`: Details about NAMCS dataset files,
+        in the form of key value pair year,zip file name of NAMCS dataset,
+        public CDC url of NAMCS dataset file.
     """
-    year_value = get_string_representations_of_date(year=year).get("year_short")
-    public_file_name = \
-        get_customized_file_name(BASE_FILE_NAME[year],
-                                 year_value,
-                                 NAMCS_PUBLIC_FILE_EXTENSIONS[year],
-                                 separator=""
-                                 )
-    url = \
-        get_customized_file_name(NAMCS_PUBLIC_FILE_URL[year],
-                                 public_file_name,
-                                 separator=""
-                                 )
+    years_representations = get_string_representations_of_date(year=year)
+    public_file_name = get_customized_file_name(
+        BASE_FILE_NAME[year],
+        years_representations.get("year_short"),
+        NAMCS_PUBLIC_FILE_EXTENSIONS[year],
+        separator=""
+    )
+    url = get_customized_file_name(
+        NAMCS_PUBLIC_FILE_URL[year], public_file_name, separator=""
+    )
     return {
-        "year": year_value,
+        "year": int(years_representations.get("year_long")),
         "zip_file_name": public_file_name,
         "url": url
     }
@@ -437,17 +378,17 @@ def get_year_from_dataset_file_name(file_name):
 
     Parameters:
         file_name(:class:`str`): NAMCS raw dataset file name in the format
-            <YEAR>_NAMCS
+            <YEAR>_NAMCS.
 
     Returns:
-        :class:`int`: Extracted year from input raw dataset file name
+        :class:`int` or :class:`NoneType`: Year of NAMCS dataset file if
+        `file_name` exists.
+
+    Note:
+        Valid NAMCS dataset file name format: <YEAR>_NAMCS.
     """
-    base_file_name = os.path.basename(file_name)
-
-    # NAMCS file format: <YEAR>_NAMCS
-    year = base_file_name.split("_")[0]
-
-    return year
+    return int(os.path.basename(file_name).split("_")[0]) \
+        if os.path.exists(file_name) else None
 
 
 def safe_read_file(file_handle):
@@ -455,16 +396,16 @@ def safe_read_file(file_handle):
     Method to read all records from file irrespective of errors occurred while
     reading certain record.
 
-    Args:
+    Parameters:
         file_handle (:class:`_io.TextIO`): File that needs to be read
-            completely irrespective of exception in certain record
+            completely irrespective of exception in certain record.
 
     Returns:
-        :class:`generator` : Record from file.
+        :class:`generator`: Record from file and record number.
     """
     try:
         for line_no, line in enumerate(file_handle):
-            line = line.strip()
+            line = line.strip("\n")
             yield line_no, line
     except Exception:
         # In case of exception skip current record and process

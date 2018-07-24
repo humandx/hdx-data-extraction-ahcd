@@ -26,26 +26,26 @@ class ImportModuleTest(TestCase):
     def test_config(self):
         import hdx_ahcd.namcs.config
 
-    def test_controllers(self):
-        import hdx_ahcd.scripts.controllers
+    def test_namcs_validators(self):
+        import hdx_ahcd.scripts.namcs_validators
 
-    def test_script_validation(self):
-        import hdx_ahcd.scripts.validation
+    def test_controllers_namcs_processors(self):
+        import hdx_ahcd.controllers.namcs_processors
 
     def test_mapper_functions(self):
-        import hdx_ahcd.mapper.functions
+        import hdx_ahcd.mappers.functions
 
     def test_mapper_years(self):
-        import hdx_ahcd.mapper.years
+        import hdx_ahcd.mappers.years
 
     def test_helpers_functions(self):
         import hdx_ahcd.helpers.functions
 
-    def test_general_namcs_extractor(self):
-        import hdx_ahcd.general.namcs_extractor
+    def test_controllers_namcs_extractor(self):
+        import hdx_ahcd.controllers.namcs_extractor
 
-    def test_general_namcs_convertor(self):
-        import hdx_ahcd.general.namcs_converter
+    def test_controllers_namcs_converter(self):
+        import hdx_ahcd.controllers.namcs_converter
 
     def test_utils_context(self):
         import hdx_ahcd.utils.context
